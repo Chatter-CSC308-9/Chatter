@@ -14,10 +14,11 @@ public class Main extends Application {
     int i = 1;
 
     public static void main(String[] args) {
-        launch(args);
+        launch();
     }
+
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) {
         stage.setTitle("Chatter");
         label1 = new Label("Behold the VBox");
         VBox root = new VBox();
