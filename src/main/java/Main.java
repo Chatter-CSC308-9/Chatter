@@ -14,7 +14,7 @@ public class Main extends Application {
     int i = 1;
 
     public static void main(String[] args) {
-        launch();
+        launch(args);
     }
 
     @Override
