@@ -13,7 +13,8 @@
 4. Delete any `.idea/` and `.iml` files
 5. Open IntelliJ
 6. `File->Open->Chatter/pom.xml` as a project, not a file
-7. Ensure JDK 23
+7. Click "Load Maven Project" in bottom right popup
+8. Ensure JDK 23
 
 
 
