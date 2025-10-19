@@ -46,10 +46,7 @@
   <children>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
          <children>
-            <ToggleButton layoutY="1.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="167.0" text="Chatter" />
-            <ToggleButton layoutX="167.0" layoutY="1.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="167.0" text="Current" />
-            <ToggleButton layoutX="334.0" layoutY="1.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="167.0" text="Pending" />
-            <ToggleButton layoutX="501.0" layoutY="1.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="167.0" text="Graded" />
+            <ToggleButton layoutY="1.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="143.0" text="Chatter" />
             <Label layoutX="19.0" layoutY="40.0" text="Home Page">
                <font>
                   <Font size="25.0" />
@@ -71,6 +68,10 @@
                 </TitledPane>
               </panes>
             </Accordion>
+            <Button layoutX="572.0" layoutY="1.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="73.0" text="Account" />
+            <ToggleButton layoutX="143.0" layoutY="1.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="143.0" text="Current" />
+            <ToggleButton layoutX="286.0" layoutY="1.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="143.0" text="Pending" />
+            <ToggleButton layoutX="429.0" layoutY="1.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="143.0" text="Graded" />
          </children>
     </AnchorPane>
   </children>
