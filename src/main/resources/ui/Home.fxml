@@ -55,7 +55,7 @@
             </Label>
             <Accordion layoutX="383.0" layoutY="58.0">
               <panes>
-                <TitledPane animated="false" text="Choose Languages">
+                <TitledPane animated="false" text="Add Languages">
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
