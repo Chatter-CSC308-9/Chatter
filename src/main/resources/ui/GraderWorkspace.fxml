@@ -69,9 +69,8 @@
                 </TitledPane>
               </panes>
             </Accordion>
-            <ToggleButton layoutX="143.0" layoutY="1.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="143.0" text="Catalog" />
-            <ToggleButton layoutX="286.0" layoutY="1.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="143.0" text="Pending" />
-            <ToggleButton layoutX="429.0" layoutY="1.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="143.0" text="Graded" />
+            <ToggleButton layoutX="143.0" layoutY="1.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="214.0" text="Catalog" />
+            <ToggleButton layoutX="357.0" layoutY="1.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="214.0" text="Pending" />
             <ToggleButton layoutX="572.0" layoutY="1.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="68.0" text="Account" />
             <Label layoutX="19.0" layoutY="84.0" text="Select Assignment to claim">
                <font>
