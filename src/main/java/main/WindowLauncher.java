@@ -12,7 +12,7 @@ public class WindowLauncher extends Application {
         String windowAddress = getParameters().getRaw().getFirst();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/" + windowAddress + ".fxml"));
         Scene scene = new Scene(loader.load());
-        stage.setTitle("Chatter - FXML UI");
+        stage.setTitle("Chatter - " + windowAddress);
         stage.setScene(scene);
         stage.show();
     }
