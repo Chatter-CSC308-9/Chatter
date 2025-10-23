@@ -55,8 +55,8 @@
             <TextField layoutX="235.0" layoutY="140.0" prefHeight="25.0" prefWidth="170.0" />
             <Label layoutX="235.0" layoutY="122.0" text="Username:" />
             <Label layoutX="235.0" layoutY="186.0" text="Password:" />
-            <Button layoutX="297.0" layoutY="270.0" mnemonicParsing="false" text="Sign Up" />
             <Label layoutX="271.0" layoutY="55.0" text="Welcome to Chatter!" />
+            <Button alignment="CENTER" contentDisplay="CENTER" layoutX="295.0" layoutY="264.0" mnemonicParsing="false" text="Log in" />
       </children>
     </AnchorPane>
   </children>
