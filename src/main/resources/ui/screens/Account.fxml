@@ -44,17 +44,12 @@
   <children>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="395.0" prefWidth="611.0" VBox.vgrow="ALWAYS">
          <children>
-            <ToggleButton layoutY="1.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="143.0" text="Chatter" />
             <Label layoutX="19.0" layoutY="40.0" text="Hi [Name]!">
                <font>
                   <Font size="25.0" />
                </font>
             </Label>
             <Accordion layoutX="383.0" layoutY="58.0" />
-            <ToggleButton layoutX="143.0" layoutY="1.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="143.0" text="Current" />
-            <ToggleButton layoutX="286.0" layoutY="1.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="143.0" text="Pending" />
-            <ToggleButton layoutX="429.0" layoutY="1.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="143.0" text="Graded" />
-            <ToggleButton layoutX="572.0" layoutY="1.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="68.0" text="Account" />
             <Label layoutX="31.0" layoutY="83.0" text="Account Info">
                <font>
                   <Font size="15.0" />

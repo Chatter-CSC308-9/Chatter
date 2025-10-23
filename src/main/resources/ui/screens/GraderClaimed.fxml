@@ -47,7 +47,6 @@
   <children>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="395.0" prefWidth="611.0" VBox.vgrow="ALWAYS">
          <children>
-            <ToggleButton layoutY="1.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="143.0" text="Chatter" />
             <Label layoutX="21.0" layoutY="40.0" text="Catalog">
                <font>
                   <Font size="25.0" />
@@ -69,9 +68,6 @@
                 </TitledPane>
               </panes>
             </Accordion>
-            <ToggleButton layoutX="143.0" layoutY="1.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="214.0" text="Catalog" />
-            <ToggleButton layoutX="357.0" layoutY="1.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="214.0" text="Pending" />
-            <ToggleButton layoutX="572.0" layoutY="1.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="68.0" text="Account" />
             <Label layoutX="19.0" layoutY="84.0" text="Select Assignment to claim">
                <font>
                   <Font size="15.0" />

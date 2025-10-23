@@ -46,11 +46,6 @@
     <children>
         <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
             <children>
-                <ToggleButton layoutY="1.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="143.0" text="Chatter" />
-                <ToggleButton layoutX="143.0" layoutY="1.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="143.0" text="Current" />
-                <ToggleButton layoutX="286.0" layoutY="1.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="143.0" text="Pending" />
-                <ToggleButton layoutX="429.0" layoutY="1.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="143.0" text="Graded" />
-            <ToggleButton layoutX="572.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="74.0" text="Account" />
                 <Label layoutX="19.0" layoutY="40.0" text="Current Work">
                     <font>
                         <Font size="25.0" />

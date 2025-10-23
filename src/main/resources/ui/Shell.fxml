@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<BorderPane fx:controller="main.boundaries.Shell"
+            xmlns:fx="http://javafx.com/fxml">
+    <!-- top is filled at runtime with the selected taskbar -->
+    <top>
+        <StackPane fx:id="taskbarHost"
+        />
+    </top>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="main.boundaries.Shell"
-            prefHeight="400.0" prefWidth="600.0">
-
-</AnchorPane>
+    <!-- center holds whatever screen is active -->
+    <center>
+        <StackPane fx:id="contentHost"/>
+    </center>
+</BorderPane>
