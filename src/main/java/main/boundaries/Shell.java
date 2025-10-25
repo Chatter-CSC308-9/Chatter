@@ -7,7 +7,7 @@ import javafx.scene.layout.StackPane;
 
 import java.io.IOException;
 
-public class Shell {
+public class Shell implements ShellAPI {
 
     @FXML
     private StackPane taskbarHost;
@@ -17,18 +17,42 @@ public class Shell {
     @FXML
     private void initialize() {
         // Hardcode your choices here:
-        Node taskbar = load("/ui/taskbars/GraderTaskbar.fxml");
-        Node screen = load("/ui/screens/CurrentEdit.fxml");
-
-        taskbarHost.getChildren().setAll(taskbar);
+        Node screen = loadNode("/ui/screens/Login.fxml");
         contentHost.getChildren().setAll(screen);
     }
 
-    private Node load(String resourcePath) {
+    @FXML
+    @Override
+    public void setTaskbar(String taskbarName) {
+        Node taskbar = loadNode("/ui/taskbars/" + taskbarName + ".fxml");
+        taskbarHost.getChildren().setAll(taskbar);
+    }
+
+    @FXML
+    @Override
+    public void setContent(String screenName) {
+        Node screen = loadNode("/ui/screens/" + screenName + ".fxml");
+        contentHost.getChildren().setAll(screen);
+    }
+
+    private void injectShellAPI(Object boundary) {
+        if (boundary instanceof Navigator navigator) {
+            navigator.setShellAPI(this);
+        }
+    }
+
+    private Node loadNode(String resourcePath) {
         try {
-            return FXMLLoader.load(getClass().getResource(resourcePath));
-        } catch (NullPointerException | IOException e) {
-            throw new IllegalArgumentException("FXML resource not found: " + resourcePath, e);
+            var url = getClass().getResource(resourcePath);
+            if (url == null) {
+                throw new IllegalArgumentException("FXML resource not found: " + resourcePath);
+            }
+            FXMLLoader loader = new FXMLLoader(url);
+            Node node = loader.load();                // 1) create the controller & UI
+            injectShellAPI(loader.getController());   // 2) now the controller exists
+            return node;
+        } catch (IOException e) {
+            throw new IllegalArgumentException("Failed to load: " + resourcePath, e);
         }
     }
 }
