@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+
+<BorderPane fx:controller="main.boundaries.Shell"
+            xmlns:fx="http://javafx.com/fxml">
+    <!-- top is filled at runtime with the selected taskbar -->
+    <top>
+        <StackPane fx:id="taskbarHost"
+        />
+    </top>
+
+    <!-- center holds whatever screen is active -->
+    <center>
+        <StackPane fx:id="contentHost"/>
+    </center>
+</BorderPane>

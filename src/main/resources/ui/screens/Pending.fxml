@@ -47,17 +47,12 @@
     <children>
         <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
             <children>
-                <ToggleButton layoutY="1.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="143.0" text="Chatter" />
-                <ToggleButton layoutX="143.0" layoutY="1.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="143.0" text="Current" />
-                <ToggleButton layoutX="286.0" layoutY="1.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="143.0" text="Pending" />
-                <ToggleButton layoutX="429.0" layoutY="1.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="143.0" text="Graded" />
-            <ToggleButton layoutX="572.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="74.0" text="Account" />
-                <Label layoutX="19.0" layoutY="40.0" text="Graded Work">
+                <Label layoutX="19.0" layoutY="40.0" text="Pending Work">
                     <font>
                         <Font size="25.0" />
                     </font>
                 </Label>
-            <Label layoutX="35.0" layoutY="76.0" prefHeight="51.0" prefWidth="257.0" text="Click an assignment to review feedback on your work" wrapText="true">
+            <Label layoutX="35.0" layoutY="76.0" text="Click an assignment to review your work">
                <font>
                   <Font size="14.0" />
                </font>
@@ -103,20 +98,7 @@
                                                       <Label text="Grader email: perry@owca.gov" />
                                                    </children>
                                                 </VBox>
-                                                <VBox prefHeight="200.0" prefWidth="100.0">
-                                                   <children>
-                                                      <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="121.0" text="View Feedback">
-                                                         <font>
-                                                            <Font size="10.0" />
-                                                         </font>
-                                                      </Button>
-                                                      <Button mnemonicParsing="false" text="Download Feedback">
-                                                         <font>
-                                                            <Font size="9.0" />
-                                                         </font>
-                                                      </Button>
-                                                   </children>
-                                                </VBox>
+                                                <Button mnemonicParsing="false" text="Grade with AI" />
                                              </children>
                                           </HBox>
                                        </children>
@@ -136,20 +118,27 @@
                                                       <Label text="Grader email: perry@owca.gov" />
                                                    </children>
                                                 </VBox>
-                                                <VBox prefHeight="200.0" prefWidth="100.0">
+                                                <Button mnemonicParsing="false" text="Grade with AI" />
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                    </AnchorPane>
+                                 </content>
+                              </TitledPane>
+                              <TitledPane animated="false" expanded="false" prefHeight="89.0" prefWidth="321.0" text="J'en veux pas">
+                                 <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="96.0" prefWidth="318.0">
+                                       <children>
+                                          <HBox prefHeight="57.0" prefWidth="315.0">
+                                             <children>
+                                                <VBox prefHeight="57.0" prefWidth="227.0">
                                                    <children>
-                                                      <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="121.0" text="View Feedback">
-                                                         <font>
-                                                            <Font size="10.0" />
-                                                         </font>
-                                                      </Button>
-                                                      <Button mnemonicParsing="false" text="Download Feedback">
-                                                         <font>
-                                                            <Font size="9.0" />
-                                                         </font>
-                                                      </Button>
+                                                      <Label text="Status: Claimed" />
+                                                      <Label text="Grader: Agent P" />
+                                                      <Label text="Grader email: perry@owca.gov" />
                                                    </children>
                                                 </VBox>
+                                                <Button mnemonicParsing="false" text="Grade with AI" />
                                              </children>
                                           </HBox>
                                        </children>
@@ -167,12 +156,11 @@
                               <Font size="20.0" />
                            </font>
                         </Label>
-                        <Accordion />
-                        <TitledPane animated="false" expanded="false" prefHeight="89.0" prefWidth="321.0" text="J'en veux pas">
-                           <content>
-                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="96.0" prefWidth="318.0">
-                                 <children>
-                                    <HBox prefHeight="57.0" prefWidth="315.0">
+                        <Accordion>
+                           <panes>
+                              <TitledPane animated="false" expanded="false" prefHeight="89.0" prefWidth="321.0" text="J'en veux pas">
+                                 <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="96.0" prefWidth="318.0">
                                        <children>
                                           <VBox prefHeight="57.0" prefWidth="227.0">
                                              <children>
@@ -181,26 +169,27 @@
                                                 <Label text="Grader email: perry@owca.gov" />
                                              </children>
                                           </VBox>
-                                          <VBox prefHeight="200.0" prefWidth="100.0">
+                                       </children>
+                                    </AnchorPane>
+                                 </content>
+                              </TitledPane>
+                              <TitledPane animated="false" expanded="false" prefHeight="89.0" prefWidth="321.0" text="J'en veux pas">
+                                 <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="96.0" prefWidth="318.0">
+                                       <children>
+                                          <VBox prefHeight="57.0" prefWidth="227.0">
                                              <children>
-                                                <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="121.0" text="View Feedback">
-                                                   <font>
-                                                      <Font size="10.0" />
-                                                   </font>
-                                                </Button>
-                                                <Button mnemonicParsing="false" text="Download Feedback">
-                                                   <font>
-                                                      <Font size="9.0" />
-                                                   </font>
-                                                </Button>
+                                                <Label text="Status: Claimed" />
+                                                <Label text="Grader: Agent P" />
+                                                <Label text="Grader email: perry@owca.gov" />
                                              </children>
                                           </VBox>
                                        </children>
-                                    </HBox>
-                                 </children>
-                              </AnchorPane>
-                           </content>
-                        </TitledPane>
+                                    </AnchorPane>
+                                 </content>
+                              </TitledPane>
+                           </panes>
+                        </Accordion>
                      </children>
                   </VBox>
                </children>
