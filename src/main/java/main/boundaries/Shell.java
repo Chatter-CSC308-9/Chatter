@@ -6,8 +6,12 @@ import javafx.scene.Node;
 import javafx.scene.layout.StackPane;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Shell implements ShellAPI {
+
+    private Map<String, Node> nodes = new HashMap<>();
 
     @FXML
     private StackPane taskbarHost;
@@ -17,22 +21,30 @@ public class Shell implements ShellAPI {
     // Starts here
     @FXML
     private void initialize() {
-        Node screen = loadNode("/ui/screens/Login.fxml");
+        Node screen = getNode("/ui/screens/Login.fxml");
         contentHost.getChildren().setAll(screen); // renders the Login Node
     }
 
     @FXML
     @Override
     public void setTaskbar(String taskbarName) {
-        Node taskbar = loadNode("/ui/taskbars/" + taskbarName + ".fxml");
+        Node taskbar = getNode("/ui/taskbars/" + taskbarName + ".fxml");
         taskbarHost.getChildren().setAll(taskbar);
     }
 
     @FXML
     @Override
     public void setContent(String screenName) {
-        Node screen = loadNode("/ui/screens/" + screenName + ".fxml");
+        Node screen = getNode("/ui/screens/" + screenName + ".fxml");
         contentHost.getChildren().setAll(screen);
+    }
+
+    private Node getNode(String resourcePath) {
+        if (!nodes.containsKey(resourcePath)) {
+            Node node = loadNode(resourcePath);
+            nodes.put(resourcePath, node);
+        }
+        return nodes.get(resourcePath);
     }
 
     // Takes a resource path and creates associated java object (Boundary)
