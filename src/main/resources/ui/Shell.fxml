@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.StackPane?>
-
-<BorderPane fx:controller="main.boundaries.Shell"
+<!--fx:controller="main.boundaries.Shell"-->
+<BorderPane
             xmlns:fx="http://javafx.com/fxml">
     <!-- top is filled at runtime with the selected taskbar -->
     <top>
