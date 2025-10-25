@@ -1,15 +1,19 @@
 package main.boundaries.screens;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import main.boundaries.Navigator;
 import main.boundaries.ShellAPI;
+import main.controllers.EditWorkController;
 
 public class Current implements Navigator {
-    @FXML
-    public Button loginButton;
 
     private ShellAPI shellAPI;
+
+    EditWorkController editWorkController = new EditWorkController();
+
+    public Current(EditWorkController editWorkController) {
+        this.editWorkController = editWorkController;
+    }
 
     @FXML
     private void handleButtonClick() {

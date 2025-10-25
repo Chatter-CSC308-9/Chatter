@@ -12,11 +12,16 @@ import java.util.Map;
 public class Shell implements ShellAPI {
 
     private Map<String, Node> nodes = new HashMap<>();
+    private Map<Class<?>, Object> boundaryInstantiations;
 
     @FXML
     private StackPane taskbarHost;
     @FXML
     private StackPane contentHost; // The screen to be displayed under the taskbar
+
+    public Shell(Map<Class<?>, Object> boundaryInstantiations) {
+        this.boundaryInstantiations = boundaryInstantiations;
+    }
 
     // Starts here
     @FXML
@@ -55,6 +60,18 @@ public class Shell implements ShellAPI {
                 throw new IllegalArgumentException("FXML resource not found: " + resourcePath);
             }
             FXMLLoader loader = new FXMLLoader(url); // gets FXML
+            loader.setControllerFactory(type -> {
+                Object existing = boundaryInstantiations.get(type);
+                if (existing != null) return existing;
+                try {
+                    // fallback for controllers you didn’t prebuild (e.g., simple taskbars)
+                    return type.getDeclaredConstructor().newInstance();
+                } catch (Exception e) {
+                    throw new IllegalStateException(
+                            "No controller provided for " + type.getName() +
+                                    " and failed to construct via no-arg constructor.", e);
+                }
+            });
             Node node = loader.load(); // turns FXML into Java
             injectShellAPI(loader.getController()); // adds ShellAPI
             return node;

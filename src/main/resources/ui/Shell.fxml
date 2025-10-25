@@ -3,7 +3,8 @@
 <?import javafx.scene.layout.StackPane?>
 <!--fx:controller="main.boundaries.Shell"-->
 <BorderPane
-            xmlns:fx="http://javafx.com/fxml">
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="main.boundaries.Shell">
     <!-- top is filled at runtime with the selected taskbar -->
     <top>
         <StackPane fx:id="taskbarHost"
