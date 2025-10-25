@@ -42,7 +42,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.boundaries.screens.CurrentEdit">
     <children>
         <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
             <children>
@@ -51,7 +51,7 @@
                         <Font size="25.0" />
                     </font>
                 </Label>
-                <Button layoutX="529.0" layoutY="45.0" mnemonicParsing="false" text="Save and Exit" />
+                <Button fx:id="saveAndExitButton" layoutX="529.0" layoutY="45.0" mnemonicParsing="false" onAction="#handleSaveAndExitButtonClick" text="Save and Exit" />
                 <HBox layoutX="40.0" layoutY="76.0" prefHeight="27.0" prefWidth="334.0">
                     <children>
                         <Label prefHeight="27.0" prefWidth="57.0" text="Title: ">
@@ -66,8 +66,8 @@
                     <children>
                         <HBox prefHeight="34.0" prefWidth="555.0">
                             <children>
-                                <ToggleButton mnemonicParsing="false" prefHeight="26.0" prefWidth="69.0" text="Upload" />
-                                <ToggleButton mnemonicParsing="false" prefHeight="26.0" prefWidth="74.0" text="Text Entry" />
+                                <ToggleButton fx:id="uploadButton" mnemonicParsing="false" onAction="#handleUploadButtonClick" prefHeight="26.0" prefWidth="69.0" text="Upload" />
+                                <ToggleButton fx:id="textEntryButton" mnemonicParsing="false" onAction="#handleTextEntryButtonClick" prefHeight="26.0" prefWidth="74.0" text="Text Entry" />
                             </children>
                         </HBox>
                   <TextArea prefHeight="212.0" prefWidth="555.0" />

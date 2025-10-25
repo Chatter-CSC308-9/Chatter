@@ -73,12 +73,12 @@
                 </Accordion>
             <VBox layoutX="35.0" layoutY="100.0" prefHeight="290.0" prefWidth="339.0">
                <children>
-                  <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="339.0" text="Perry the Platypus" />
+                  <Button fx:id="perryThePlatypusButton" mnemonicParsing="false" onAction="#handleAssignmentButtonClick" prefHeight="26.0" prefWidth="339.0" text="Perry the Platypus" />
                   <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="339.0" text="Assignment 2" />
                   <Button layoutX="10.0" layoutY="36.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="339.0" text="Doof" />
                </children>
             </VBox>
-            <Button layoutX="457.0" layoutY="351.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="128.0" text="Create New Work" />
+            <Button fx:id="createNewWorkButton" layoutX="457.0" layoutY="351.0" mnemonicParsing="false" onAction="#handleCreateNewWorkButtonClick" prefHeight="26.0" prefWidth="128.0" text="Create New Work" />
             </children>
         </AnchorPane>
     </children>
