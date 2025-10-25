@@ -1,20 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="main.boundaries.taskbars.LearnerTaskbar"
-            >
+<AnchorPane xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.boundaries.taskbars.LearnerTaskbar">
     <HBox>
-        <ToggleButton mnemonicParsing="false" prefHeight="25.0" prefWidth="143.0" text="Chatter" />
-        <ToggleButton mnemonicParsing="false" prefHeight="25.0" prefWidth="143.0" text="Current" />
-        <ToggleButton mnemonicParsing="false" prefHeight="25.0" prefWidth="143.0" text="Pending" />
-        <ToggleButton mnemonicParsing="false" prefHeight="25.0" prefWidth="143.0" text="Graded" />
-        <ToggleButton mnemonicParsing="false" prefHeight="25.0" prefWidth="68.0" text="Account" />
+        <ToggleButton fx:id="chatterButton" mnemonicParsing="false" onAction="#handleChatterButtonClick" prefHeight="25.0" prefWidth="143.0" text="Chatter" />
+        <ToggleButton fx:id="currentButton" mnemonicParsing="false" onAction="#handleCurrentButtonClick" prefHeight="25.0" prefWidth="143.0" text="Current" />
+        <ToggleButton fx:id="pendingButton" mnemonicParsing="false" onAction="#handlePendingButtonClick" prefHeight="25.0" prefWidth="143.0" text="Pending" />
+        <ToggleButton fx:id="gradedButton" mnemonicParsing="false" onAction="#handleGradedButtonClick" prefHeight="25.0" prefWidth="143.0" text="Graded" />
+        <ToggleButton fx:id="accountButton" mnemonicParsing="false" onAction="#handleAccountButtonClick" prefHeight="25.0" prefWidth="68.0" text="Account" />
     </HBox>
 </AnchorPane>
