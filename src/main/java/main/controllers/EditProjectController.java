@@ -26,7 +26,7 @@ public class EditProjectController {
     // return title of project
     public String getTitle() {
         String title = "hello world";
-        try(BufferedReader br = new BufferedReader(new FileReader("server/" + projectFolder + "/title.txt"))) {
+        try(BufferedReader br = new BufferedReader(new FileReader("server/projects/" + projectFolder + "/title.txt"))) {
             title = br.readLine();
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -38,7 +38,7 @@ public class EditProjectController {
     // return text of project
     public String getWork() {
         String everything = "hello world";
-        try(BufferedReader br = new BufferedReader(new FileReader("server/" + projectFolder + "/work.txt"))) {
+        try(BufferedReader br = new BufferedReader(new FileReader("server/projects/" + projectFolder + "/work.txt"))) {
             StringBuilder sb = new StringBuilder();
             String line = br.readLine();
 
@@ -58,14 +58,14 @@ public class EditProjectController {
     // save title and work
     public void saveWork(String title, String work) {
         // write to title file
-        try (FileWriter writer = new FileWriter("server/" + projectFolder + "/title.txt")) {
+        try (FileWriter writer = new FileWriter("server/projects/" + projectFolder + "/title.txt")) {
             writer.write(title);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         // write to work file
-        try (FileWriter writer = new FileWriter("server/" + projectFolder + "/work.txt")) {
+        try (FileWriter writer = new FileWriter("server/projects/" + projectFolder + "/work.txt")) {
             writer.write(work);
         } catch (IOException e) {
             e.printStackTrace();
