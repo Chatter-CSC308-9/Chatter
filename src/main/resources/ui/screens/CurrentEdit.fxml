@@ -59,7 +59,7 @@
                                 <Font size="18.0" />
                             </font>
                         </Label>
-                        <TextField prefHeight="26.0" prefWidth="300.0" />
+                        <TextField fx:id="titleField" prefHeight="26.0" prefWidth="300.0" />
                     </children>
                 </HBox>
                 <VBox layoutX="43.0" layoutY="110.0" prefHeight="238.0" prefWidth="555.0">
@@ -70,7 +70,7 @@
                                 <ToggleButton fx:id="textEntryButton" mnemonicParsing="false" onAction="#handleTextEntryButtonClick" prefHeight="26.0" prefWidth="74.0" text="Text Entry" />
                             </children>
                         </HBox>
-                  <TextArea prefHeight="212.0" prefWidth="555.0" />
+                  <TextArea fx:id="projectField" prefHeight="212.0" prefWidth="555.0" />
                     </children>
                 </VBox>
                 <Button layoutX="447.0" layoutY="359.0" mnemonicParsing="false" text="Submit" />

@@ -1,15 +1,15 @@
 package main.entities;
 
-public class Assignment {
+public class Project {
     private String language;
-    private String name;
+    private String folderName;
     private String title;
-    // path to assignment folder
+    // path to project folder
     private Boolean submitted;
     private Boolean claimed;
     private Boolean graded;
 
-    public Assignment() {
+    public Project() {
         //code
     }
 }

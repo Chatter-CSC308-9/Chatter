@@ -7,6 +7,7 @@ import main.boundaries.ShellAPI;
 import main.controllers.LoginController;
 
 public class Login implements Navigator {
+
     @FXML
     public Button loginButton;
 

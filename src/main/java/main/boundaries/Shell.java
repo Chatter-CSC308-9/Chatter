@@ -13,6 +13,7 @@ public class Shell implements ShellAPI {
 
     private Map<String, Node> nodes = new HashMap<>();
     private Map<Class<?>, Object> boundaryInstantiations;
+    private Map<Node, Object> nodesToBoundaries = new HashMap<>();
 
     @FXML
     private StackPane taskbarHost;
@@ -42,6 +43,11 @@ public class Shell implements ShellAPI {
     public void setContent(String screenName) {
         Node screen = getNode("/ui/screens/" + screenName + ".fxml");
         contentHost.getChildren().setAll(screen);
+
+        Object boundary = nodesToBoundaries.get(screen);
+        if (boundary instanceof Navigator nav) {
+            nav.onShow();
+        }
     }
 
     private Node getNode(String resourcePath) {
@@ -73,7 +79,7 @@ public class Shell implements ShellAPI {
                 }
             });
             Node node = loader.load(); // turns FXML into Java
-            injectShellAPI(loader.getController()); // adds ShellAPI
+            injectShellAPI(node, loader.getController()); // adds ShellAPI
             return node;
         } catch (IOException e) {
             throw new IllegalArgumentException("Failed to load: " + resourcePath, e);
@@ -81,8 +87,9 @@ public class Shell implements ShellAPI {
     }
 
     // Adds the Shell as a ShellAPI to the Boundary, allowing it to use ShellAPI methods only
-    private void injectShellAPI(Object boundary) {
+    private void injectShellAPI(Node node, Object boundary) {
         if (boundary instanceof Navigator navigator) {
+            nodesToBoundaries.put(node, navigator);
             navigator.setShellAPI(this);
         }
     }
