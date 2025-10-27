@@ -36,8 +36,8 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TitledPane?>
-<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -58,6 +58,142 @@
                </font>
             </Label>
             <VBox layoutX="35.0" layoutY="303.0" prefHeight="81.0" prefWidth="339.0" />
+            <HBox layoutX="8.0" layoutY="126.0" prefHeight="239.0" prefWidth="629.0">
+               <children>
+                  <ScrollPane prefHeight="239.0" prefWidth="310.0">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="240.0" prefWidth="310.0">
+                           <children>
+                              <VBox prefHeight="222.0" prefWidth="321.0">
+                                 <children>
+                                    <Label text="Written work">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Accordion>
+                                      <panes>
+                                          <TitledPane animated="false" expanded="false" prefHeight="89.0" prefWidth="321.0" text="J'en veux pas">
+                                            <content>
+                                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="96.0" prefWidth="318.0">
+                                                   <children>
+                                                      <HBox prefHeight="57.0" prefWidth="315.0">
+                                                         <children>
+                                                            <VBox prefHeight="57.0" prefWidth="227.0">
+                                                               <children>
+                                                                  <Label text="Status: Claimed" />
+                                                                  <Label text="Grader: Agent P" />
+                                                                  <Label text="Grader email: perry@owca.gov" />
+                                                               </children>
+                                                            </VBox>
+                                                            <Button mnemonicParsing="false" text="Grade with AI" />
+                                                         </children>
+                                                      </HBox>
+                                                   </children>
+                                                </AnchorPane>
+                                            </content>
+                                          </TitledPane>
+                                          <TitledPane animated="false" expanded="false" prefHeight="89.0" prefWidth="321.0" text="J'en veux pas">
+                                             <content>
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="96.0" prefWidth="318.0">
+                                                   <children>
+                                                      <HBox prefHeight="57.0" prefWidth="315.0">
+                                                         <children>
+                                                            <VBox prefHeight="57.0" prefWidth="227.0">
+                                                               <children>
+                                                                  <Label text="Status: Claimed" />
+                                                                  <Label text="Grader: Agent P" />
+                                                                  <Label text="Grader email: perry@owca.gov" />
+                                                               </children>
+                                                            </VBox>
+                                                            <Button mnemonicParsing="false" text="Grade with AI" />
+                                                         </children>
+                                                      </HBox>
+                                                   </children>
+                                                </AnchorPane>
+                                             </content>
+                                          </TitledPane>
+                                          <TitledPane animated="false" expanded="false" prefHeight="89.0" prefWidth="321.0" text="J'en veux pas">
+                                             <content>
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="96.0" prefWidth="318.0">
+                                                   <children>
+                                                      <HBox prefHeight="57.0" prefWidth="315.0">
+                                                         <children>
+                                                            <VBox prefHeight="57.0" prefWidth="227.0">
+                                                               <children>
+                                                                  <Label text="Status: Claimed" />
+                                                                  <Label text="Grader: Agent P" />
+                                                                  <Label text="Grader email: perry@owca.gov" />
+                                                               </children>
+                                                            </VBox>
+                                                            <Button mnemonicParsing="false" text="Grade with AI" />
+                                                         </children>
+                                                      </HBox>
+                                                   </children>
+                                                </AnchorPane>
+                                             </content>
+                                          </TitledPane>
+                                      </panes>
+                                    </Accordion>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </ScrollPane>
+                  <ScrollPane prefHeight="239.0" prefWidth="310.0">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="240.0" prefWidth="310.0">
+                           <children>
+                              <VBox prefHeight="222.0" prefWidth="321.0">
+                                 <children>
+                                    <Label text="Multimedia work">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Accordion>
+                                       <panes>
+                                          <TitledPane animated="false" expanded="false" prefHeight="89.0" prefWidth="321.0" text="J'en veux pas">
+                                             <content>
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="96.0" prefWidth="318.0">
+                                                   <children>
+                                                      <VBox prefHeight="57.0" prefWidth="227.0">
+                                                         <children>
+                                                            <Label text="Status: Claimed" />
+                                                            <Label text="Grader: Agent P" />
+                                                            <Label text="Grader email: perry@owca.gov" />
+                                                         </children>
+                                                      </VBox>
+                                                   </children>
+                                                </AnchorPane>
+                                             </content>
+                                          </TitledPane>
+                                          <TitledPane animated="false" expanded="false" prefHeight="89.0" prefWidth="321.0" text="J'en veux pas">
+                                             <content>
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="96.0" prefWidth="318.0">
+                                                   <children>
+                                                      <VBox prefHeight="57.0" prefWidth="227.0">
+                                                         <children>
+                                                            <Label text="Status: Claimed" />
+                                                            <Label text="Grader: Agent P" />
+                                                            <Label text="Grader email: perry@owca.gov" />
+                                                         </children>
+                                                      </VBox>
+                                                   </children>
+                                                </AnchorPane>
+                                             </content>
+                                          </TitledPane>
+                                       </panes>
+                                    </Accordion>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </ScrollPane>
+               </children>
+            </HBox>
                 <Accordion layoutX="383.0" layoutY="58.0">
                     <panes>
                         <TitledPane animated="false" expanded="false" prefWidth="202.0" text="Choose Languages">
@@ -74,126 +210,6 @@
                         </TitledPane>
                     </panes>
                 </Accordion>
-            <HBox layoutX="8.0" layoutY="126.0" prefHeight="239.0" prefWidth="629.0">
-               <children>
-                  <VBox prefHeight="222.0" prefWidth="321.0">
-                     <children>
-                        <Label text="Written work">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <Accordion>
-                          <panes>
-                              <TitledPane animated="false" expanded="false" prefHeight="89.0" prefWidth="321.0" text="J'en veux pas">
-                                <content>
-                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="96.0" prefWidth="318.0">
-                                       <children>
-                                          <HBox prefHeight="57.0" prefWidth="315.0">
-                                             <children>
-                                                <VBox prefHeight="57.0" prefWidth="227.0">
-                                                   <children>
-                                                      <Label text="Status: Claimed" />
-                                                      <Label text="Grader: Agent P" />
-                                                      <Label text="Grader email: perry@owca.gov" />
-                                                   </children>
-                                                </VBox>
-                                                <Button mnemonicParsing="false" text="Grade with AI" />
-                                             </children>
-                                          </HBox>
-                                       </children>
-                                    </AnchorPane>
-                                </content>
-                              </TitledPane>
-                              <TitledPane animated="false" expanded="false" prefHeight="89.0" prefWidth="321.0" text="J'en veux pas">
-                                 <content>
-                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="96.0" prefWidth="318.0">
-                                       <children>
-                                          <HBox prefHeight="57.0" prefWidth="315.0">
-                                             <children>
-                                                <VBox prefHeight="57.0" prefWidth="227.0">
-                                                   <children>
-                                                      <Label text="Status: Claimed" />
-                                                      <Label text="Grader: Agent P" />
-                                                      <Label text="Grader email: perry@owca.gov" />
-                                                   </children>
-                                                </VBox>
-                                                <Button mnemonicParsing="false" text="Grade with AI" />
-                                             </children>
-                                          </HBox>
-                                       </children>
-                                    </AnchorPane>
-                                 </content>
-                              </TitledPane>
-                              <TitledPane animated="false" expanded="false" prefHeight="89.0" prefWidth="321.0" text="J'en veux pas">
-                                 <content>
-                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="96.0" prefWidth="318.0">
-                                       <children>
-                                          <HBox prefHeight="57.0" prefWidth="315.0">
-                                             <children>
-                                                <VBox prefHeight="57.0" prefWidth="227.0">
-                                                   <children>
-                                                      <Label text="Status: Claimed" />
-                                                      <Label text="Grader: Agent P" />
-                                                      <Label text="Grader email: perry@owca.gov" />
-                                                   </children>
-                                                </VBox>
-                                                <Button mnemonicParsing="false" text="Grade with AI" />
-                                             </children>
-                                          </HBox>
-                                       </children>
-                                    </AnchorPane>
-                                 </content>
-                              </TitledPane>
-                          </panes>
-                        </Accordion>
-                     </children>
-                  </VBox>
-                  <VBox prefHeight="222.0" prefWidth="321.0">
-                     <children>
-                        <Label text="Multimedia work">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <Accordion>
-                           <panes>
-                              <TitledPane animated="false" expanded="false" prefHeight="89.0" prefWidth="321.0" text="J'en veux pas">
-                                 <content>
-                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="96.0" prefWidth="318.0">
-                                       <children>
-                                          <VBox prefHeight="57.0" prefWidth="227.0">
-                                             <children>
-                                                <Label text="Status: Claimed" />
-                                                <Label text="Grader: Agent P" />
-                                                <Label text="Grader email: perry@owca.gov" />
-                                             </children>
-                                          </VBox>
-                                       </children>
-                                    </AnchorPane>
-                                 </content>
-                              </TitledPane>
-                              <TitledPane animated="false" expanded="false" prefHeight="89.0" prefWidth="321.0" text="J'en veux pas">
-                                 <content>
-                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="96.0" prefWidth="318.0">
-                                       <children>
-                                          <VBox prefHeight="57.0" prefWidth="227.0">
-                                             <children>
-                                                <Label text="Status: Claimed" />
-                                                <Label text="Grader: Agent P" />
-                                                <Label text="Grader email: perry@owca.gov" />
-                                             </children>
-                                          </VBox>
-                                       </children>
-                                    </AnchorPane>
-                                 </content>
-                              </TitledPane>
-                           </panes>
-                        </Accordion>
-                     </children>
-                  </VBox>
-               </children>
-            </HBox>
             </children>
         </AnchorPane>
     </children>
