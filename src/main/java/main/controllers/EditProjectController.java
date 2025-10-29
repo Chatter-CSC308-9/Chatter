@@ -81,7 +81,7 @@ public class EditProjectController {
     public ArrayList<String> getProjectNames() {
         ArrayList<String> projectNames = new ArrayList<>();
 
-        File parentDir = new File("server/");
+        File parentDir = new File("server/projects");
         File[] dirs = parentDir.listFiles();
 
         if (dirs != null) {
