@@ -4,6 +4,7 @@ import main.boundaries.screens.CurrentEdit;
 import main.entities.Project;
 
 import java.io.*;
+import java.util.ArrayList;
 
 
 // NOTE: PATHS TO TITLE AND WORK FILES ARE HARDCODED EXCEPT NAME OF PROJECT FOLDER
@@ -16,6 +17,10 @@ public class EditProjectController {
 
     public void setCurrentEditBoundary(CurrentEdit ceb) {
         this.currentEditBoundary = ceb;
+    }
+
+    public void setProject(String projectFolder) {
+        this.projectFolder = projectFolder;
     }
 
     public void editProject(String projectFolder) {
@@ -70,5 +75,21 @@ public class EditProjectController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    // return names of folders holding projects (currently assumed to be all files in server)
+    public ArrayList<String> getProjectNames() {
+        ArrayList<String> projectNames = new ArrayList<>();
+
+        File parentDir = new File("server/");
+        File[] dirs = parentDir.listFiles();
+
+        if (dirs != null) {
+            for (File dir : dirs) {
+                projectNames.add(dir.getName());
+            }
+        }
+
+        return projectNames;
     }
 }

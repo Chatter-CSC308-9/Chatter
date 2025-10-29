@@ -13,7 +13,7 @@ public class Login implements Navigator {
 
     private ShellAPI shellAPI;
 
-    LoginController loginController = new LoginController();
+    LoginController loginController;// = new LoginController();
 
     public Login(LoginController loginController) {
         this.loginController = loginController;

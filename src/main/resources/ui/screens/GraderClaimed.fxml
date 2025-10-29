@@ -38,7 +38,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TitledPane?>
-<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -47,7 +46,7 @@
   <children>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="395.0" prefWidth="611.0" VBox.vgrow="ALWAYS">
          <children>
-            <Label layoutX="21.0" layoutY="40.0" text="Catalog">
+            <Label layoutX="21.0" layoutY="40.0" text="Claimed">
                <font>
                   <Font size="25.0" />
                </font>
@@ -68,22 +67,27 @@
                 </TitledPane>
               </panes>
             </Accordion>
-            <Label layoutX="19.0" layoutY="84.0" text="Select Assignment to claim">
+            <Label layoutX="19.0" layoutY="84.0" text="Continue working on your claimed Assignments">
                <font>
                   <Font size="15.0" />
                </font>
             </Label>
-            <ScrollPane layoutY="132.0" prefHeight="121.0" prefWidth="372.0">
+            <ScrollPane layoutY="126.0" prefHeight="103.0" prefWidth="640.0">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="143.0" prefWidth="356.0">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="239.0" prefWidth="617.0">
                      <children>
-                        <Button layoutY="2.0" mnemonicParsing="false" text="Mon célébrité préférée est.." />
-                        <Button layoutY="27.0" mnemonicParsing="false" text="Other Assignments..." />
+                        <Accordion />
+                        <Accordion layoutY="-2.0">
+                          <panes>
+                            <TitledPane animated="false" text="untitled 1" />
+                            <TitledPane animated="false" text="untitled 2" />
+                          </panes>
+                        </Accordion>
                      </children>
                   </AnchorPane>
               </content>
             </ScrollPane>
-            <Label layoutY="113.0" text="French">
+            <Label layoutY="106.0" text="French">
                <font>
                   <Font size="14.0" />
                </font>
@@ -93,9 +97,9 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <ScrollPane layoutY="293.0" prefHeight="121.0" prefWidth="372.0">
+            <ScrollPane layoutY="293.0" prefHeight="121.0" prefWidth="640.0">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="143.0" prefWidth="356.0">
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="264.0" prefWidth="622.0">
                      <children>
                         <Button layoutY="2.0" mnemonicParsing="false" text="La mia celebrità preferita è..." />
                         <Button layoutY="27.0" mnemonicParsing="false" text="Other Assignments..." />
