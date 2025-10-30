@@ -1,20 +1,17 @@
 package main.controllers;
 
-import main.boundaries.BoundaryWithController;
 import main.boundaries.shell_apis.hooks.ShellGetUserAPI;
 import main.boundaries.shell_apis.hooks.ShellSetUserAPI;
 import main.boundaries.shell_apis.interfaces.NeedsUser;
 import main.boundaries.shell_apis.interfaces.SetsUser;
 
-public class APIController implements ShellGetUserAPI, ShellSetUserAPI {
+public class APIController extends Controller implements ShellGetUserAPI, ShellSetUserAPI {
 
     private String currentUserID;
 
-    public void injectControllerAPIs(BoundaryWithController boundary) {
-        for (Object controller : boundary.getControllers()) {
-            if (controller instanceof NeedsUser) injectGetUserAPI(controller);
-            if (controller instanceof SetsUser) injectSetUserAPI(controller);
-        }
+    public void injectControllerAPIs(Controller controller) {
+        if (controller instanceof NeedsUser) injectGetUserAPI(controller);
+        if (controller instanceof SetsUser) injectSetUserAPI(controller);
     }
 
     private void injectGetUserAPI(Object controller) {

@@ -3,8 +3,8 @@ package main.boundaries;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class BoundaryWithController {
-    private List<Object> controllers = new ArrayList<>();
+public abstract class Boundary {
+    private final List<Object> controllers = new ArrayList<>();
     public void addController(Object controller) {
         controllers.add(controller);
     }

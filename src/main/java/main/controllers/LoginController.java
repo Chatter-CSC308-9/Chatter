@@ -5,7 +5,7 @@ import main.boundaries.shell_apis.interfaces.SetsUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class LoginController implements SetsUser {
+public class LoginController extends Controller implements SetsUser {
 
     private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 

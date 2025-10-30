@@ -4,12 +4,12 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import main.boundaries.BoundaryWithController;
+import main.boundaries.Boundary;
 import main.boundaries.shell_apis.interfaces.Navigator;
 import main.boundaries.shell_apis.hooks.ShellNavigateAPI;
 import main.controllers.LoginController;
 
-public class Login extends BoundaryWithController implements Navigator {
+public class Login extends Boundary implements Navigator {
 
     @FXML
     public Button loginButton;

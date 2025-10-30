@@ -1,9 +1,10 @@
 package main.boundaries.taskbars;
 
+import main.boundaries.Boundary;
 import main.boundaries.shell_apis.interfaces.Navigator;
 import main.boundaries.shell_apis.hooks.ShellNavigateAPI;
 
-public class GraderTaskbar implements Navigator {
+public class GraderTaskbar extends Boundary implements Navigator {
 
     private ShellNavigateAPI shellNavigateAPI;
 

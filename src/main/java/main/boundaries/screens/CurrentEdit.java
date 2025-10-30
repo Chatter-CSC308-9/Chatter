@@ -5,14 +5,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
-import main.boundaries.BoundaryWithController;
+import main.boundaries.Boundary;
 import main.boundaries.shell_apis.interfaces.Navigator;
 import main.boundaries.shell_apis.hooks.ShellNavigateAPI;
 import main.controllers.EditProjectController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class CurrentEdit extends BoundaryWithController implements Navigator {
+public class CurrentEdit extends Boundary implements Navigator {
 
     private static final Logger logger = LoggerFactory.getLogger(CurrentEdit.class);
 

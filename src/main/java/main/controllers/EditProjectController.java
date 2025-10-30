@@ -16,7 +16,7 @@ import java.util.List;
 // NOTE: PATHS TO TITLE AND WORK FILES ARE HARDCODED EXCEPT NAME OF PROJECT FOLDER
 
 
-public class EditProjectController implements NeedsUser {
+public class EditProjectController extends Controller implements NeedsUser {
 
     private static final Logger logger = LoggerFactory.getLogger(EditProjectController.class);
 

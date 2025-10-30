@@ -2,10 +2,11 @@ package main.boundaries.taskbars;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.ToggleButton;
+import main.boundaries.Boundary;
 import main.boundaries.shell_apis.interfaces.Navigator;
 import main.boundaries.shell_apis.hooks.ShellNavigateAPI;
 
-public class LearnerTaskbar implements Navigator {
+public class LearnerTaskbar extends Boundary implements Navigator {
 
     @FXML
     private ToggleButton accountButton;

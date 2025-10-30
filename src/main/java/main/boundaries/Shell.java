@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Shell extends BoundaryWithController implements ShellNavigateAPI {
+public class Shell extends Boundary implements ShellNavigateAPI {
 
     private Map<String, Node> nodes = new HashMap<>();
     private Map<Class<?>, Object> boundaryInstantiations;
@@ -88,13 +88,10 @@ public class Shell extends BoundaryWithController implements ShellNavigateAPI {
             Node node = loader.load(); // turns FXML into Java
             Object boundary = loader.getController();
             if (boundary instanceof Navigator) injectNavigateAPI(node, boundary); // adds ShellAPI
-            if (boundary instanceof BoundaryWithController boundaryWithController) {
-                apiController.injectControllerAPIs(boundaryWithController);
-            }
 
             return node;
-        } catch (IOException e) {
-            throw new IllegalArgumentException("Failed to load: " + resourcePath, e);
+        } catch (IOException ioException) {
+            throw new IllegalArgumentException("Failed to load: " + resourcePath, ioException);
         }
     }
 
