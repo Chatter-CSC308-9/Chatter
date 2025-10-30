@@ -7,7 +7,7 @@ import main.boundaries.shell_apis.interfaces.SetsUser;
 
 public class APIController extends Controller implements ShellGetUserAPI, ShellSetUserAPI {
 
-    private String currentUserID;
+    private int currentUserID;
 
     public void injectControllerAPIs(Controller controller) {
         if (controller instanceof NeedsUser) injectGetUserAPI(controller);
@@ -27,12 +27,12 @@ public class APIController extends Controller implements ShellGetUserAPI, ShellS
     }
 
     @Override
-    public String getUserID() {
+    public int getUserID() {
         return this.currentUserID;
     }
 
     @Override
-    public void setUserID(String userID) {
+    public void setUserID(int userID) {
         this.currentUserID = userID;
     }
 
