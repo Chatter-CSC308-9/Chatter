@@ -5,11 +5,17 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
-import main.boundaries.Navigator;
-import main.boundaries.ShellAPI;
+import main.boundaries.BoundaryWithController;
+import main.boundaries.shell_apis.interfaces.Navigator;
+import main.boundaries.shell_apis.hooks.ShellNavigateAPI;
 import main.controllers.EditProjectController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public class CurrentEdit implements Navigator {
+public class CurrentEdit extends BoundaryWithController implements Navigator {
+
+    private static final Logger logger = LoggerFactory.getLogger(CurrentEdit.class);
+
     EditProjectController editProjectController;
 
     @FXML
@@ -27,10 +33,11 @@ public class CurrentEdit implements Navigator {
     @FXML
     private ToggleButton uploadButton;
 
-    private ShellAPI shellAPI;
+    private ShellNavigateAPI shellNavigateAPI;
 
     public CurrentEdit(EditProjectController ewc) {
         this.editProjectController = ewc;
+        super.addController(this.editProjectController);
     }
 
     @FXML
@@ -54,21 +61,21 @@ public class CurrentEdit implements Navigator {
         projectField.setText("");
 
         // back to Current screen
-        shellAPI.setContent("Current");
+        shellNavigateAPI.setContent("Current");
     }
 
     @FXML
     void handleTextEntryButtonClick() {
-        System.out.println("text entry button clicked");
+        logger.debug("text entry button clicked");
     }
 
     @FXML
     void handleUploadButtonClick() {
-        System.out.println("upload button clicked");
+        logger.debug("upload button clicked");
     }
 
     @Override
-    public void setShellAPI(ShellAPI shellAPI) {
-        this.shellAPI = shellAPI;
+    public void setNavigateAPI(ShellNavigateAPI shellNavigateAPI) {
+        this.shellNavigateAPI = shellNavigateAPI;
     }
 }

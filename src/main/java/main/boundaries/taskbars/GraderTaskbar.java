@@ -1,14 +1,14 @@
 package main.boundaries.taskbars;
 
-import main.boundaries.Navigator;
-import main.boundaries.ShellAPI;
+import main.boundaries.shell_apis.interfaces.Navigator;
+import main.boundaries.shell_apis.hooks.ShellNavigateAPI;
 
 public class GraderTaskbar implements Navigator {
 
-    private ShellAPI shellAPI;
+    private ShellNavigateAPI shellNavigateAPI;
 
     @Override
-    public void setShellAPI(ShellAPI shellAPI) {
-        this.shellAPI = shellAPI;
+    public void setNavigateAPI(ShellNavigateAPI shellNavigateAPI) {
+        this.shellNavigateAPI = shellNavigateAPI;
     }
 }

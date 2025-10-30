@@ -8,6 +8,7 @@ import main.boundaries.Shell;
 import main.boundaries.screens.Current;
 import main.boundaries.screens.CurrentEdit;
 import main.boundaries.screens.Login;
+import main.controllers.APIController;
 import main.controllers.EditProjectController;
 import main.controllers.LoginController;
 
@@ -18,6 +19,7 @@ public class Main extends Application {
 
     LoginController loginController = new LoginController();
     EditProjectController editProjectController = new EditProjectController();
+    APIController apiController = new APIController();
 
     Login login = new Login(loginController);
     Current current = new Current(editProjectController);
@@ -38,7 +40,7 @@ public class Main extends Application {
         editProjectController.setCurrentEditBoundary(currentEdit);
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/Shell.fxml"));
-        loader.setControllerFactory(_ -> new Shell(boundaryInstantiations));
+        loader.setControllerFactory(_ -> new Shell(boundaryInstantiations, apiController));
         Scene scene = new Scene(loader.load());
         stage.setTitle("Chatter");
         stage.setScene(scene);
