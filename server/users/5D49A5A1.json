@@ -1,0 +1,9 @@
+{
+  "username":"ferb",
+  "passwordplaintext":"iamferb",
+  "userID":1565107617,
+  "isGrader": true,
+  "email": "ferb@gmail.com",
+  "emailIsHidden": false,
+  "projects": ["project0"]
+}

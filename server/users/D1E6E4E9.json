@@ -1,0 +1,9 @@
+{
+  "username":"perry",
+  "passwordplaintext":"iloveflynns",
+  "userID":3521570025,
+  "isGrader": false,
+  "email": "perry@owca.gov",
+  "emailIsHidden": true,
+  "projects": ["project0"]
+}

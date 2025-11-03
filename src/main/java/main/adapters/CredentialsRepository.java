@@ -15,7 +15,7 @@ public class CredentialsRepository {
 
     private static final Logger logger = LoggerFactory.getLogger(CredentialsRepository.class);
 
-    public Optional<UserCredentials> getUserCredentials(String username) throws IOException {
+    public Optional<UserCredentials> getUserCredentials(String username) {
         ObjectMapper mapper = new ObjectMapper();
         try (BufferedReader reader = new BufferedReader(new FileReader("server/credentials.jsonl"))) {
             String line;
@@ -24,9 +24,8 @@ public class CredentialsRepository {
 
                 if (node.get("username").asText().equals(username)) {
                     String passwordPlaintext = node.get("passwordplaintext").asText();
-                    String email = node.get("email").asText();
                     int userID = node.get("userID").asInt();
-                    return Optional.of(new UserCredentials(username, passwordPlaintext, email, userID));
+                    return Optional.of(new UserCredentials(username, passwordPlaintext, userID));
                 }
             }
         } catch (IOException exception) {
