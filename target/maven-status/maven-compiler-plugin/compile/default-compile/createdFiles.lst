@@ -1,5 +1,7 @@
 main\boundaries\shell_apis\hooks\ShellGetUserAPI.class
+main\controllers\LogoutController.class
 main\Main.class
+main\boundaries\screens\Account.class
 main\adapters\UserHydratinator.class
 main\boundaries\Shell.class
 main\boundaries\screens\CurrentEdit.class
