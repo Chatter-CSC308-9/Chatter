@@ -11,9 +11,9 @@
             fx:controller="main.boundaries.taskbars.GraderTaskbar"
             >
     <HBox>
-        <ToggleButton mnemonicParsing="false" prefHeight="25.0" prefWidth="143.0" text="Chatter"/>
-        <ToggleButton mnemonicParsing="false" prefHeight="25.0" prefWidth="216.0" text="Catalog"/>
-        <ToggleButton mnemonicParsing="false" prefHeight="25.0" prefWidth="216.0" text="Claimed"/>
-        <ToggleButton mnemonicParsing="false" prefHeight="25.0" prefWidth="68.0" text="Account"/>
+        <ToggleButton fx:id="chatterButton" onAction="#handleChatterButtonClick" mnemonicParsing="false" prefHeight="25.0" prefWidth="143.0" text="Chatter"/>
+        <ToggleButton fx:id="catalogButton" onAction="#handleCatalogButtonClick" mnemonicParsing="false" prefHeight="25.0" prefWidth="216.0" text="Catalog"/>
+        <ToggleButton fx:id="claimedButton" onAction="#handleClaimedButtonClick" mnemonicParsing="false" prefHeight="25.0" prefWidth="216.0" text="Claimed"/>
+        <ToggleButton fx:id="accountButton" onAction="#handleAccountButtonClick" mnemonicParsing="false" prefHeight="25.0" prefWidth="68.0" text="Account"/>
     </HBox>
 </AnchorPane>
