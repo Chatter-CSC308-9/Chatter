@@ -24,7 +24,7 @@ public class CredentialsRepository {
 
                 if (node.get("username").asText().equals(username)) {
                     String passwordPlaintext = node.get("passwordplaintext").asText();
-                    int userID = node.get("userID").asInt();
+                    long userID = node.get("userID").asLong();
                     boolean isGrader = node.get("isGrader").asBoolean();
                     return Optional.of(new UserCredentials(username, passwordPlaintext, userID, isGrader));
                 }

@@ -32,7 +32,7 @@ public class LoginController implements Controller, SetsUser {
         return Optional.empty();
     }
 
-    private void setUser(int userID) {
+    private void setUser(long userID) {
         shellSetUserAPI.setUserID(userID);
     }
 

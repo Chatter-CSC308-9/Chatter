@@ -14,8 +14,6 @@ import main.controllers.EditProjectController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.List;
-
 public class Current extends Boundary implements Navigator {
 
     private static final Logger logger = LoggerFactory.getLogger(Current.class);
@@ -65,7 +63,7 @@ public class Current extends Boundary implements Navigator {
         ObservableList<Button> projectButtons = FXCollections.observableArrayList();
 
         // create one button per project
-        List<String> projectNames = editProjectController.getProjectNames();
+        String[] projectNames = editProjectController.getProjectNames();
         for (String project : projectNames) {
             Button b = new Button(project);
             projectButtons.add(b);
