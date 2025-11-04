@@ -7,29 +7,29 @@ import main.entities.UserCredentials;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
 import java.util.Optional;
 
-public class LoginController extends Controller implements SetsUser {
+public class LoginController implements Controller, SetsUser {
 
     private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
     private ShellSetUserAPI shellSetUserAPI;
 
-    // not yet implemented
-    public boolean verifyCredentials(String username, String password) throws IOException {
+    // verifies credentials and returns user type
+    // null return means unverified, true means isGrader, false means learner
+    public Optional<Boolean> verifyCredentials(String username, String password) {
         CredentialsRepository credentialsRepository = new CredentialsRepository();
         Optional<UserCredentials> userCredentials = credentialsRepository.getUserCredentials(username);
         if (userCredentials.isPresent() && password.equals(userCredentials.get().plaintextPassword)) {
             setUser(userCredentials.get().userID);
             logger.debug("{}/{}", username, password);
-            return true;
+            return Optional.of(userCredentials.get().isGrader);
         } else if (userCredentials.isPresent()) {
             logger.debug("Incorrect password");
-            return false;
+            return Optional.empty();
         }
         logger.debug("User not found");
-        return false;
+        return Optional.empty();
     }
 
     private void setUser(int userID) {

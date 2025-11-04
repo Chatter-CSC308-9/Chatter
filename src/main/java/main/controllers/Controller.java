@@ -1,4 +1,4 @@
 package main.controllers;
 
-public abstract class Controller {
+public interface Controller {
 }

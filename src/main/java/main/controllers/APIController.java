@@ -5,7 +5,7 @@ import main.boundaries.shell_apis.hooks.ShellSetUserAPI;
 import main.boundaries.shell_apis.interfaces.NeedsUser;
 import main.boundaries.shell_apis.interfaces.SetsUser;
 
-public class APIController extends Controller implements ShellGetUserAPI, ShellSetUserAPI {
+public class APIController implements Controller, ShellGetUserAPI, ShellSetUserAPI {
 
     private int currentUserID;
 
