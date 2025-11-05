@@ -2,7 +2,6 @@ package main.controllers;
 
 import main.FileProcessingException;
 import main.adapters.UserHydratinator;
-import main.boundaries.screens.CurrentEdit;
 import main.boundaries.shell_apis.hooks.ShellGetUserAPI;
 import main.boundaries.shell_apis.interfaces.NeedsUser;
 import main.entities.Project;
@@ -17,16 +16,12 @@ public class EditProjectController implements Controller, NeedsUser {
 
     private static final Logger logger = LoggerFactory.getLogger(EditProjectController.class);
 
-    CurrentEdit currentEditBoundary;
     String projectFolder;
     Project project;
     ShellGetUserAPI shellGetUserAPI;
 
     private static final String PROJECTS_DIRECTORY = "server/projects/";
 
-    public void setCurrentEditBoundary(CurrentEdit ceb) {
-        this.currentEditBoundary = ceb;
-    }
 
     public void setProject(String projectFolder) {
         this.projectFolder = projectFolder;
