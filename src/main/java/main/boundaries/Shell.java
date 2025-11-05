@@ -66,6 +66,7 @@ public class Shell extends Boundary implements ShellNavigateAPI {
     }
 
     // Takes a resource path and creates associated java object (Boundary)
+    @SuppressWarnings("java:S7467") // prevent erroneous error naming sonar issue
     private Node loadNode(String resourcePath) {
         try {
             var url = getClass().getResource(resourcePath);
@@ -80,7 +81,6 @@ public class Shell extends Boundary implements ShellNavigateAPI {
                     // fallback for controllers you didn’t prebuild (e.g., simple taskbars)
                     return type.getDeclaredConstructor().newInstance();
                 }
-                //noinspection java:S7467
                 catch (Exception e) {
                     throw new IllegalStateException(
                             "No controller provided for " + type.getName() +
