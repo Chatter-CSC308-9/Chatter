@@ -45,7 +45,7 @@ fx:controller="main.boundaries.screens.GraderAccount">
   <children>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="395.0" prefWidth="611.0" VBox.vgrow="ALWAYS">
          <children>
-            <Label layoutX="19.0" layoutY="40.0" text="Hi [Name]!">
+            <Label fx:id="greetingLabel" layoutX="19.0" layoutY="40.0" text="Hi [Name]!">
                <font>
                   <Font size="25.0" />
                </font>
