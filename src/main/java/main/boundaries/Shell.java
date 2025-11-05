@@ -66,6 +66,7 @@ public class Shell extends Boundary implements ShellNavigateAPI {
     }
 
     // Takes a resource path and creates associated java object (Boundary)
+    @SuppressWarnings("java:S7467") // prevent erroneous error naming sonar issue
     private Node loadNode(String resourcePath) {
         try {
             var url = getClass().getResource(resourcePath);
@@ -79,10 +80,11 @@ public class Shell extends Boundary implements ShellNavigateAPI {
                 try {
                     // fallback for controllers you didn’t prebuild (e.g., simple taskbars)
                     return type.getDeclaredConstructor().newInstance();
-                } catch (Exception illegalState) {
+                }
+                catch (Exception e) {
                     throw new IllegalStateException(
                             "No controller provided for " + type.getName() +
-                                    " and failed to construct via no-arg constructor.", illegalState);
+                                    " and failed to construct via no-arg constructor.", e);
                 }
             });
             Node node = loader.load(); // turns FXML into Java
