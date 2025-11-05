@@ -2,6 +2,8 @@ package main.controllers;
 
 import main.FileProcessingException;
 import main.adapters.UserHydratinator;
+import main.controllers.apis.hooks.GetUserAPI;
+import main.controllers.apis.interfaces.NeedsUser;
 import main.boundaries.shell_apis.hooks.ShellGetUserAPI;
 import main.boundaries.shell_apis.interfaces.NeedsUser;
 import main.entities.Project;
@@ -17,9 +19,10 @@ public class EditProjectController implements Controller, NeedsUser {
 
     private static final Logger logger = LoggerFactory.getLogger(EditProjectController.class);
 
+    CurrentEdit currentEditBoundary;
     String projectFolder;
     Project project;
-    ShellGetUserAPI shellGetUserAPI;
+    GetUserAPI getUserAPI;
 
     private static final String PROJECTS_DIRECTORY = "server/projects/";
     private static final String TITLE_FILE_NAME = "/title.txt";
@@ -132,7 +135,7 @@ public class EditProjectController implements Controller, NeedsUser {
     public String[] getProjectNames() {
 
         UserHydratinator userHydratinator = new UserHydratinator();
-        Optional<User> user = userHydratinator.getUser(this.shellGetUserAPI.getUserID());
+        User user = userHydratinator.getUser(this.getUserAPI.getUserID());
 
         if (user.isPresent()) {
             return user.get().projects;
@@ -142,11 +145,11 @@ public class EditProjectController implements Controller, NeedsUser {
     }
 
     @Override
-    public void setGetUserAPI(ShellGetUserAPI shellGetUserAPI) {
-        this.shellGetUserAPI = shellGetUserAPI;
+    public void setGetUserAPI(GetUserAPI getUserAPI) {
+        this.getUserAPI = getUserAPI;
     }
 
     public long getUserID() {
-        return this.shellGetUserAPI.getUserID();
+        return this.getUserAPI.getUserID();
     }
 }

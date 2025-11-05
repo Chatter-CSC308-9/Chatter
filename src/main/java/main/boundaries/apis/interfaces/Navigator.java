@@ -1,6 +1,6 @@
-package main.boundaries.shell_apis.interfaces;
+package main.boundaries.apis.interfaces;
 
-import main.boundaries.shell_apis.hooks.ShellNavigateAPI;
+import main.boundaries.apis.hooks.ShellNavigateAPI;
 
 // Boundaries must be able to set a ShellAPI to be able to use ShellAPI to navigate
 public interface Navigator {

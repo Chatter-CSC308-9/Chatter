@@ -10,14 +10,13 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Optional;
 import java.util.stream.Stream;
 
 public class UserHydratinator {
 
     private static final Logger logger = LoggerFactory.getLogger(UserHydratinator.class);
 
-    public Optional<User> getUser(long userID) {
+    public User getUser(long userID) {
 
         String jsonText = null;
         Stream<String> lines = null;
@@ -42,7 +41,7 @@ public class UserHydratinator {
             logger.error("error hydrating user entity", e);
         }
 
-        return Optional.of(user);
+        return user;
     }
 
     public void setUser(User user) {

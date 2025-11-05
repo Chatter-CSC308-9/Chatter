@@ -1,8 +1,8 @@
 package main.controllers;
 
 import main.adapters.CredentialsRepository;
-import main.boundaries.shell_apis.hooks.ShellSetUserAPI;
-import main.boundaries.shell_apis.interfaces.SetsUser;
+import main.controllers.apis.hooks.SetUserAPI;
+import main.controllers.apis.interfaces.SetsUser;
 import main.entities.UserCredentials;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +13,7 @@ public class LoginController implements Controller, SetsUser {
 
     private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
-    private ShellSetUserAPI shellSetUserAPI;
+    private SetUserAPI setUserAPI;
 
     // verifies credentials and returns user type
     // null return means unverified, true means isGrader, false means learner
@@ -33,11 +33,11 @@ public class LoginController implements Controller, SetsUser {
     }
 
     private void setUser(long userID) {
-        shellSetUserAPI.setUserID(userID);
+        setUserAPI.setUserID(userID);
     }
 
     @Override
-    public void setUserSettingAPI(ShellSetUserAPI shellSetUserAPI) {
-        this.shellSetUserAPI = shellSetUserAPI;
+    public void setUserSettingAPI(SetUserAPI setUserAPI) {
+        this.setUserAPI = setUserAPI;
     }
 }

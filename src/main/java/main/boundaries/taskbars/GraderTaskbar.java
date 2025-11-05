@@ -3,8 +3,8 @@ package main.boundaries.taskbars;
 import javafx.fxml.FXML;
 import javafx.scene.control.ToggleButton;
 import main.boundaries.Boundary;
-import main.boundaries.shell_apis.interfaces.Navigator;
-import main.boundaries.shell_apis.hooks.ShellNavigateAPI;
+import main.boundaries.apis.interfaces.Navigator;
+import main.boundaries.apis.hooks.ShellNavigateAPI;
 
 public class GraderTaskbar extends Boundary implements Navigator {
 

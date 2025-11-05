@@ -9,7 +9,7 @@ import main.boundaries.apis.interfaces.Navigator;
 import main.controllers.DisplayUsernameController;
 import main.controllers.LogoutController;
 
-public class Account extends Boundary implements Navigator {
+public class GraderAccount extends Boundary implements Navigator {
 
     @FXML
     public Button logoutButton;
@@ -21,7 +21,7 @@ public class Account extends Boundary implements Navigator {
 
     private ShellNavigateAPI shellNavigateAPI;
 
-    public Account(LogoutController logoutController, DisplayUsernameController displayUsernameController) {
+    public GraderAccount(LogoutController logoutController, DisplayUsernameController displayUsernameController) {
         this.logoutController = logoutController;
         this.displayUsernameController = displayUsernameController;
         super.addController(this.logoutController);
