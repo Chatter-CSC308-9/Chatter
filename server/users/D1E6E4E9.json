@@ -5,5 +5,5 @@
   "isGrader": false,
   "email": "perry@owca.gov",
   "emailIsHidden": true,
-  "projects": ["project0"]
+  "projects": ["project0", "project1"]
 }

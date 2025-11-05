@@ -1,22 +1,19 @@
 package main.controllers;
 
 import main.FileProcessingException;
+import main.adapters.UserHydratinator;
 import main.boundaries.screens.CurrentEdit;
 import main.boundaries.shell_apis.hooks.ShellGetUserAPI;
 import main.boundaries.shell_apis.interfaces.NeedsUser;
 import main.entities.Project;
+import main.entities.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Optional;
 
-
-// NOTE: PATHS TO TITLE AND WORK FILES ARE HARDCODED EXCEPT NAME OF PROJECT FOLDER
-
-
-public class EditProjectController extends Controller implements NeedsUser {
+public class EditProjectController implements Controller, NeedsUser {
 
     private static final Logger logger = LoggerFactory.getLogger(EditProjectController.class);
 
@@ -54,7 +51,7 @@ public class EditProjectController extends Controller implements NeedsUser {
 
     // return text of project
     public String getWork() {
-        String everything = "hello world";
+        String everything = "";
         try(BufferedReader br = new BufferedReader(new FileReader(PROJECTS_DIRECTORY + projectFolder + "/work.txt"))) {
             StringBuilder sb = new StringBuilder();
             String line = br.readLine();
@@ -90,23 +87,24 @@ public class EditProjectController extends Controller implements NeedsUser {
     }
 
     // return names of folders holding projects (currently assumed to be all files in server)
-    public List<String> getProjectNames() {
-        ArrayList<String> projectNames = new ArrayList<>();
+    public String[] getProjectNames() {
 
-        File parentDir = new File("server/projects"); // should this be changed to projectsDirectory?
-        File[] dirs = parentDir.listFiles();
+        UserHydratinator userHydratinator = new UserHydratinator();
+        Optional<User> user = userHydratinator.getUser(this.shellGetUserAPI.getUserID());
 
-        if (dirs != null) {
-            for (File dir : dirs) {
-                projectNames.add(dir.getName());
-            }
+        if (user.isPresent()) {
+            return user.get().projects;
         }
 
-        return projectNames;
+        return new String[]{""};
     }
 
     @Override
     public void setGetUserAPI(ShellGetUserAPI shellGetUserAPI) {
         this.shellGetUserAPI = shellGetUserAPI;
+    }
+
+    public long getUserID() {
+        return this.shellGetUserAPI.getUserID();
     }
 }

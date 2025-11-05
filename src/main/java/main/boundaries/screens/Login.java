@@ -9,7 +9,7 @@ import main.boundaries.shell_apis.interfaces.Navigator;
 import main.boundaries.shell_apis.hooks.ShellNavigateAPI;
 import main.controllers.LoginController;
 
-import java.io.IOException;
+import java.util.Optional;
 
 public class Login extends Boundary implements Navigator {
 
@@ -30,10 +30,18 @@ public class Login extends Boundary implements Navigator {
     }
 
     @FXML
-    private void handleButtonClick() throws IOException {
-        if (loginController.verifyCredentials(usernameField.getText(), passwordField.getText())) {
-            shellNavigateAPI.setTaskbar("LearnerTaskbar");
-            shellNavigateAPI.setContent("ChatterHome");
+    private void handleButtonClick() {
+        Optional<Boolean> verifyCredentials = loginController.verifyCredentials(usernameField.getText(), passwordField.getText());
+        if (verifyCredentials.isPresent()) {
+            this.usernameField.clear();
+            this.passwordField.clear();
+            if (Boolean.TRUE.equals(verifyCredentials.get())) {
+                shellNavigateAPI.setTaskbar("GraderTaskbar");
+                shellNavigateAPI.setContent("GraderChatterHome");
+            } else if (Boolean.FALSE.equals(verifyCredentials.get())) {
+                shellNavigateAPI.setTaskbar("LearnerTaskbar");
+                shellNavigateAPI.setContent("ChatterHome");
+            }
         }
     }
 
@@ -41,4 +49,5 @@ public class Login extends Boundary implements Navigator {
     public void setNavigateAPI(ShellNavigateAPI shellNavigateAPI) {
         this.shellNavigateAPI = shellNavigateAPI;
     }
+
 }
