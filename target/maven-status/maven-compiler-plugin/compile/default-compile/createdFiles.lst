@@ -1,0 +1,11 @@
+main\boundaries\screens\Current.class
+main\entities\Project.class
+main\boundaries\taskbars\LearnerTaskbar.class
+main\boundaries\ShellAPI.class
+main\boundaries\Shell.class
+main\boundaries\Navigator.class
+main\boundaries\screens\CurrentEdit.class
+main\boundaries\taskbars\GraderTaskbar.class
+main\controllers\EditProjectController.class
+main\boundaries\screens\Login.class
+main\controllers\LoginController.class
