@@ -17,20 +17,20 @@ public class Main extends Application {
     EditProjectController editProjectController = new EditProjectController();
     APIController apiController = new APIController();
     LogoutController logoutController = new LogoutController();
-    FinanceController financeController = new FinanceController();
+    DisplayUsernameController displayUsernameController = new DisplayUsernameController();
 
     List<Controller> controllers = new ArrayList<>(Arrays.asList(
             loginController,
             editProjectController,
             apiController,
             logoutController,
-            financeController));
+            displayUsernameController));
 
     Login login = new Login(loginController);
     Current current = new Current(editProjectController);
     CurrentEdit currentEdit = new CurrentEdit(editProjectController);
-    Account account = new Account(logoutController, financeController);
-    GraderAccount graderAccount = new GraderAccount(logoutController, financeController);
+    Account account = new Account(logoutController, displayUsernameController);
+    GraderAccount graderAccount = new GraderAccount(logoutController, displayUsernameController);
 
     List<Boundary> boundaries = new ArrayList<>(Arrays.asList(
             login,

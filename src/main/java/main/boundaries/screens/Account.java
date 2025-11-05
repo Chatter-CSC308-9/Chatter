@@ -6,7 +6,7 @@ import javafx.scene.control.Label;
 import main.boundaries.Boundary;
 import main.boundaries.apis.hooks.ShellNavigateAPI;
 import main.boundaries.apis.interfaces.Navigator;
-import main.controllers.FinanceController;
+import main.controllers.DisplayUsernameController;
 import main.controllers.LogoutController;
 
 public class Account extends Boundary implements Navigator {
@@ -17,15 +17,15 @@ public class Account extends Boundary implements Navigator {
     public Label greetingLabel;
 
     LogoutController logoutController;
-    FinanceController financeController;
+    DisplayUsernameController displayUsernameController;
 
     private ShellNavigateAPI shellNavigateAPI;
 
-    public Account(LogoutController logoutController, FinanceController financeController) {
+    public Account(LogoutController logoutController, DisplayUsernameController displayUsernameController) {
         this.logoutController = logoutController;
-        this.financeController = financeController;
+        this.displayUsernameController = displayUsernameController;
         super.addController(this.logoutController);
-        super.addController(this.financeController);
+        super.addController(this.displayUsernameController);
     }
 
     public void handleLogoutButtonClick() {
@@ -42,7 +42,7 @@ public class Account extends Boundary implements Navigator {
     @FXML
     @Override
     public void onShow() {
-        greetingLabel.setText("Hi " + financeController.getUserID() + "!");
+        greetingLabel.setText("Hi " + displayUsernameController.getUsername() + "!");
     }
 
 }

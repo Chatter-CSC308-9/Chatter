@@ -10,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
-import java.util.Optional;
 
 public class EditProjectController implements Controller, NeedsUser {
 
@@ -85,13 +84,10 @@ public class EditProjectController implements Controller, NeedsUser {
     public String[] getProjectNames() {
 
         UserHydratinator userHydratinator = new UserHydratinator();
-        Optional<User> user = userHydratinator.getUser(this.getUserAPI.getUserID());
+        User user = userHydratinator.getUser(this.getUserAPI.getUserID());
 
-        if (user.isPresent()) {
-            return user.get().projects;
-        }
+            return user.projects;
 
-        return new String[]{""};
     }
 
     @Override
