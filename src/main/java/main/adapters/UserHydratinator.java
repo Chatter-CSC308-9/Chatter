@@ -6,6 +6,7 @@ import main.entities.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -25,7 +26,7 @@ public class UserHydratinator {
             jsonText = lines.reduce("", String::concat);
         }
         catch (IOException e) {
-            logger.error("error", e);
+            logger.error("error retrieving user info", e);
         }
         finally {
             if (lines != null) {
@@ -38,9 +39,19 @@ public class UserHydratinator {
         try {
             user = mapper.readValue(jsonText, User.class);
         } catch (JsonProcessingException e) {
-            logger.error("error", e);
+            logger.error("error hydrating user entity", e);
         }
 
         return Optional.of(user);
+    }
+
+    public void setUser(User user) {
+        ObjectMapper mapper = new ObjectMapper();
+
+        try {
+            mapper.writeValue(new File("server/users/" + Long.toHexString(user.userID) + ".json"), user);
+        } catch (IOException e) {
+            logger.error("error", e);
+        }
     }
 }

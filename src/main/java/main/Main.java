@@ -54,8 +54,6 @@ public class Main extends Application {
             apiController.injectControllerAPIs(controller);
         }
 
-        editProjectController.setCurrentEditBoundary(currentEdit);
-
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/Shell.fxml"));
         loader.setControllerFactory(_ -> new Shell(boundaryInstantiations, apiController));
         Scene scene = new Scene(loader.load());

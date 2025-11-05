@@ -42,7 +42,8 @@ public class Current extends Boundary implements Navigator {
     @FXML
     private void handleCreateNewProjectButtonClick() {
         logger.debug("Create new project");
-        editProjectController.editProject("name");
+        editProjectController.createProject();
+        shellNavigateAPI.setContent("CurrentEdit");
     }
 
     @FXML
