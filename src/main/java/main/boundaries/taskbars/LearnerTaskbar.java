@@ -2,10 +2,11 @@ package main.boundaries.taskbars;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.ToggleButton;
-import main.boundaries.Navigator;
-import main.boundaries.ShellAPI;
+import main.boundaries.Boundary;
+import main.boundaries.shell_apis.interfaces.Navigator;
+import main.boundaries.shell_apis.hooks.ShellNavigateAPI;
 
-public class LearnerTaskbar implements Navigator {
+public class LearnerTaskbar extends Boundary implements Navigator {
 
     @FXML
     private ToggleButton accountButton;
@@ -22,40 +23,40 @@ public class LearnerTaskbar implements Navigator {
     @FXML
     private ToggleButton pendingButton;
 
-    private ShellAPI shellAPI;
+    private ShellNavigateAPI shellNavigateAPI;
 
     @Override
-    public void setShellAPI(ShellAPI shellAPI) {
-        this.shellAPI = shellAPI;
+    public void setNavigateAPI(ShellNavigateAPI shellNavigateAPI) {
+        this.shellNavigateAPI = shellNavigateAPI;
     }
 
     @FXML
     private void handleChatterButtonClick() {
-        shellAPI.setContent("ChatterHome");
+        shellNavigateAPI.setContent("ChatterHome");
         setToggledButton(chatterButton);
     }
 
     @FXML
     private void handleCurrentButtonClick() {
-        shellAPI.setContent("Current");
+        shellNavigateAPI.setContent("Current");
         setToggledButton(currentButton);
     }
 
     @FXML
     private void handlePendingButtonClick() {
-        shellAPI.setContent("Pending");
+        shellNavigateAPI.setContent("Pending");
         setToggledButton(pendingButton);
     }
 
     @FXML
     void handleGradedButtonClick() {
-        shellAPI.setContent("Graded");
+        shellNavigateAPI.setContent("Graded");
         setToggledButton(gradedButton);
     }
 
     @FXML
     void handleAccountButtonClick() {
-        shellAPI.setContent("Account");
+        shellNavigateAPI.setContent("Account");
         setToggledButton(accountButton);
     }
 

@@ -55,8 +55,8 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <PasswordField layoutX="235.0" layoutY="204.0" prefHeight="25.0" prefWidth="170.0" />
-            <TextField layoutX="235.0" layoutY="140.0" prefHeight="25.0" prefWidth="170.0" />
+            <TextField fx:id="usernameField" layoutX="235.0" layoutY="140.0" prefHeight="25.0" prefWidth="170.0" />
+            <PasswordField fx:id="passwordField" layoutX="235.0" layoutY="204.0" prefHeight="25.0" prefWidth="170.0" />
             <Label layoutX="235.0" layoutY="122.0" text="Username:" />
             <Label layoutX="235.0" layoutY="186.0" text="Password:" />
             <Label layoutX="271.0" layoutY="55.0" text="Welcome to Chatter!" />

@@ -1,0 +1,9 @@
+{
+  "username":"doof",
+  "passwordplaintext":"passwordinator",
+  "userID":1942783793,
+  "isGrader": false,
+  "email": "doof@deinc.com",
+  "emailIsHidden": false,
+  "projects": ["project2"]
+}

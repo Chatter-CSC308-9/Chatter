@@ -1,19 +1,28 @@
 package main.controllers;
 
+import main.FileProcessingException;
+import main.adapters.UserHydratinator;
 import main.boundaries.screens.CurrentEdit;
+import main.boundaries.shell_apis.hooks.ShellGetUserAPI;
+import main.boundaries.shell_apis.interfaces.NeedsUser;
 import main.entities.Project;
+import main.entities.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
-import java.util.ArrayList;
+import java.util.Optional;
 
+public class EditProjectController implements Controller, NeedsUser {
 
-// NOTE: PATHS TO TITLE AND WORK FILES ARE HARDCODED EXCEPT NAME OF PROJECT FOLDER
+    private static final Logger logger = LoggerFactory.getLogger(EditProjectController.class);
 
-
-public class EditProjectController {
     CurrentEdit currentEditBoundary;
     String projectFolder;
     Project project;
+    ShellGetUserAPI shellGetUserAPI;
+
+    private static final String PROJECTS_DIRECTORY = "server/projects/";
 
     public void setCurrentEditBoundary(CurrentEdit ceb) {
         this.currentEditBoundary = ceb;
@@ -31,10 +40,10 @@ public class EditProjectController {
     // return title of project
     public String getTitle() {
         String title = "hello world";
-        try(BufferedReader br = new BufferedReader(new FileReader("server/" + projectFolder + "/title.txt"))) {
+        try(BufferedReader br = new BufferedReader(new FileReader(PROJECTS_DIRECTORY + projectFolder + "/title.txt"))) {
             title = br.readLine();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new FileProcessingException("Failed to get title", e);
         }
 
         return title;
@@ -42,8 +51,8 @@ public class EditProjectController {
 
     // return text of project
     public String getWork() {
-        String everything = "hello world";
-        try(BufferedReader br = new BufferedReader(new FileReader("server/" + projectFolder + "/work.txt"))) {
+        String everything = "";
+        try(BufferedReader br = new BufferedReader(new FileReader(PROJECTS_DIRECTORY + projectFolder + "/work.txt"))) {
             StringBuilder sb = new StringBuilder();
             String line = br.readLine();
 
@@ -54,7 +63,7 @@ public class EditProjectController {
             }
             everything = sb.toString();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new FileProcessingException("Failed to get work", e);
         }
 
         return everything;
@@ -63,33 +72,39 @@ public class EditProjectController {
     // save title and work
     public void saveWork(String title, String work) {
         // write to title file
-        try (FileWriter writer = new FileWriter("server/" + projectFolder + "/title.txt")) {
+        try (FileWriter writer = new FileWriter(PROJECTS_DIRECTORY + projectFolder + "/title.txt")) {
             writer.write(title);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("error", e);
         }
 
         // write to work file
-        try (FileWriter writer = new FileWriter("server/" + projectFolder + "/work.txt")) {
+        try (FileWriter writer = new FileWriter(PROJECTS_DIRECTORY + projectFolder + "/work.txt")) {
             writer.write(work);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("error", e);
         }
     }
 
     // return names of folders holding projects (currently assumed to be all files in server)
-    public ArrayList<String> getProjectNames() {
-        ArrayList<String> projectNames = new ArrayList<>();
+    public String[] getProjectNames() {
 
-        File parentDir = new File("server/");
-        File[] dirs = parentDir.listFiles();
+        UserHydratinator userHydratinator = new UserHydratinator();
+        Optional<User> user = userHydratinator.getUser(this.shellGetUserAPI.getUserID());
 
-        if (dirs != null) {
-            for (File dir : dirs) {
-                projectNames.add(dir.getName());
-            }
+        if (user.isPresent()) {
+            return user.get().projects;
         }
 
-        return projectNames;
+        return new String[]{""};
+    }
+
+    @Override
+    public void setGetUserAPI(ShellGetUserAPI shellGetUserAPI) {
+        this.shellGetUserAPI = shellGetUserAPI;
+    }
+
+    public long getUserID() {
+        return this.shellGetUserAPI.getUserID();
     }
 }

@@ -4,12 +4,15 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.layout.StackPane;
+import main.boundaries.shell_apis.hooks.ShellNavigateAPI;
+import main.boundaries.shell_apis.interfaces.Navigator;
+import main.controllers.APIController;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Shell implements ShellAPI {
+public class Shell extends Boundary implements ShellNavigateAPI {
 
     private Map<String, Node> nodes = new HashMap<>();
     private Map<Class<?>, Object> boundaryInstantiations;
@@ -20,8 +23,12 @@ public class Shell implements ShellAPI {
     @FXML
     private StackPane contentHost; // The screen to be displayed under the taskbar
 
-    public Shell(Map<Class<?>, Object> boundaryInstantiations) {
+    APIController apiController;
+
+    public Shell(Map<Class<?>, Object> boundaryInstantiations, APIController apiController) {
         this.boundaryInstantiations = boundaryInstantiations;
+        this.apiController = apiController;
+        super.addController(this.apiController);
     }
 
     // Starts here
@@ -72,25 +79,28 @@ public class Shell implements ShellAPI {
                 try {
                     // fallback for controllers you didn’t prebuild (e.g., simple taskbars)
                     return type.getDeclaredConstructor().newInstance();
-                } catch (Exception e) {
+                } catch (Exception illegalState) {
                     throw new IllegalStateException(
                             "No controller provided for " + type.getName() +
-                                    " and failed to construct via no-arg constructor.", e);
+                                    " and failed to construct via no-arg constructor.", illegalState);
                 }
             });
             Node node = loader.load(); // turns FXML into Java
-            injectShellAPI(node, loader.getController()); // adds ShellAPI
+            Object boundary = loader.getController();
+            if (boundary instanceof Navigator) injectNavigateAPI(node, boundary); // adds ShellAPI
+
             return node;
-        } catch (IOException e) {
-            throw new IllegalArgumentException("Failed to load: " + resourcePath, e);
+        } catch (IOException ioException) {
+            throw new IllegalArgumentException("Failed to load: " + resourcePath, ioException);
         }
     }
 
     // Adds the Shell as a ShellAPI to the Boundary, allowing it to use ShellAPI methods only
-    private void injectShellAPI(Node node, Object boundary) {
+    private void injectNavigateAPI(Node node, Object boundary) {
         if (boundary instanceof Navigator navigator) {
             nodesToBoundaries.put(node, navigator);
-            navigator.setShellAPI(this);
+            navigator.setNavigateAPI(this);
         }
     }
+
 }

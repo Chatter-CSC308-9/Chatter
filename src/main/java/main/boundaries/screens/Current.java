@@ -7,13 +7,17 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.TilePane;
-import main.boundaries.Navigator;
-import main.boundaries.ShellAPI;
+import main.boundaries.Boundary;
+import main.boundaries.shell_apis.interfaces.Navigator;
+import main.boundaries.shell_apis.hooks.ShellNavigateAPI;
 import main.controllers.EditProjectController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
+public class Current extends Boundary implements Navigator {
 
-public class Current implements Navigator {
+    private static final Logger logger = LoggerFactory.getLogger(Current.class);
+
     EditProjectController editProjectController;
 
     @FXML
@@ -28,40 +32,38 @@ public class Current implements Navigator {
     @FXML
     private ListView<Button> projectButtonListView;
 
-    private ObservableList<Button> projectButtons = FXCollections.observableArrayList();
-
-    private ShellAPI shellAPI;
+    private ShellNavigateAPI shellNavigateAPI;
 
     public Current(EditProjectController ewc) {
         this.editProjectController = ewc;
+        super.addController(this.editProjectController);
     }
 
     @FXML
     private void handleCreateNewProjectButtonClick() {
-        System.out.println("Create new project");
+        logger.debug("Create new project");
         editProjectController.editProject("name");
-        //shellAPI.setContent("CurrentEdit");
     }
 
     @FXML
     private void handleProjectButtonClick(String projDir) {
         editProjectController.editProject(projDir);
-        shellAPI.setContent("CurrentEdit");
+        shellNavigateAPI.setContent("CurrentEdit");
     }
 
     @Override
-    public void setShellAPI(ShellAPI shellAPI) {
-        this.shellAPI = shellAPI;
+    public void setNavigateAPI(ShellNavigateAPI shellNavigateAPI) {
+        this.shellNavigateAPI = shellNavigateAPI;
     }
 
     @FXML
     @Override
     public void onShow() {
         // empty projectButtons list
-        projectButtons = FXCollections.observableArrayList();
+        ObservableList<Button> projectButtons = FXCollections.observableArrayList();
 
         // create one button per project
-        ArrayList<String> projectNames = editProjectController.getProjectNames();
+        String[] projectNames = editProjectController.getProjectNames();
         for (String project : projectNames) {
             Button b = new Button(project);
             projectButtons.add(b);

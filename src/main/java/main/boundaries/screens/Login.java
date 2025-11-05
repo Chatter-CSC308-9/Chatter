@@ -2,31 +2,52 @@ package main.boundaries.screens;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import main.boundaries.Navigator;
-import main.boundaries.ShellAPI;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import main.boundaries.Boundary;
+import main.boundaries.shell_apis.interfaces.Navigator;
+import main.boundaries.shell_apis.hooks.ShellNavigateAPI;
 import main.controllers.LoginController;
 
-public class Login implements Navigator {
+import java.util.Optional;
+
+public class Login extends Boundary implements Navigator {
 
     @FXML
     public Button loginButton;
+    @FXML
+    public TextField usernameField;
+    @FXML
+    public PasswordField passwordField;
 
-    private ShellAPI shellAPI;
+    private ShellNavigateAPI shellNavigateAPI;
 
-    LoginController loginController;// = new LoginController();
+    LoginController loginController;
 
     public Login(LoginController loginController) {
         this.loginController = loginController;
+        super.addController(this.loginController);
     }
 
     @FXML
     private void handleButtonClick() {
-        shellAPI.setTaskbar("LearnerTaskbar");
-        shellAPI.setContent("ChatterHome");
+        Optional<Boolean> verifyCredentials = loginController.verifyCredentials(usernameField.getText(), passwordField.getText());
+        if (verifyCredentials.isPresent()) {
+            this.usernameField.clear();
+            this.passwordField.clear();
+            if (Boolean.TRUE.equals(verifyCredentials.get())) {
+                shellNavigateAPI.setTaskbar("GraderTaskbar");
+                shellNavigateAPI.setContent("GraderChatterHome");
+            } else if (Boolean.FALSE.equals(verifyCredentials.get())) {
+                shellNavigateAPI.setTaskbar("LearnerTaskbar");
+                shellNavigateAPI.setContent("ChatterHome");
+            }
+        }
     }
 
     @Override
-    public void setShellAPI(ShellAPI shellAPI) {
-        this.shellAPI = shellAPI;
+    public void setNavigateAPI(ShellNavigateAPI shellNavigateAPI) {
+        this.shellNavigateAPI = shellNavigateAPI;
     }
+
 }
