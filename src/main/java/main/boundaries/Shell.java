@@ -79,10 +79,12 @@ public class Shell extends Boundary implements ShellNavigateAPI {
                 try {
                     // fallback for controllers you didn’t prebuild (e.g., simple taskbars)
                     return type.getDeclaredConstructor().newInstance();
-                } catch (Exception illegalStateException) {
+                }
+                //noinspection java:S7467
+                catch (Exception e) {
                     throw new IllegalStateException(
                             "No controller provided for " + type.getName() +
-                                    " and failed to construct via no-arg constructor.", illegalStateException);
+                                    " and failed to construct via no-arg constructor.", e);
                 }
             });
             Node node = loader.load(); // turns FXML into Java
