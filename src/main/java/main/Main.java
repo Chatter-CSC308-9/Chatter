@@ -6,10 +6,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import main.boundaries.Boundary;
 import main.boundaries.Shell;
-import main.boundaries.screens.Account;
-import main.boundaries.screens.Current;
-import main.boundaries.screens.CurrentEdit;
-import main.boundaries.screens.Login;
+import main.boundaries.screens.*;
 import main.controllers.*;
 
 import java.util.*;
@@ -31,12 +28,14 @@ public class Main extends Application {
     Current current = new Current(editProjectController);
     CurrentEdit currentEdit = new CurrentEdit(editProjectController);
     Account account = new Account(logoutController);
+    GraderAccount graderAccount = new GraderAccount(logoutController);
 
     List<Boundary> boundaries = new ArrayList<>(Arrays.asList(
             login,
             current,
             currentEdit,
-            account));
+            account,
+            graderAccount));
 
     Map<Class<?>, Object> boundaryInstantiations = new HashMap<>();
 
