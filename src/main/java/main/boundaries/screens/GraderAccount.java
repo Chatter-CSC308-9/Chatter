@@ -3,8 +3,8 @@ package main.boundaries.screens;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import main.boundaries.Boundary;
-import main.boundaries.shell_apis.hooks.ShellNavigateAPI;
-import main.boundaries.shell_apis.interfaces.Navigator;
+import main.boundaries.apis.hooks.ShellNavigateAPI;
+import main.boundaries.apis.interfaces.Navigator;
 import main.controllers.LogoutController;
 
 public class GraderAccount extends Boundary implements Navigator {

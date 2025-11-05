@@ -1,4 +1,4 @@
-package main.boundaries.shell_apis.hooks;
+package main.boundaries.apis.hooks;
 
 // ShellAPI allows Boundaries to access certain Shell functionalities
 // without having full access to the shell.

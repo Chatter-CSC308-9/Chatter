@@ -4,8 +4,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.layout.StackPane;
-import main.boundaries.shell_apis.hooks.ShellNavigateAPI;
-import main.boundaries.shell_apis.interfaces.Navigator;
+import main.boundaries.apis.hooks.ShellNavigateAPI;
+import main.boundaries.apis.interfaces.Navigator;
 import main.controllers.APIController;
 
 import java.io.IOException;

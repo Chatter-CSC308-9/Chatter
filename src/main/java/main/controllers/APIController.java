@@ -1,11 +1,11 @@
 package main.controllers;
 
-import main.boundaries.shell_apis.hooks.ShellGetUserAPI;
-import main.boundaries.shell_apis.hooks.ShellSetUserAPI;
-import main.boundaries.shell_apis.interfaces.NeedsUser;
-import main.boundaries.shell_apis.interfaces.SetsUser;
+import main.controllers.apis.hooks.GetUserAPI;
+import main.controllers.apis.hooks.SetUserAPI;
+import main.controllers.apis.interfaces.NeedsUser;
+import main.controllers.apis.interfaces.SetsUser;
 
-public class APIController implements Controller, ShellGetUserAPI, ShellSetUserAPI {
+public class APIController implements Controller, GetUserAPI, SetUserAPI {
 
     private long currentUserID;
 
