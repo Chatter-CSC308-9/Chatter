@@ -45,6 +45,11 @@ public class Shell extends Boundary implements ShellNavigateAPI {
         taskbarHost.getChildren().setAll(taskbar);
     }
 
+    @Override
+    public void setTaskbar() {
+        taskbarHost.getChildren().setAll();
+    }
+
     @FXML
     @Override
     public void setContent(String screenName) {

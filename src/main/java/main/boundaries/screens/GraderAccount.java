@@ -24,7 +24,7 @@ public class GraderAccount extends Boundary implements Navigator {
     public void handleLogoutButtonClick() {
         this.logoutController.logout();
         shellNavigateAPI.setContent("Login");
-        shellNavigateAPI.setTaskbar("EmptyTaskbar");
+        shellNavigateAPI.setTaskbar();
     }
 
     @Override

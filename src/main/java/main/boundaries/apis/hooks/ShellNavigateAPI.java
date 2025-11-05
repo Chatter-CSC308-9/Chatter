@@ -5,4 +5,5 @@ package main.boundaries.apis.hooks;
 public interface ShellNavigateAPI {
     void setTaskbar(String taskbarName);
     void setContent(String screenName);
+    void setTaskbar();
 }
