@@ -4,8 +4,6 @@ import main.FileProcessingException;
 import main.adapters.UserHydratinator;
 import main.controllers.apis.hooks.GetUserAPI;
 import main.controllers.apis.interfaces.NeedsUser;
-import main.boundaries.shell_apis.hooks.ShellGetUserAPI;
-import main.boundaries.shell_apis.interfaces.NeedsUser;
 import main.entities.Project;
 import main.entities.User;
 import org.slf4j.Logger;
@@ -13,13 +11,11 @@ import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.util.Arrays;
-import java.util.Optional;
 
 public class EditProjectController implements Controller, NeedsUser {
 
     private static final Logger logger = LoggerFactory.getLogger(EditProjectController.class);
 
-    CurrentEdit currentEditBoundary;
     String projectFolder;
     Project project;
     GetUserAPI getUserAPI;
@@ -40,14 +36,8 @@ public class EditProjectController implements Controller, NeedsUser {
     // create new project and prepare it for editing
     public void createProject() {
         UserHydratinator userHydratinator = new UserHydratinator();
-        Optional<User> userOptional = userHydratinator.getUser(this.shellGetUserAPI.getUserID());
-        User user = null;
+        User user = userHydratinator.getUser(this.getUserAPI.getUserID());
 
-        if (!userOptional.isPresent()) {
-            return;
-        }
-
-        user = userOptional.get();
         user.numProjects++;
         String newProjDirName = (Long.toHexString(user.userID) + (user.numProjects - 1)).toUpperCase();
 
@@ -137,11 +127,7 @@ public class EditProjectController implements Controller, NeedsUser {
         UserHydratinator userHydratinator = new UserHydratinator();
         User user = userHydratinator.getUser(this.getUserAPI.getUserID());
 
-        if (user.isPresent()) {
-            return user.get().projects;
-        }
-
-        return new String[]{""};
+        return user.projects;
     }
 
     @Override
