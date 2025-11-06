@@ -1,5 +1,6 @@
 package main;
 
+import com.stripe.Stripe;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -8,28 +9,31 @@ import main.boundaries.Boundary;
 import main.boundaries.Shell;
 import main.boundaries.screens.*;
 import main.controllers.*;
+import main.controllers.apis.UserIdApiController;
 
 import java.util.*;
 
 public class Main extends Application {
 
+    UserIdApiController userIdApiController = new UserIdApiController();
     LoginController loginController = new LoginController();
     EditProjectController editProjectController = new EditProjectController();
-    APIController apiController = new APIController();
     LogoutController logoutController = new LogoutController();
     DisplayUsernameController displayUsernameController = new DisplayUsernameController();
+    AcceptPaymentController acceptPaymentController = new AcceptPaymentController();
 
     List<Controller> controllers = new ArrayList<>(Arrays.asList(
             loginController,
             editProjectController,
-            apiController,
+            userIdApiController,
             logoutController,
-            displayUsernameController));
+            displayUsernameController,
+            acceptPaymentController));
 
     Login login = new Login(loginController);
     Current current = new Current(editProjectController);
     CurrentEdit currentEdit = new CurrentEdit(editProjectController);
-    Account account = new Account(logoutController, displayUsernameController);
+    Account account = new Account(logoutController, displayUsernameController, acceptPaymentController);
     GraderAccount graderAccount = new GraderAccount(logoutController, displayUsernameController);
 
     List<Boundary> boundaries = new ArrayList<>(Arrays.asList(
@@ -42,6 +46,7 @@ public class Main extends Application {
     Map<Class<?>, Object> boundaryInstantiations = new HashMap<>();
 
     public static void main(String[] args) {
+        Stripe.apiKey = System.getenv("STRIPE_SECRET");
         launch();
     }
 
@@ -52,11 +57,11 @@ public class Main extends Application {
         }
 
         for (Controller controller : controllers) {
-            apiController.injectControllerAPIs(controller);
+            userIdApiController.injectControllerAPIs(controller);
         }
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/Shell.fxml"));
-        loader.setControllerFactory(_ -> new Shell(boundaryInstantiations, apiController));
+        loader.setControllerFactory(_ -> new Shell(boundaryInstantiations, userIdApiController));
         Scene scene = new Scene(loader.load());
         stage.setTitle("Chatter");
         stage.setScene(scene);
