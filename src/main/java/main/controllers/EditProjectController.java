@@ -179,7 +179,7 @@ public class EditProjectController implements Controller, NeedsUser {
         }
     }
 
-    // return names of folders holding projects (currently assumed to be all files in server)
+    // return names of folders holding projects for user
     public String[] getProjectNames() {
 
         UserHydratinator userHydratinator = new UserHydratinator();
@@ -189,33 +189,8 @@ public class EditProjectController implements Controller, NeedsUser {
     }
 
     // submit project
-    public void submitProject() {
-        // get project and user
-        ProjectHydratinator projectHydratinator = new ProjectHydratinator();
-        Project proj = projectHydratinator.getProject(projectFolder);
-        UserHydratinator userHydratinator = new UserHydratinator();
-        User user = userHydratinator.getUser(this.getUserAPI.getUserID());
-
-        // update project
-        proj.submitted = true;
-
-        // update user
-        user.completedProjects = Arrays.copyOf(user.completedProjects, user.completedProjects.length + 1);
-        user.completedProjects[user.completedProjects.length - 1] = projectFolder;
-        String[] projectsUpdated = new String[user.projects.length - 1];
-        int found = 0;
-        for (int i = 0; i < user.projects.length; i++) {
-            if (user.projects[i].equals(projectFolder)) {
-                found = -1;
-                continue;
-            }
-            projectsUpdated[i + found] = user.projects[i];
-        }
-        user.projects = projectsUpdated;
-
-        // update project and user files
-        projectHydratinator.setProject(proj);
-        userHydratinator.setUser(user);
+    public void submitProject(SubmitProjectController spc) {
+        spc.submitProject(projectFolder);
     }
 
     @Override

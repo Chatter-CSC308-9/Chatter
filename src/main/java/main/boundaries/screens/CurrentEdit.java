@@ -9,6 +9,7 @@ import main.boundaries.Boundary;
 import main.boundaries.apis.interfaces.Navigator;
 import main.boundaries.apis.hooks.ShellNavigateAPI;
 import main.controllers.EditProjectController;
+import main.controllers.SubmitProjectController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,6 +20,7 @@ public class CurrentEdit extends Boundary implements Navigator {
     private static final Logger logger = LoggerFactory.getLogger(CurrentEdit.class);
 
     EditProjectController editProjectController;
+    SubmitProjectController submitProjectController;
 
     @FXML
     private TextArea projectField;
@@ -44,8 +46,9 @@ public class CurrentEdit extends Boundary implements Navigator {
 
     private ShellNavigateAPI shellNavigateAPI;
 
-    public CurrentEdit(EditProjectController ewc) {
+    public CurrentEdit(EditProjectController ewc, SubmitProjectController spc) {
         this.editProjectController = ewc;
+        this.submitProjectController = spc;
         super.addController(this.editProjectController);
     }
 
@@ -123,7 +126,7 @@ public class CurrentEdit extends Boundary implements Navigator {
 
     @FXML
     void handleSubmitButtonClick() {
-        this.editProjectController.submitProject();
+        this.editProjectController.submitProject(submitProjectController);
         shellNavigateAPI.setContent("Current");
     }
 

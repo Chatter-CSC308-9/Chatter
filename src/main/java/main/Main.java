@@ -18,17 +18,20 @@ public class Main extends Application {
     APIController apiController = new APIController();
     LogoutController logoutController = new LogoutController();
     DisplayUsernameController displayUsernameController = new DisplayUsernameController();
+    SubmitProjectController submitProjectController = new SubmitProjectController();
 
     List<Controller> controllers = new ArrayList<>(Arrays.asList(
             loginController,
             editProjectController,
             apiController,
             logoutController,
-            displayUsernameController));
+            displayUsernameController,
+            submitProjectController));
 
     Login login = new Login(loginController);
     Current current = new Current(editProjectController);
-    CurrentEdit currentEdit = new CurrentEdit(editProjectController);
+    CurrentEdit currentEdit = new CurrentEdit(editProjectController, submitProjectController);
+    Pending pending = new Pending(submitProjectController);
     Account account = new Account(logoutController, displayUsernameController);
     GraderAccount graderAccount = new GraderAccount(logoutController, displayUsernameController);
 
@@ -36,6 +39,7 @@ public class Main extends Application {
             login,
             current,
             currentEdit,
+            pending,
             account,
             graderAccount));
 
