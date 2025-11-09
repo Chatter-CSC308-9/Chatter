@@ -71,9 +71,14 @@
                             </children>
                         </HBox>
                   <TextArea fx:id="projectField" prefHeight="212.0" prefWidth="555.0" />
+                  <VBox fx:id="uploadInformation" prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <Label text="hi guys" />
+                     </children>
+                  </VBox>
                     </children>
                 </VBox>
-                <Button layoutX="447.0" layoutY="359.0" mnemonicParsing="false" text="Submit" />
+                <Button fx:id="submitButton" layoutX="447.0" layoutY="359.0" mnemonicParsing="false" onAction="#handleSubmitButtonClick" text="Submit" />
                 <Button layoutX="515.0" layoutY="359.0" mnemonicParsing="false" text="Submit to AI" />
             </children>
         </AnchorPane>

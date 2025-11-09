@@ -1,6 +1,7 @@
 package main.controllers;
 
 import main.FileProcessingException;
+import main.adapters.ProjectHydratinator;
 import main.adapters.UserHydratinator;
 import main.controllers.apis.hooks.GetUserAPI;
 import main.controllers.apis.interfaces.NeedsUser;
@@ -10,6 +11,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Arrays;
 
 public class EditProjectController implements Controller, NeedsUser {
@@ -30,7 +33,6 @@ public class EditProjectController implements Controller, NeedsUser {
 
     public void editProject(String projectFolder) {
         this.projectFolder = projectFolder;
-        // use json to load information into project entity
     }
 
     // create new project and prepare it for editing
@@ -104,6 +106,62 @@ public class EditProjectController implements Controller, NeedsUser {
         return everything;
     }
 
+    // upload file
+    public void uploadFile(File file) {
+        ProjectHydratinator projectHydratinator = new ProjectHydratinator();
+        Project proj = projectHydratinator.getProject(projectFolder);
+
+        // work accordingly with txt, mp3, and png files
+        if (Boolean.TRUE.equals(isTXT(file.getPath()))) {
+            try {
+                Files.copy(file.toPath(), Path.of(PROJECTS_DIRECTORY + projectFolder + "/uploaded_work.txt"));
+                proj.hasUploadedTXT = true;
+            } catch (IOException e) {
+                logger.error("failed to upload txt", e);
+            }
+        }
+        else if (Boolean.TRUE.equals(isMP3(file.getPath()))) {
+            try {
+                Files.copy(file.toPath(), Path.of(PROJECTS_DIRECTORY + projectFolder + "/uploaded_work.mp3"));
+                proj.hasUploadedMP3 = true;
+            } catch (IOException e) {
+                logger.error("failed to upload mp3", e);
+            }
+        }
+        else if (Boolean.TRUE.equals(isPNG(file.getPath()))) {
+            try {
+                Files.copy(file.toPath(), Path.of(PROJECTS_DIRECTORY + projectFolder + "/uploaded_work.png"));
+                proj.hasUploadedPNG = true;
+            } catch (IOException e) {
+                logger.error("failed to upload png", e);
+            }
+        }
+        else {
+            logger.info("file is not a txt");
+        }
+
+        // update project
+        projectHydratinator.setProject(proj);
+    }
+
+    // check if file is .txt
+    private Boolean isTXT(String filePath) {
+        String end = filePath.substring(filePath.length() - 4);
+        return end.equals(".txt");
+    }
+
+    // check if file is .mp3
+    private Boolean isMP3(String filePath) {
+        String end = filePath.substring(filePath.length() - 4);
+        return end.equals(".mp3");
+    }
+
+    // check if file is .png
+    private Boolean isPNG(String filePath) {
+        String end = filePath.substring(filePath.length() - 4);
+        return end.equals(".png");
+    }
+
     // save title and work
     public void saveWork(String title, String work) {
         // write to title file
@@ -128,6 +186,36 @@ public class EditProjectController implements Controller, NeedsUser {
         User user = userHydratinator.getUser(this.getUserAPI.getUserID());
 
         return user.projects;
+    }
+
+    // submit project
+    public void submitProject() {
+        // get project and user
+        ProjectHydratinator projectHydratinator = new ProjectHydratinator();
+        Project proj = projectHydratinator.getProject(projectFolder);
+        UserHydratinator userHydratinator = new UserHydratinator();
+        User user = userHydratinator.getUser(this.getUserAPI.getUserID());
+
+        // update project
+        proj.submitted = true;
+
+        // update user
+        user.completedProjects = Arrays.copyOf(user.completedProjects, user.completedProjects.length + 1);
+        user.completedProjects[user.completedProjects.length - 1] = projectFolder;
+        String[] projectsUpdated = new String[user.projects.length - 1];
+        int found = 0;
+        for (int i = 0; i < user.projects.length; i++) {
+            if (user.projects[i].equals(projectFolder)) {
+                found = -1;
+                continue;
+            }
+            projectsUpdated[i + found] = user.projects[i];
+        }
+        user.projects = projectsUpdated;
+
+        // update project and user files
+        projectHydratinator.setProject(proj);
+        userHydratinator.setUser(user);
     }
 
     @Override
