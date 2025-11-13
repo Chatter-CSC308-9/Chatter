@@ -23,7 +23,6 @@ public class Main extends Application {
     AcceptPaymentController acceptPaymentController = new AcceptPaymentController();
     SubmitProjectController submitProjectController = new SubmitProjectController();
 
-
     List<Controller> controllers = new ArrayList<>(Arrays.asList(
             loginController,
             editProjectController,
@@ -35,10 +34,11 @@ public class Main extends Application {
 
     Login login = new Login(loginController);
     Current current = new Current(editProjectController);
-    CurrentEdit currentEdit = new CurrentEdit(editProjectController);
+    CurrentEdit currentEdit = new CurrentEdit(editProjectController, submitProjectController);
     Pending pending = new Pending(submitProjectController);
-    Account account = new Account(logoutController, displayUsernameController, acceptPaymentController);
+    Account account = new Account(logoutController, displayUsernameController);
     GraderAccount graderAccount = new GraderAccount(logoutController, displayUsernameController);
+    Pay pay = new Pay(acceptPaymentController);
 
     List<Boundary> boundaries = new ArrayList<>(Arrays.asList(
             login,
@@ -46,7 +46,8 @@ public class Main extends Application {
             currentEdit,
             pending,
             account,
-            graderAccount));
+            graderAccount,
+            pay));
 
     Map<Class<?>, Object> boundaryInstantiations = new HashMap<>();
 
