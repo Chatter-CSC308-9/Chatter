@@ -22,6 +22,7 @@ public class EditProjectController implements Controller, NeedsUser {
     String projectFolder;
     Project project;
     GetUserAPI getUserAPI;
+    ProjectHydratinator projectHydratinator = new ProjectHydratinator();
 
     private static final String PROJECTS_DIRECTORY = "server/projects/";
     private static final String TITLE_FILE_NAME = "/title.txt";
@@ -33,6 +34,8 @@ public class EditProjectController implements Controller, NeedsUser {
 
     public void editProject(String projectFolder) {
         this.projectFolder = projectFolder;
+
+        project = projectHydratinator.getProject(projectFolder);
     }
 
     // create new project and prepare it for editing
@@ -43,7 +46,6 @@ public class EditProjectController implements Controller, NeedsUser {
         user.numProjects++;
         String newProjDirName = (Long.toHexString(user.userID) + (user.numProjects - 1)).toUpperCase();
 
-
         // create new project directory
         File newProjDir = new File(PROJECTS_DIRECTORY + newProjDirName);
         if (!newProjDir.exists() && newProjDir.mkdir()) {
@@ -51,15 +53,25 @@ public class EditProjectController implements Controller, NeedsUser {
             // create title.txt and work.txt and add empty strings
             makeFile(PROJECTS_DIRECTORY + newProjDirName + TITLE_FILE_NAME);
             makeFile(PROJECTS_DIRECTORY + newProjDirName + WORK_FILE_NAME);
-            editProject(newProjDirName);
+            this.projectFolder = newProjDirName;
             saveWork("title here", "work here");
 
-            user.projects = Arrays.copyOf(user.projects, user.numProjects);
+            // update user information
+            user.projects = Arrays.copyOf(user.projects, user.projects.length + 1);
             user.projects[user.projects.length - 1] = newProjDirName;
-        }
+            userHydratinator.setUser(user);
 
-        // update user file
-        userHydratinator.setUser(user);
+            // create project entity, create file to store its information, and save information
+            try {
+                Files.copy(Path.of("server/default_files/projectFolderName.json"), Path.of("server/projects_list/" + projectFolder + ".json"));
+            } catch (IOException e) {
+                logger.error("error creating new project json file", e);
+            }
+            editProject(projectFolder);
+            project.learnerID = user.userID;
+            project.projectName = projectFolder;
+            projectHydratinator.setProject(project);
+        }
     }
 
     // create given files
@@ -108,14 +120,11 @@ public class EditProjectController implements Controller, NeedsUser {
 
     // upload file
     public void uploadFile(File file) {
-        ProjectHydratinator projectHydratinator = new ProjectHydratinator();
-        Project proj = projectHydratinator.getProject(projectFolder);
-
         // work accordingly with txt, mp3, and png files
         if (Boolean.TRUE.equals(isTXT(file.getPath()))) {
             try {
                 Files.copy(file.toPath(), Path.of(PROJECTS_DIRECTORY + projectFolder + "/uploaded_work.txt"));
-                proj.hasUploadedTXT = true;
+                project.hasUploadedTXT = true;
             } catch (IOException e) {
                 logger.error("failed to upload txt", e);
             }
@@ -123,7 +132,7 @@ public class EditProjectController implements Controller, NeedsUser {
         else if (Boolean.TRUE.equals(isMP3(file.getPath()))) {
             try {
                 Files.copy(file.toPath(), Path.of(PROJECTS_DIRECTORY + projectFolder + "/uploaded_work.mp3"));
-                proj.hasUploadedMP3 = true;
+                project.hasUploadedMP3 = true;
             } catch (IOException e) {
                 logger.error("failed to upload mp3", e);
             }
@@ -131,7 +140,7 @@ public class EditProjectController implements Controller, NeedsUser {
         else if (Boolean.TRUE.equals(isPNG(file.getPath()))) {
             try {
                 Files.copy(file.toPath(), Path.of(PROJECTS_DIRECTORY + projectFolder + "/uploaded_work.png"));
-                proj.hasUploadedPNG = true;
+                project.hasUploadedPNG = true;
             } catch (IOException e) {
                 logger.error("failed to upload png", e);
             }
@@ -141,7 +150,7 @@ public class EditProjectController implements Controller, NeedsUser {
         }
 
         // update project
-        projectHydratinator.setProject(proj);
+        projectHydratinator.setProject(project);
     }
 
     // check if file is .txt
@@ -160,6 +169,100 @@ public class EditProjectController implements Controller, NeedsUser {
     private Boolean isPNG(String filePath) {
         String end = filePath.substring(filePath.length() - 4);
         return end.equals(".png");
+    }
+
+    // check if project has uploaded .txt file
+    public Boolean hasUploadedTXT() {
+        return project.hasUploadedTXT;
+    }
+
+    // check if project has uploaded .mp3 file
+    public Boolean hasUploadedMP3() {
+        return project.hasUploadedMP3;
+    }
+
+    // check if project has uploaded .png file
+    public Boolean hasUploadedPNG() {
+        return project.hasUploadedPNG;
+    }
+
+    // delete uploaded txt file
+    public void deleteUploadedTXT() {
+        try {
+            Files.deleteIfExists(Path.of(PROJECTS_DIRECTORY + projectFolder + "/uploaded_work.txt"));
+        } catch (IOException e) {
+            logger.error("error deleting uploaded .txt file", e);
+        }
+        project.hasUploadedTXT = false;
+        projectHydratinator.setProject(project);
+    }
+
+    // delete uploaded mp3 file
+    public void deleteUploadedMP3() {
+        try {
+            Files.deleteIfExists(Path.of(PROJECTS_DIRECTORY + projectFolder + "/uploaded_work.mp3"));
+        } catch (IOException e) {
+            logger.error("error deleting uploaded .mp3 file", e);
+        }
+        project.hasUploadedMP3 = false;
+        projectHydratinator.setProject(project);
+    }
+
+    // delete uploaded png file
+    public void deleteUploadedPNG() {
+        try {
+            Files.deleteIfExists(Path.of(PROJECTS_DIRECTORY + projectFolder + "/uploaded_work.png"));
+        } catch (IOException e) {
+            logger.error("error deleting uploaded .png file", e);
+        }
+        project.hasUploadedPNG = false;
+        projectHydratinator.setProject(project);
+    }
+
+    // delete project
+    public void deleteProject() {
+        logger.info("delete project");
+
+        // delete from user profile
+        UserHydratinator userHydratinator = new UserHydratinator();
+        User user = userHydratinator.getUser(this.getUserAPI.getUserID());
+
+        String[] updatedProjects = new String[user.projects.length - 1];
+        int found = 0;
+        for (int i = 0; i < updatedProjects.length; i++) {
+            if (user.projects[i].equals(projectFolder)) {
+                found = 1;
+                continue;
+            }
+            updatedProjects[i] = user.projects[i + found];
+        }
+        user.projects = updatedProjects;
+        userHydratinator.setUser(user);
+
+        // delete folder
+        if (Boolean.TRUE.equals(project.hasUploadedTXT)) {
+            deleteUploadedTXT();
+        }
+        if (Boolean.TRUE.equals(project.hasUploadedMP3)) {
+            deleteUploadedMP3();
+        }
+        if (Boolean.TRUE.equals(project.hasUploadedPNG)) {
+            deleteUploadedPNG();
+        }
+        try {
+            Files.deleteIfExists(Path.of(PROJECTS_DIRECTORY + projectFolder + TITLE_FILE_NAME));
+            Files.deleteIfExists(Path.of(PROJECTS_DIRECTORY + projectFolder + WORK_FILE_NAME));
+            Files.delete(Path.of(PROJECTS_DIRECTORY + projectFolder));
+        } catch (IOException e) {
+            logger.error("error deleting project folder", e);
+        }
+
+        // delete json
+        try {
+            Files.deleteIfExists(Path.of("server/projects_list/" + projectFolder + ".json"));
+        } catch (IOException e) {
+            logger.error("error deleting project json file", e);
+        }
     }
 
     // save title and work
@@ -184,6 +287,8 @@ public class EditProjectController implements Controller, NeedsUser {
 
         UserHydratinator userHydratinator = new UserHydratinator();
         User user = userHydratinator.getUser(this.getUserAPI.getUserID());
+
+        userHydratinator.setUser(user);
 
         return user.projects;
     }

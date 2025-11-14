@@ -2,6 +2,7 @@ package main.boundaries.screens;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -13,6 +14,7 @@ import main.controllers.SubmitProjectController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.swing.*;
 import java.io.File;
 
 public class CurrentEdit extends Boundary implements Navigator {
@@ -34,6 +36,32 @@ public class CurrentEdit extends Boundary implements Navigator {
     @FXML
     private Button submitButton;
 
+    @FXML
+    private Button deleteMP3Button;
+
+    @FXML
+    private Button deletePNGButton;
+
+    @FXML
+    private Button deleteTXTButton;
+
+    @FXML
+    private Button uploadFileButton;
+
+    @FXML
+    private Button deleteProjectButton;
+
+    @FXML
+    private Label noUploadedFilesLabel;
+
+    @FXML
+    private HBox uploadedMP3Box;
+
+    @FXML
+    private HBox uploadedPNGBox;
+
+    @FXML
+    private HBox uploadedTXTBox;
 
     @FXML
     private ToggleButton textEntryButton;
@@ -45,6 +73,8 @@ public class CurrentEdit extends Boundary implements Navigator {
     private VBox uploadInformation;
 
     private ShellNavigateAPI shellNavigateAPI;
+
+    private static final String CURRENT = "Current";
 
     public CurrentEdit(EditProjectController ewc, SubmitProjectController spc) {
         this.editProjectController = ewc;
@@ -63,6 +93,8 @@ public class CurrentEdit extends Boundary implements Navigator {
         projectField.setVisible(true);
         uploadInformation.setManaged(false);
         uploadInformation.setVisible(false);
+        uploadButton.setSelected(false);
+        textEntryButton.setSelected(true);
     }
 
     // save and exit
@@ -84,7 +116,7 @@ public class CurrentEdit extends Boundary implements Navigator {
         projectField.setText("");
 
         // back to Current screen
-        shellNavigateAPI.setContent("Current");
+        shellNavigateAPI.setContent(CURRENT);
     }
 
     @FXML
@@ -116,18 +148,80 @@ public class CurrentEdit extends Boundary implements Navigator {
         projectField.setVisible(false);
         projectField.setManaged(false);
 
+        noUploadedFilesLabel.setVisible(true);
+        noUploadedFilesLabel.setManaged(true);
+        uploadedTXTBox.setVisible(false);
+        uploadedTXTBox.setManaged(false);
+        uploadedMP3Box.setVisible(false);
+        uploadedMP3Box.setManaged(false);
+        uploadedPNGBox.setVisible(false);
+        uploadedPNGBox.setManaged(false);
+
+        if (Boolean.TRUE.equals(editProjectController.hasUploadedTXT())) {
+            noUploadedFilesLabel.setVisible(false);
+            noUploadedFilesLabel.setManaged(false);
+
+            uploadedTXTBox.setVisible(true);
+            uploadedTXTBox.setManaged(true);
+        }
+        if (Boolean.TRUE.equals(editProjectController.hasUploadedMP3())) {
+            noUploadedFilesLabel.setVisible(false);
+            noUploadedFilesLabel.setManaged(false);
+
+            uploadedMP3Box.setVisible(true);
+            uploadedMP3Box.setManaged(true);
+        }
+        if (Boolean.TRUE.equals(editProjectController.hasUploadedPNG())) {
+            noUploadedFilesLabel.setVisible(false);
+            noUploadedFilesLabel.setManaged(false);
+
+            uploadedPNGBox.setVisible(true);
+            uploadedPNGBox.setManaged(true);
+        }
+    }
+
+    @FXML
+    void handleUploadFileButtonClick() {
         // let user try to upload file
         final FileChooser fileChooser = new FileChooser();
         File file = fileChooser.showOpenDialog(new Stage());
         if (file != null) {
             this.editProjectController.uploadFile(file);
         }
+        handleUploadButtonClick();
+    }
+
+    @FXML
+    void handleDeleteUploadedTXTButtonClick() {
+        this.editProjectController.deleteUploadedTXT();
+        handleUploadButtonClick();
+    }
+
+    @FXML
+    void handleDeleteUploadedMP3ButtonClick() {
+        this.editProjectController.deleteUploadedMP3();
+        handleUploadButtonClick();
+    }
+
+    @FXML
+    void handleDeleteUploadedPNGButtonClick() {
+        this.editProjectController.deleteUploadedPNG();
+        handleUploadButtonClick();
     }
 
     @FXML
     void handleSubmitButtonClick() {
         this.editProjectController.submitProject(submitProjectController);
-        shellNavigateAPI.setContent("Current");
+        shellNavigateAPI.setContent(CURRENT);
+    }
+
+    @FXML
+    void handleDeleteProjectButtonClick() {
+        int input = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this project?");
+        if (input == 0) {
+            this.editProjectController.deleteProject();
+        }
+        shellNavigateAPI.setContent(CURRENT);
     }
 
     @Override
