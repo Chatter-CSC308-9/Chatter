@@ -9,6 +9,8 @@ public class Project {
     public long graderID;
     @JsonProperty("projectName")
     public String projectName;
+    @JsonProperty("projectTitle")
+    public String projectTitle;
     @JsonProperty("language")
     public String language;
     @JsonProperty("submitted")

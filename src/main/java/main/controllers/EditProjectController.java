@@ -34,7 +34,6 @@ public class EditProjectController implements Controller, NeedsUser {
 
     public void editProject(String projectFolder) {
         this.projectFolder = projectFolder;
-
         project = projectHydratinator.getProject(projectFolder);
     }
 
@@ -54,7 +53,6 @@ public class EditProjectController implements Controller, NeedsUser {
             makeFile(PROJECTS_DIRECTORY + newProjDirName + TITLE_FILE_NAME);
             makeFile(PROJECTS_DIRECTORY + newProjDirName + WORK_FILE_NAME);
             this.projectFolder = newProjDirName;
-            saveWork("title here", "work here");
 
             // update user information
             user.projects = Arrays.copyOf(user.projects, user.projects.length + 1);
@@ -67,9 +65,13 @@ public class EditProjectController implements Controller, NeedsUser {
             } catch (IOException e) {
                 logger.error("error creating new project json file", e);
             }
-            editProject(projectFolder);
+
+            this.project = projectHydratinator.getProject(newProjDirName);
+            saveWork("title here", "work here");
+
             project.learnerID = user.userID;
             project.projectName = projectFolder;
+            project.projectTitle = "title here";
             projectHydratinator.setProject(project);
         }
     }
@@ -146,7 +148,7 @@ public class EditProjectController implements Controller, NeedsUser {
             }
         }
         else {
-            logger.info("file is not a txt");
+            logger.info("file is not valid");
         }
 
         // update project
@@ -270,6 +272,8 @@ public class EditProjectController implements Controller, NeedsUser {
         // write to title file
         try (FileWriter writer = new FileWriter(PROJECTS_DIRECTORY + projectFolder + TITLE_FILE_NAME)) {
             writer.write(title);
+            project.projectTitle = title;
+            projectHydratinator.setProject(project);
         } catch (IOException e) {
             logger.error("error in writing to title file", e);
         }
@@ -284,7 +288,6 @@ public class EditProjectController implements Controller, NeedsUser {
 
     // return names of folders holding projects for user
     public String[] getProjectNames() {
-
         UserHydratinator userHydratinator = new UserHydratinator();
         User user = userHydratinator.getUser(this.getUserAPI.getUserID());
 
