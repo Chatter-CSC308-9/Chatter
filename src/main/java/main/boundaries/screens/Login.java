@@ -5,8 +5,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import main.boundaries.Boundary;
-import main.boundaries.shell_apis.interfaces.Navigator;
-import main.boundaries.shell_apis.hooks.ShellNavigateAPI;
+import main.boundaries.apis.interfaces.Navigator;
+import main.boundaries.apis.hooks.ShellNavigateAPI;
 import main.controllers.LoginController;
 
 import java.util.Optional;

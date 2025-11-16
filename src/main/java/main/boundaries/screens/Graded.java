@@ -10,21 +10,14 @@ import javafx.scene.layout.TilePane;
 import main.boundaries.Boundary;
 import main.boundaries.apis.interfaces.Navigator;
 import main.boundaries.apis.hooks.ShellNavigateAPI;
-import main.controllers.EditProjectController;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import main.controllers.DownloadGradedProjectController;
 
-public class Current extends Boundary implements Navigator {
+import javax.swing.*;
+import java.io.File;
 
-    private static final Logger logger = LoggerFactory.getLogger(Current.class);
+public class Graded extends Boundary implements Navigator {
 
-    EditProjectController editProjectController;
-
-    @FXML
-    private Button createNewProjectButton;
-
-    @FXML
-    private Button perryThePlatypusButton;
+    DownloadGradedProjectController downloadGradedProjectController;
 
     @FXML
     private TilePane buttonPane;
@@ -32,24 +25,26 @@ public class Current extends Boundary implements Navigator {
     @FXML
     private ListView<Button> projectButtonListView;
 
-    private ShellNavigateAPI shellNavigateAPI;
+    ShellNavigateAPI shellNavigateAPI;
 
-    public Current(EditProjectController ewc) {
-        this.editProjectController = ewc;
-        super.addController(this.editProjectController);
-    }
-
-    @FXML
-    private void handleCreateNewProjectButtonClick() {
-        logger.debug("Create new project");
-        editProjectController.createProject();
-        shellNavigateAPI.setContent("CurrentEdit");
+    public Graded(DownloadGradedProjectController dgpc) {
+        this.downloadGradedProjectController = dgpc;
+        super.addController(this.downloadGradedProjectController);
     }
 
     @FXML
     private void handleProjectButtonClick(String projDir) {
-        editProjectController.editProject(projDir);
-        shellNavigateAPI.setContent("CurrentEdit");
+        final JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFile();
+            if (this.downloadGradedProjectController.downloadFeedback(projDir, file) == 1) {
+                JOptionPane.showMessageDialog(null, "Error in downloading feedback. There may be a naming conflict in your destination folder.");
+            }
+            else {
+                JOptionPane.showMessageDialog(null, "Successfully downloaded");
+            }
+        }
     }
 
     @Override
@@ -64,15 +59,14 @@ public class Current extends Boundary implements Navigator {
         ObservableList<Button> projectButtons = FXCollections.observableArrayList();
 
         // create one button per project
-        String[] projectNames = editProjectController.getProjectNames();
+        String[] projectNames = downloadGradedProjectController.getGradedProjectNames();
 
         for (String project : projectNames) {
             Button b = new Button(project);
             projectButtons.add(b);
             b.addEventHandler(MouseEvent.MOUSE_CLICKED, (event -> handleProjectButtonClick(project)));
-            editProjectController.setProject(project);
-            String title = editProjectController.getTitle();
-            b.setText(title);
+            String title = downloadGradedProjectController.getTitle(project);
+            b.setText("Download Feedback for: " + title);
             b.setPrefHeight(26.0);
             b.setPrefWidth(290.0);
         }

@@ -32,6 +32,7 @@
   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
@@ -71,9 +72,78 @@
                             </children>
                         </HBox>
                   <TextArea fx:id="projectField" prefHeight="212.0" prefWidth="555.0" />
+                  <VBox fx:id="uploadInformation" prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <VBox prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <Label fx:id="noUploadedFilesLabel" prefHeight="26.0" prefWidth="146.0" text="No uploaded work">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets left="5.0" top="5.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <HBox fx:id="uploadedTXTBox" prefHeight="100.0" prefWidth="200.0">
+                                 <children>
+                                    <Label prefHeight="26.0" prefWidth="164.0" text=".txt file uploaded">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets left="5.0" top="5.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <Button fx:id="deleteTXTButton" mnemonicParsing="false" onAction="#handleDeleteUploadedTXTButtonClick" text="Delete" textAlignment="CENTER">
+                                       <HBox.margin>
+                                          <Insets top="5.0" />
+                                       </HBox.margin>
+                                    </Button>
+                                 </children>
+                              </HBox>
+                              <HBox fx:id="uploadedMP3Box" prefHeight="100.0" prefWidth="200.0">
+                                 <children>
+                                    <Label prefHeight="26.0" prefWidth="164.0" text=".mp3 file uploaded">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets left="5.0" top="5.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <Button fx:id="deleteMP3Button" mnemonicParsing="false" onAction="#handleDeleteUploadedMP3ButtonClick" text="Delete" textAlignment="CENTER">
+                                       <HBox.margin>
+                                          <Insets top="5.0" />
+                                       </HBox.margin>
+                                    </Button>
+                                 </children>
+                              </HBox>
+                              <HBox fx:id="uploadedPNGBox" prefHeight="100.0" prefWidth="200.0">
+                                 <children>
+                                    <Label prefHeight="26.0" prefWidth="164.0" text=".png file uploaded">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets left="5.0" top="5.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <Button fx:id="deletePNGButton" mnemonicParsing="false" onAction="#handleDeleteUploadedPNGButtonClick" text="Delete" textAlignment="CENTER">
+                                       <HBox.margin>
+                                          <Insets top="5.0" />
+                                       </HBox.margin>
+                                    </Button>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                        <Button fx:id="uploadFileButton" mnemonicParsing="false" onAction="#handleUploadFileButtonClick" text="Upload File" />
+                     </children>
+                  </VBox>
                     </children>
                 </VBox>
-                <Button layoutX="447.0" layoutY="359.0" mnemonicParsing="false" text="Submit" />
+            <Button fx:id="deleteProjectButton" layoutX="43.0" layoutY="359.0" mnemonicParsing="false" onAction="#handleDeleteProjectButtonClick" text="Delete Project" />
+                <Button fx:id="submitButton" layoutX="447.0" layoutY="359.0" mnemonicParsing="false" onAction="#handleSubmitButtonClick" text="Submit" />
                 <Button layoutX="515.0" layoutY="359.0" mnemonicParsing="false" text="Submit to AI" />
             </children>
         </AnchorPane>

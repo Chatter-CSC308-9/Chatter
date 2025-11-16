@@ -17,4 +17,8 @@ public class User {
     public Boolean emailIsHidden;
     @JsonProperty("projects")
     public String[] projects;
+    @JsonProperty("completedProjects")
+    public String[] completedProjects;
+    @JsonProperty("numProjects")
+    public int numProjects;
 }

@@ -17,25 +17,43 @@ public class Main extends Application {
     EditProjectController editProjectController = new EditProjectController();
     APIController apiController = new APIController();
     LogoutController logoutController = new LogoutController();
+    DisplayUsernameController displayUsernameController = new DisplayUsernameController();
+    SubmitProjectController submitProjectController = new SubmitProjectController();
+    ClaimUngradedProjectController claimUngradedProjectController = new ClaimUngradedProjectController();
+    SubmitGradedProjectController submitGradedProjectController = new SubmitGradedProjectController();
+    DownloadGradedProjectController downloadGradedProjectController = new DownloadGradedProjectController();
 
     List<Controller> controllers = new ArrayList<>(Arrays.asList(
             loginController,
             editProjectController,
             apiController,
-            logoutController));
+            logoutController,
+            displayUsernameController,
+            submitProjectController,
+            claimUngradedProjectController,
+            submitGradedProjectController,
+            downloadGradedProjectController));
 
     Login login = new Login(loginController);
     Current current = new Current(editProjectController);
-    CurrentEdit currentEdit = new CurrentEdit(editProjectController);
-    Account account = new Account(logoutController);
-    GraderAccount graderAccount = new GraderAccount(logoutController);
+    CurrentEdit currentEdit = new CurrentEdit(editProjectController, submitProjectController);
+    Pending pending = new Pending(submitProjectController);
+    Account account = new Account(logoutController, displayUsernameController);
+    GraderAccount graderAccount = new GraderAccount(logoutController, displayUsernameController);
+    GraderCatalog graderCatalog = new GraderCatalog(claimUngradedProjectController);
+    GraderClaimed graderClaimed = new GraderClaimed(submitGradedProjectController);
+    Graded graded = new Graded(downloadGradedProjectController);
 
     List<Boundary> boundaries = new ArrayList<>(Arrays.asList(
             login,
             current,
             currentEdit,
+            pending,
             account,
-            graderAccount));
+            graderAccount,
+            graderCatalog,
+            graderClaimed,
+            graded));
 
     Map<Class<?>, Object> boundaryInstantiations = new HashMap<>();
 

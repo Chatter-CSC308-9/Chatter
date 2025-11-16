@@ -1,18 +1,18 @@
 package main.controllers;
 
-import main.boundaries.shell_apis.hooks.ShellSetUserAPI;
-import main.boundaries.shell_apis.interfaces.SetsUser;
+import main.controllers.apis.hooks.SetUserAPI;
+import main.controllers.apis.interfaces.SetsUser;
 
 public class LogoutController implements Controller, SetsUser {
 
-    private ShellSetUserAPI shellSetUserAPI;
+    private SetUserAPI setUserAPI;
 
     public void logout() {
-        shellSetUserAPI.setUserID(0);
+        setUserAPI.setUserID(0);
     }
 
     @Override
-    public void setUserSettingAPI(ShellSetUserAPI shellSetUserAPI) {
-        this.shellSetUserAPI = shellSetUserAPI;
+    public void setUserSettingAPI(SetUserAPI setUserAPI) {
+        this.setUserAPI = setUserAPI;
     }
 }

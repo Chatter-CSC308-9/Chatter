@@ -1,9 +1,1 @@
-{
-  "username":"ferb",
-  "passwordplaintext":"iamferb",
-  "userID":1565107617,
-  "isGrader": true,
-  "email": "ferb@gmail.com",
-  "emailIsHidden": false,
-  "projects": ["project0"]
-}
+{"username":"ferb","passwordplaintext":"iamferb","userID":1565107617,"isGrader":true,"email":"ferb@gmail.com","emailIsHidden":false,"projects":[],"completedProjects":["D1E6E4E95","D1E6E4E97"],"numProjects":1}

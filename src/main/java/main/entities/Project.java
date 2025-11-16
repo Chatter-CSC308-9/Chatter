@@ -1,13 +1,28 @@
 package main.entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Project {
-
-    // path to project folder
-
-    // Strings: language, folderName, title
-    // booleans: submitted, claimed, graded
-
-    public Project() {
-        //code
-    }
+    @JsonProperty("learnerID")
+    public long learnerID;
+    @JsonProperty("graderID")
+    public long graderID;
+    @JsonProperty("projectName")
+    public String projectName;
+    @JsonProperty("projectTitle")
+    public String projectTitle;
+    @JsonProperty("language")
+    public String language;
+    @JsonProperty("submitted")
+    public Boolean submitted;
+    @JsonProperty("claimed")
+    public Boolean claimed;
+    @JsonProperty("graded")
+    public Boolean graded;
+    @JsonProperty("hasUploadedTXT")
+    public Boolean hasUploadedTXT;
+    @JsonProperty("hasUploadedMP3")
+    public Boolean hasUploadedMP3;
+    @JsonProperty("hasUploadedPNG")
+    public Boolean hasUploadedPNG;
 }

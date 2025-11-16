@@ -10,21 +10,18 @@ import javafx.scene.layout.TilePane;
 import main.boundaries.Boundary;
 import main.boundaries.apis.interfaces.Navigator;
 import main.boundaries.apis.hooks.ShellNavigateAPI;
-import main.controllers.EditProjectController;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import main.controllers.ClaimUngradedProjectController;
 
-public class Current extends Boundary implements Navigator {
+import javax.swing.*;
 
-    private static final Logger logger = LoggerFactory.getLogger(Current.class);
+public class GraderCatalog extends Boundary implements Navigator {
 
-    EditProjectController editProjectController;
+    ClaimUngradedProjectController claimUngradedProjectController;
 
-    @FXML
-    private Button createNewProjectButton;
+    ShellNavigateAPI shellNavigateAPI;
 
     @FXML
-    private Button perryThePlatypusButton;
+    private Button refreshButton;
 
     @FXML
     private TilePane buttonPane;
@@ -32,24 +29,22 @@ public class Current extends Boundary implements Navigator {
     @FXML
     private ListView<Button> projectButtonListView;
 
-    private ShellNavigateAPI shellNavigateAPI;
-
-    public Current(EditProjectController ewc) {
-        this.editProjectController = ewc;
-        super.addController(this.editProjectController);
-    }
-
-    @FXML
-    private void handleCreateNewProjectButtonClick() {
-        logger.debug("Create new project");
-        editProjectController.createProject();
-        shellNavigateAPI.setContent("CurrentEdit");
+    public GraderCatalog(ClaimUngradedProjectController cupc) {
+        this.claimUngradedProjectController = cupc;
+        super.addController(this.claimUngradedProjectController);
     }
 
     @FXML
     private void handleProjectButtonClick(String projDir) {
-        editProjectController.editProject(projDir);
-        shellNavigateAPI.setContent("CurrentEdit");
+        int input = JOptionPane.showConfirmDialog(null, "Do you want to claim this project?");
+        if (input == 0 && Boolean.FALSE.equals(this.claimUngradedProjectController.claimProject(projDir))) {
+            JOptionPane.showMessageDialog(null, "Failed to claim project. Try refreshing.");
+        }
+    }
+
+    @FXML
+    void refreshUngradedProjectsList() {
+        onShow();
     }
 
     @Override
@@ -64,14 +59,13 @@ public class Current extends Boundary implements Navigator {
         ObservableList<Button> projectButtons = FXCollections.observableArrayList();
 
         // create one button per project
-        String[] projectNames = editProjectController.getProjectNames();
+        String[] projectNames = claimUngradedProjectController.getAvailableProjectNames();
 
         for (String project : projectNames) {
             Button b = new Button(project);
             projectButtons.add(b);
             b.addEventHandler(MouseEvent.MOUSE_CLICKED, (event -> handleProjectButtonClick(project)));
-            editProjectController.setProject(project);
-            String title = editProjectController.getTitle();
+            String title = claimUngradedProjectController.getTitle(project);
             b.setText(title);
             b.setPrefHeight(26.0);
             b.setPrefWidth(290.0);

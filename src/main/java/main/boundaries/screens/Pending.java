@@ -6,50 +6,33 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.TilePane;
 import main.boundaries.Boundary;
 import main.boundaries.apis.interfaces.Navigator;
 import main.boundaries.apis.hooks.ShellNavigateAPI;
-import main.controllers.EditProjectController;
+import main.controllers.SubmitProjectController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class Current extends Boundary implements Navigator {
+public class Pending extends Boundary implements Navigator {
 
-    private static final Logger logger = LoggerFactory.getLogger(Current.class);
+    private static final Logger logger = LoggerFactory.getLogger(Pending.class);
 
-    EditProjectController editProjectController;
-
-    @FXML
-    private Button createNewProjectButton;
+    SubmitProjectController submitProjectController;
 
     @FXML
-    private Button perryThePlatypusButton;
-
-    @FXML
-    private TilePane buttonPane;
-
-    @FXML
-    private ListView<Button> projectButtonListView;
+    private ListView<Button> completedProjectButtonListView;
 
     private ShellNavigateAPI shellNavigateAPI;
 
-    public Current(EditProjectController ewc) {
-        this.editProjectController = ewc;
-        super.addController(this.editProjectController);
-    }
-
-    @FXML
-    private void handleCreateNewProjectButtonClick() {
-        logger.debug("Create new project");
-        editProjectController.createProject();
-        shellNavigateAPI.setContent("CurrentEdit");
+    public Pending(SubmitProjectController spc) {
+        this.submitProjectController = spc;
+        super.addController(this.submitProjectController);
     }
 
     @FXML
     private void handleProjectButtonClick(String projDir) {
-        editProjectController.editProject(projDir);
-        shellNavigateAPI.setContent("CurrentEdit");
+        logger.info("project clicked");
+        shellNavigateAPI.setContent("Pending"); // use shellNavigate for now to get rid of sonarqube issue
     }
 
     @Override
@@ -64,20 +47,18 @@ public class Current extends Boundary implements Navigator {
         ObservableList<Button> projectButtons = FXCollections.observableArrayList();
 
         // create one button per project
-        String[] projectNames = editProjectController.getProjectNames();
-
+        String[] projectNames = submitProjectController.getSubmittedUngradedProjectNames();
         for (String project : projectNames) {
             Button b = new Button(project);
             projectButtons.add(b);
             b.addEventHandler(MouseEvent.MOUSE_CLICKED, (event -> handleProjectButtonClick(project)));
-            editProjectController.setProject(project);
-            String title = editProjectController.getTitle();
+            String title = submitProjectController.getTitle(project);
             b.setText(title);
             b.setPrefHeight(26.0);
             b.setPrefWidth(290.0);
         }
 
         // display buttons
-        projectButtonListView.setItems(projectButtons);
+        completedProjectButtonListView.setItems(projectButtons);
     }
 }
