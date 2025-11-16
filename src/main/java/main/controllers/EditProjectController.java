@@ -301,6 +301,11 @@ public class EditProjectController implements Controller, NeedsUser {
         spc.submitProject(projectFolder);
     }
 
+    public void submitAIProject(SubmitProjectController spc) {
+        logger.debug("AI method called");
+        spc.submitProjectToAI(projectFolder);
+    }
+
     @Override
     public void setGetUserAPI(GetUserAPI getUserAPI) {
         this.getUserAPI = getUserAPI;

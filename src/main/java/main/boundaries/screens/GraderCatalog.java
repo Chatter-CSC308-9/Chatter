@@ -40,6 +40,7 @@ public class GraderCatalog extends Boundary implements Navigator {
         if (input == 0 && Boolean.FALSE.equals(this.claimUngradedProjectController.claimProject(projDir))) {
             JOptionPane.showMessageDialog(null, "Failed to claim project. Try refreshing.");
         }
+        onShow();
     }
 
     @FXML
