@@ -93,6 +93,9 @@ public class GraderClaimed extends Boundary implements Navigator {
             if (this.submitGradedProjectController.download(projDir, fileName, file) == 1) {
                 JOptionPane.showMessageDialog(null, "Error in downloading project. There may be a naming conflict in your destination folder.");
             }
+            else {
+                JOptionPane.showMessageDialog(null, "Successfully downloaded");
+            }
         }
     }
 

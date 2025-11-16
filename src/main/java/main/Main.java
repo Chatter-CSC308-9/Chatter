@@ -21,6 +21,7 @@ public class Main extends Application {
     SubmitProjectController submitProjectController = new SubmitProjectController();
     ClaimUngradedProjectController claimUngradedProjectController = new ClaimUngradedProjectController();
     SubmitGradedProjectController submitGradedProjectController = new SubmitGradedProjectController();
+    DownloadGradedProjectController downloadGradedProjectController = new DownloadGradedProjectController();
 
     List<Controller> controllers = new ArrayList<>(Arrays.asList(
             loginController,
@@ -30,7 +31,8 @@ public class Main extends Application {
             displayUsernameController,
             submitProjectController,
             claimUngradedProjectController,
-            submitGradedProjectController));
+            submitGradedProjectController,
+            downloadGradedProjectController));
 
     Login login = new Login(loginController);
     Current current = new Current(editProjectController);
@@ -40,6 +42,7 @@ public class Main extends Application {
     GraderAccount graderAccount = new GraderAccount(logoutController, displayUsernameController);
     GraderCatalog graderCatalog = new GraderCatalog(claimUngradedProjectController);
     GraderClaimed graderClaimed = new GraderClaimed(submitGradedProjectController);
+    Graded graded = new Graded(downloadGradedProjectController);
 
     List<Boundary> boundaries = new ArrayList<>(Arrays.asList(
             login,
@@ -49,7 +52,8 @@ public class Main extends Application {
             account,
             graderAccount,
             graderCatalog,
-            graderClaimed));
+            graderClaimed,
+            graded));
 
     Map<Class<?>, Object> boundaryInstantiations = new HashMap<>();
 

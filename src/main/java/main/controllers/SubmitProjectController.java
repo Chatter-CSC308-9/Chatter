@@ -11,11 +11,15 @@ import main.entities.User;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class SubmitProjectController implements Controller, NeedsUser {
 
     GetUserAPI getUserAPI;
+
+    ProjectHydratinator projectHydratinator = new ProjectHydratinator();
+    UserHydratinator userHydratinator = new UserHydratinator();
 
     private static final String PROJECTS_DIRECTORY = "server/projects/";
     private static final String TITLE_FILE_NAME = "/title.txt";
@@ -23,9 +27,7 @@ public class SubmitProjectController implements Controller, NeedsUser {
     // submit project
     public void submitProject(String projectFolder) {
         // get project and user
-        ProjectHydratinator projectHydratinator = new ProjectHydratinator();
         Project proj = projectHydratinator.getProject(projectFolder);
-        UserHydratinator userHydratinator = new UserHydratinator();
         User user = userHydratinator.getUser(this.getUserAPI.getUserID());
 
         // update project
@@ -51,12 +53,18 @@ public class SubmitProjectController implements Controller, NeedsUser {
     }
 
     // return names of folders holding projects for user
-    public String[] getCompletedProjectNames() {
-
-        UserHydratinator userHydratinator = new UserHydratinator();
+    public String[] getSubmittedUngradedProjectNames() {
         User user = userHydratinator.getUser(this.getUserAPI.getUserID());
 
-        return user.completedProjects;
+        ArrayList<String> projNames = new ArrayList<>();
+        for (String projName : user.completedProjects) {
+            Project proj = projectHydratinator.getProject(projName);
+            if (Boolean.FALSE.equals(proj.graded)) {
+                projNames.add(projName);
+            }
+        }
+
+        return projNames.toArray(new String[projNames.size()]);
     }
 
     // return title of project
