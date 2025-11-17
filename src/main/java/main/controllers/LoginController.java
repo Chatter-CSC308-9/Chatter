@@ -20,7 +20,7 @@ public class LoginController implements Controller, SetsUser {
     public Optional<Boolean> verifyCredentials(String username, String password) {
         CredentialsRepository credentialsRepository = new CredentialsRepository();
         Optional<UserCredentials> userCredentials = credentialsRepository.getUserCredentials(username);
-        if (userCredentials.isPresent() && password.equals(userCredentials.get().plaintextPassword)) {
+        if (userCredentials.isPresent() && password.equals(userCredentials.get().passwordplaintext)) {
             setUser(userCredentials.get().userID);
             logger.debug("{}/{}", username, password);
             return Optional.of(userCredentials.get().isGrader);

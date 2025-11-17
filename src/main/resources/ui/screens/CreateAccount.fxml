@@ -33,6 +33,7 @@
 -->
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
@@ -41,23 +42,30 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.boundaries.screens.Login">
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.boundaries.screens.CreateAccount">
   <children>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <children>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#dce6e2" height="275.0" layoutX="217.0" layoutY="43.0" stroke="BLACK" strokeType="INSIDE" width="205.0" />
-            <Label layoutX="295.0" layoutY="73.0" text="Log In">
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#dce6e2" height="275.0" layoutX="124.0" layoutY="49.0" stroke="BLACK" strokeType="INSIDE" width="389.0" />
+            <Label layoutX="283.0" layoutY="72.0" text="Register">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <TextField fx:id="usernameField" layoutX="235.0" layoutY="140.0" prefHeight="25.0" prefWidth="170.0" />
-            <PasswordField fx:id="passwordField" layoutX="235.0" layoutY="204.0" prefHeight="25.0" prefWidth="170.0" />
-            <Label layoutX="235.0" layoutY="122.0" text="Username:" />
-            <Label layoutX="235.0" layoutY="186.0" text="Password:" />
+            <TextField fx:id="usernameField" layoutX="140.0" layoutY="130.0" prefHeight="25.0" prefWidth="170.0" />
+          <TextField fx:id="emailField" layoutX="327.0" layoutY="129.0" prefHeight="25.0" prefWidth="170.0" />
+          <Label layoutX="327.0" layoutY="111.0" text="Email:" />
+            <PasswordField fx:id="passwordField" layoutX="140.0" layoutY="197.0" prefHeight="25.0" prefWidth="170.0" />
+            <Label layoutX="140.0" layoutY="112.0" text="Username:" />
+            <Label layoutX="140.0" layoutY="179.0" text="Password:" />
             <Label layoutX="271.0" layoutY="55.0" text="Welcome to Chatter!" />
-            <Button fx:id="loginButton" alignment="CENTER" contentDisplay="CENTER" layoutX="294.0" layoutY="243.0" mnemonicParsing="false" onAction="#handleLoginButtonClick" text="Log in" />
-            <Button fx:id="createAccountButton" alignment="CENTER" contentDisplay="CENTER" layoutX="289.0" layoutY="280.0" mnemonicParsing="false" onAction="#handleCreateAccountButtonClick" text="Register" />
+          <PasswordField fx:id="repeatPasswordField" layoutX="327.0" layoutY="196.0" prefHeight="25.0" prefWidth="170.0" />
+          <Label layoutX="327.0" layoutY="178.0" text="Repeat password:" />
+          <CheckBox fx:id="isGraderCheckbox" layoutX="175.0" layoutY="269.0" mnemonicParsing="false" text="Grader account?" />
+            <Button fx:id="createAccountButton" alignment="CENTER" contentDisplay="CENTER" layoutX="355.0" layoutY="245.0" mnemonicParsing="false" onAction="#handleCreateAccountButtonClick" text="Create account" />
+            <Button fx:id="backToLoginButton" alignment="CENTER" contentDisplay="CENTER" layoutX="360.0" layoutY="282.0" mnemonicParsing="false" onAction="#handleBackToLoginButtonClick" text="Back to login" />
+
+
       </children>
     </AnchorPane>
   </children>

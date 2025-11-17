@@ -1,5 +1,6 @@
 package main;
 
+import com.stripe.Stripe;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -24,6 +25,7 @@ public class Main extends Application {
     ClaimUngradedProjectController claimUngradedProjectController = new ClaimUngradedProjectController();
     SubmitGradedProjectController submitGradedProjectController = new SubmitGradedProjectController();
     DownloadGradedProjectController downloadGradedProjectController = new DownloadGradedProjectController();
+    CreateAccountController createAccountController = new CreateAccountController();
 
     List<Controller> controllers = new ArrayList<>(Arrays.asList(
             loginController,
@@ -36,7 +38,8 @@ public class Main extends Application {
             submitGradedProjectController,
             downloadGradedProjectController,
             acceptPaymentController,
-            submitProjectController));
+            submitProjectController,
+            createAccountController));
 
     Login login = new Login(loginController);
     Current current = new Current(editProjectController);
@@ -47,6 +50,7 @@ public class Main extends Application {
     GraderCatalog graderCatalog = new GraderCatalog(claimUngradedProjectController);
     GraderClaimed graderClaimed = new GraderClaimed(submitGradedProjectController);
     Graded graded = new Graded(downloadGradedProjectController, acceptPaymentController);
+    CreateAccount createAccount = new CreateAccount(createAccountController);
 
     List<Boundary> boundaries = new ArrayList<>(Arrays.asList(
             login,
@@ -57,16 +61,19 @@ public class Main extends Application {
             graderAccount,
             graderCatalog,
             graderClaimed,
-            graded));
+            graded,
+            createAccount));
 
     Map<Class<?>, Object> boundaryInstantiations = new HashMap<>();
 
     public static void main(String[] args) {
+        Stripe.apiKey = System.getenv("STRIPE_SECRET_KEY");
         launch();
     }
 
     @Override
     public void start(Stage stage) throws Exception {
+
         for (Boundary boundary : boundaries) {
             boundaryInstantiations.put(boundary.getClass(), boundary);
         }
