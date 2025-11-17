@@ -25,4 +25,16 @@ public class Project {
     public Boolean hasUploadedMP3;
     @JsonProperty("hasUploadedPNG")
     public Boolean hasUploadedPNG;
+
+    public int getCostInCents() {
+        if (Boolean.TRUE.equals(hasUploadedMP3)) {
+            return 10;
+        } else if (Boolean.TRUE.equals(hasUploadedPNG)) {
+            return 243542;
+        } else if (Boolean.TRUE.equals(hasUploadedTXT)) {
+            return 142924;
+        } else /*if work.txt exists*/ {
+            return 40;
+        }
+    }
 }

@@ -44,10 +44,9 @@ public class Main extends Application {
     Pending pending = new Pending(submitProjectController);
     Account account = new Account(logoutController, displayUsernameController);
     GraderAccount graderAccount = new GraderAccount(logoutController, displayUsernameController);
-    Pay pay = new Pay(acceptPaymentController);
     GraderCatalog graderCatalog = new GraderCatalog(claimUngradedProjectController);
     GraderClaimed graderClaimed = new GraderClaimed(submitGradedProjectController);
-    Graded graded = new Graded(downloadGradedProjectController);
+    Graded graded = new Graded(downloadGradedProjectController, acceptPaymentController);
 
     List<Boundary> boundaries = new ArrayList<>(Arrays.asList(
             login,
@@ -55,7 +54,6 @@ public class Main extends Application {
             currentEdit,
             pending,
             account,
-            pay,
             graderAccount,
             graderCatalog,
             graderClaimed,
