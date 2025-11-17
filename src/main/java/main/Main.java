@@ -8,6 +8,7 @@ import main.boundaries.Boundary;
 import main.boundaries.Shell;
 import main.boundaries.screens.*;
 import main.controllers.*;
+import main.controllers.apis.UserIdApiController;
 
 import java.util.*;
 
@@ -15,7 +16,7 @@ public class Main extends Application {
 
     LoginController loginController = new LoginController();
     EditProjectController editProjectController = new EditProjectController();
-    APIController apiController = new APIController();
+    UserIdApiController userIdApiController = new UserIdApiController();
     LogoutController logoutController = new LogoutController();
     DisplayUsernameController displayUsernameController = new DisplayUsernameController();
     AcceptPaymentController acceptPaymentController = new AcceptPaymentController();
@@ -27,7 +28,7 @@ public class Main extends Application {
     List<Controller> controllers = new ArrayList<>(Arrays.asList(
             loginController,
             editProjectController,
-            apiController,
+            userIdApiController,
             logoutController,
             displayUsernameController,
             submitProjectController,
@@ -54,7 +55,6 @@ public class Main extends Application {
             currentEdit,
             pending,
             account,
-            graderAccount,
             pay,
             graderAccount,
             graderCatalog,

@@ -61,9 +61,13 @@ fx:controller="main.boundaries.screens.GraderAccount">
             <Label layoutX="46.0" layoutY="166.0" text="Email: perrytplatypus@owca.gov" />
             <Label layoutX="146.0" layoutY="199.0" text="Stop receiving grade requests" />
             <ToggleButton layoutX="40.0" layoutY="195.0" mnemonicParsing="false" text="Pause Account" />
-            <Button layoutX="37.0" layoutY="246.0" mnemonicParsing="false" text="Claim Payments" />
-            <Label layoutX="148.0" layoutY="250.0" text="Current Balance: $47.50" />
+             <!--
+             <Button layoutX="37.0" layoutY="246.0" mnemonicParsing="false" text="Claim Payments" />
+
+             <Label layoutX="148.0" layoutY="250.0" text="Current Balance: $47.50" />
+
             <Button fx:id="logoutButton" onAction="#handleLogoutButtonClick" layoutX="546.0" layoutY="337.0" mnemonicParsing="false" text="Log out" />
+            -->
          </children>
     </AnchorPane>
   </children>
