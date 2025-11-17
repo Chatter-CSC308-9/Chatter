@@ -8,24 +8,26 @@ import main.controllers.apis.interfaces.NeedsUser;
 import main.entities.Project;
 import main.entities.User;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.logging.Logger;
 
 public class SubmitProjectController implements Controller, NeedsUser {
 
     GetUserAPI getUserAPI;
 
+    ProjectHydratinator projectHydratinator = new ProjectHydratinator();
+    UserHydratinator userHydratinator = new UserHydratinator();
+    private static final Logger logger = Logger.getLogger(SubmitProjectController.class.getName());
     private static final String PROJECTS_DIRECTORY = "server/projects/";
     private static final String TITLE_FILE_NAME = "/title.txt";
 
     // submit project
     public void submitProject(String projectFolder) {
         // get project and user
-        ProjectHydratinator projectHydratinator = new ProjectHydratinator();
         Project proj = projectHydratinator.getProject(projectFolder);
-        UserHydratinator userHydratinator = new UserHydratinator();
         User user = userHydratinator.getUser(this.getUserAPI.getUserID());
 
         // update project
@@ -51,18 +53,24 @@ public class SubmitProjectController implements Controller, NeedsUser {
     }
 
     // return names of folders holding projects for user
-    public String[] getCompletedProjectNames() {
-
-        UserHydratinator userHydratinator = new UserHydratinator();
+    public String[] getSubmittedUngradedProjectNames() {
         User user = userHydratinator.getUser(this.getUserAPI.getUserID());
 
-        return user.completedProjects;
+        ArrayList<String> projNames = new ArrayList<>();
+        for (String projName : user.completedProjects) {
+            Project proj = projectHydratinator.getProject(projName);
+            if (Boolean.FALSE.equals(proj.graded)) {
+                projNames.add(projName);
+            }
+        }
+
+        return projNames.toArray(new String[projNames.size()]);
     }
 
     // return title of project
     public String getTitle(String projectName) {
         String title = "hello world";
-        try(BufferedReader br = new BufferedReader(new FileReader(PROJECTS_DIRECTORY + projectName + TITLE_FILE_NAME))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(PROJECTS_DIRECTORY + projectName + TITLE_FILE_NAME))) {
             title = br.readLine();
         } catch (IOException e) {
             throw new FileProcessingException("Failed to get title", e);
@@ -70,6 +78,48 @@ public class SubmitProjectController implements Controller, NeedsUser {
 
         return title;
     }
+
+    //Submit Project to AI
+    public void submitProjectToAI(String projectFolder) {
+        logger.info("entered submitProjToAI");
+        File inputFile = new File(PROJECTS_DIRECTORY, projectFolder + "/work.txt");
+        String absoluteInputPath = inputFile.getAbsolutePath();
+        logger.info(absoluteInputPath);
+        File parentDir = inputFile.getParentFile();
+        File feedbackFile = new File(parentDir, "AIFeedback.txt");
+        String feedbackPath = feedbackFile.getAbsolutePath();
+        logger.info(feedbackPath);
+        try{
+            String scriptPath = "server/AI/reader.py";
+            List<String> command = Arrays.asList(
+                    "python",
+                    scriptPath,
+                    "--model", "llama3.1",
+                    "--prompt_file", absoluteInputPath,
+                    "--output", feedbackPath
+            );
+            // Create the process builder
+            ProcessBuilder pb = new ProcessBuilder(command);
+            pb.redirectErrorStream(true); // merge stderr into stdout
+
+            // Start the process
+            Process p = pb.start();
+            try (BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()))) {
+                String line;
+                while ((line = r.readLine()) != null) {
+                    logger.info(line);
+                }
+                logger.info("complete");
+            }
+
+        }catch (Exception _){
+            logger.warning("Failed to submit project to AI");
+        }
+
+
+
+    }
+
 
     @Override
     public void setGetUserAPI(GetUserAPI getUserAPI) {

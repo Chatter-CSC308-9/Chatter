@@ -47,7 +47,7 @@ public class Pending extends Boundary implements Navigator {
         ObservableList<Button> projectButtons = FXCollections.observableArrayList();
 
         // create one button per project
-        String[] projectNames = submitProjectController.getCompletedProjectNames();
+        String[] projectNames = submitProjectController.getSubmittedUngradedProjectNames();
         for (String project : projectNames) {
             Button b = new Button(project);
             projectButtons.add(b);
