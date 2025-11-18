@@ -4,19 +4,26 @@ import main.adapters.CredentialsRepository;
 import main.adapters.UserHydratinator;
 import main.entities.User;
 import main.entities.UserCredentials;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Random;
 
 public class CreateAccountController implements Controller {
 
+    private static final Logger logger = LoggerFactory.getLogger(CreateAccountController.class);
+
     @SuppressWarnings("java:S2245") // Non-security randomness for uid generation
     private static final Random random = new Random();
+
+    private String savedUserId;
 
     // returns true if async steps required, false otherwise
     public boolean createAccount(String username, String email, String password, boolean isGrader) {
         String userId = generateUserId();
         while (!verifyValidUserId(userId)) userId = generateUserId();
+        this.savedUserId = userId;
         var user = new User();
         user.username = username;
         user.userID = Long.parseLong(userId,16);
@@ -32,6 +39,14 @@ public class CreateAccountController implements Controller {
         (new CredentialsRepository()).addUserCredential(userCredentials);
 
         return isGrader;
+    }
+
+    public boolean stripeOnboard() throws InterruptedException {
+        // stripe onboarding goes here
+        logger.debug("start");
+        Thread.sleep(3000);
+        logger.debug("end");
+        return true;
     }
 
     private String generateUserId() {
