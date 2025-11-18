@@ -17,13 +17,10 @@ public class CreateAccountController implements Controller {
     @SuppressWarnings("java:S2245") // Non-security randomness for uid generation
     private static final Random random = new Random();
 
-    private String savedUserId;
-
     // returns true if async steps required, false otherwise
     public boolean createAccount(String username, String email, String password, boolean isGrader) {
         String userId = generateUserId();
         while (!verifyValidUserId(userId)) userId = generateUserId();
-        this.savedUserId = userId;
         var user = new User();
         user.username = username;
         user.userID = Long.parseLong(userId,16);

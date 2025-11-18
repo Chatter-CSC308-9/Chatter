@@ -52,11 +52,14 @@ public class CreateAccount extends Boundary implements Navigator {
         boolean isGrader = this.isGraderCheckbox.isSelected();
         if (username == null || email == null || password == null || passwordRepeat == null) {
             registrationMessage("Fill in all fields", true);
+            return;
         }
         else if (!email.matches("(?i)^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}$")) {
             registrationMessage("Invalid email", true);
+            return;
         } else if (!password.equals(passwordRepeat)) {
             registrationMessage("Passwords do not match", true);
+            return;
         }
         if (this.createAccountController.createAccount(username, email, password, isGrader)) {
             stripeOnboard();

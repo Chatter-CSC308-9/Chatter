@@ -72,7 +72,7 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>${javafx.maven.plugin.version}</version>
                 <configuration>
-                    <mainClass>main.Main</mainClass>
+                    <mainClass>main.framework.Main</mainClass>
                 </configuration>
             </plugin>
         </plugins>

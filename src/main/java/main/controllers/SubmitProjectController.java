@@ -1,6 +1,6 @@
 package main.controllers;
 
-import main.FileProcessingException;
+import main.util.FileProcessingException;
 import main.adapters.ProjectHydratinator;
 import main.adapters.UserHydratinator;
 import main.controllers.apis.hooks.GetUserAPI;
