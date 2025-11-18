@@ -10,10 +10,18 @@
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="main.boundaries.taskbars.GraderTaskbar"
             >
-    <HBox>
-        <ToggleButton fx:id="chatterButton" onAction="#handleChatterButtonClick" mnemonicParsing="false" prefHeight="25.0" prefWidth="143.0" text="Chatter"/>
-        <ToggleButton fx:id="catalogButton" onAction="#handleCatalogButtonClick" mnemonicParsing="false" prefHeight="25.0" prefWidth="216.0" text="Catalog"/>
-        <ToggleButton fx:id="claimedButton" onAction="#handleClaimedButtonClick" mnemonicParsing="false" prefHeight="25.0" prefWidth="216.0" text="Claimed"/>
-        <ToggleButton fx:id="accountButton" onAction="#handleAccountButtonClick" mnemonicParsing="false" prefHeight="25.0" prefWidth="68.0" text="Account"/>
-    </HBox>
+    <children>
+        <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="AS_NEEDED" pannable="true" vbarPolicy="NEVER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <content>
+                <HBox alignment="CENTER_LEFT" spacing="0.0">
+                    <children>
+                        <ToggleButton fx:id="chatterButton" maxHeight="Infinity" maxWidth="Infinity" onAction="#handleChatterButtonClick" text="Chatter" HBox.hgrow="ALWAYS"/>
+                        <ToggleButton fx:id="catalogButton" maxHeight="Infinity" maxWidth="Infinity" onAction="#handleCatalogButtonClick" text="Catalog" HBox.hgrow="ALWAYS"/>
+                        <ToggleButton fx:id="claimedButton" maxHeight="Infinity" maxWidth="Infinity" onAction="#handleClaimedButtonClick" text="Claimed" HBox.hgrow="ALWAYS"/>
+                        <ToggleButton fx:id="accountButton" maxHeight="Infinity" maxWidth="Infinity" onAction="#handleAccountButtonClick" text="Account" HBox.hgrow="ALWAYS"/>
+                    </children>
+                </HBox>
+            </content>
+        </ScrollPane>
+    </children>
 </AnchorPane>
