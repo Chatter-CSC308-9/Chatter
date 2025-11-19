@@ -1,15 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.boundaries.taskbars.LearnerTaskbar">
-    <HBox>
-        <ToggleButton fx:id="chatterButton" mnemonicParsing="false" onAction="#handleChatterButtonClick" prefHeight="25.0" prefWidth="143.0" text="Chatter" />
-        <ToggleButton fx:id="currentButton" mnemonicParsing="false" onAction="#handleCurrentButtonClick" prefHeight="25.0" prefWidth="143.0" text="Current" />
-        <ToggleButton fx:id="pendingButton" mnemonicParsing="false" onAction="#handlePendingButtonClick" prefHeight="25.0" prefWidth="143.0" text="Pending" />
-        <ToggleButton fx:id="gradedButton" mnemonicParsing="false" onAction="#handleGradedButtonClick" prefHeight="25.0" prefWidth="143.0" text="Graded" />
-        <ToggleButton fx:id="accountButton" mnemonicParsing="false" onAction="#handleAccountButtonClick" prefHeight="25.0" prefWidth="68.0" text="Account" />
-    </HBox>
+<!-- Responsive learner taskbar:
+     - HBox is wrapped in a horizontal ScrollPane so all buttons remain reachable on small windows.
+     - Each ToggleButton grows to share available width (HBox.hgrow="ALWAYS" + maxWidth=Infinity).
+     - AnchorPane anchors pin the ScrollPane to all sides so it resizes with the window.
+-->
+
+<AnchorPane prefWidth="288.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.boundaries.taskbars.LearnerTaskbar">
+
+    <children>
+        <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="AS_NEEDED" pannable="true" vbarPolicy="NEVER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <content>
+                <HBox alignment="CENTER_LEFT" spacing="0.0">
+                    <children>
+                        <ToggleButton fx:id="chatterButton" maxHeight="Infinity" maxWidth="Infinity" onAction="#handleChatterButtonClick" text="Chatter" HBox.hgrow="ALWAYS" />
+                        <ToggleButton fx:id="currentButton" maxHeight="Infinity" maxWidth="Infinity" onAction="#handleCurrentButtonClick" text="Current" HBox.hgrow="ALWAYS" />
+                        <ToggleButton fx:id="pendingButton" maxHeight="Infinity" maxWidth="Infinity" onAction="#handlePendingButtonClick" text="Pending" HBox.hgrow="ALWAYS" />
+                        <ToggleButton fx:id="gradedButton" maxHeight="Infinity" maxWidth="Infinity" onAction="#handleGradedButtonClick" text="Graded" HBox.hgrow="ALWAYS" />
+                        <ToggleButton fx:id="accountButton" maxHeight="Infinity" maxWidth="Infinity" onAction="#handleAccountButtonClick" text="Account" HBox.hgrow="ALWAYS" />
+                    </children>
+                </HBox>
+            </content>
+        </ScrollPane>
+    </children>
+
 </AnchorPane>

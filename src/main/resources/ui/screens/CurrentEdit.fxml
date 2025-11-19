@@ -32,6 +32,153 @@
   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
 
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="main.boundaries.screens.CurrentEdit"
+            prefWidth="900.0" prefHeight="600.0">
+
+    <!-- Header: title + title field + save button -->
+    <top>
+        <ScrollPane hbarPolicy="AS_NEEDED" vbarPolicy="NEVER" fitToHeight="true" pannable="true">
+            <content>
+                <HBox spacing="10.0" alignment="CENTER_LEFT">
+                    <children>
+                        <Label text="Edit Work">
+                            <font>
+                                <Font name="System Bold" size="20.0"/>
+                            </font>
+                        </Label>
+
+                        <Label text="Title:"/>
+                        <TextField fx:id="titleField" promptText="title here"
+                                   HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+
+                        <Pane HBox.hgrow="ALWAYS"/> <!-- pushes save button right -->
+
+                        <Button fx:id="saveAndExitButton" onAction="#handleSaveAndExitButtonClick" text="Save and Exit"/>
+                    </children>
+
+                    <padding>
+                        <Insets top="10.0" right="14.0" bottom="10.0" left="14.0"/>
+                    </padding>
+                </HBox>
+            </content>
+        </ScrollPane>
+    </top>
+
+    <!-- Center: scrollable main content -->
+    <center>
+        <ScrollPane fitToWidth="true" fitToHeight="true" pannable="true">
+            <content>
+                <VBox><!-- spacing="12.0" padding="14.0">-->
+                    <padding>
+                        <Insets top="10.0" right="14.0" bottom="10.0" left="14.0"/>
+                    </padding>
+                    <children>
+                        <!-- Toggle mode -->
+                        <HBox spacing="8.0">
+                            <children>
+                                <ToggleButton fx:id="uploadButton" onAction="#handleUploadButtonClick" text="Upload"/>
+                                <ToggleButton fx:id="textEntryButton" onAction="#handleTextEntryButtonClick" text="Text Entry"/>
+                            </children>
+                        </HBox>
+
+                        <!-- Text area -->
+                        <TextArea fx:id="projectField" promptText="work here"
+                                  VBox.vgrow="ALWAYS" wrapText="true"/>
+
+                        <!-- Upload info -->
+                        <VBox spacing="8.0" fx:id="uploadInformation">
+                            <Label text="You can upload PNG, MP3, or TXT files." wrapText="true"/>
+                            <Button fx:id="uploadFileButton" onAction="#handleUploadFileButtonClick" text="Upload File"/>
+
+                            <HBox fx:id="uploadedTXTBox" prefHeight="100.0" prefWidth="200.0">
+                                <Label prefHeight="26.0" prefWidth="164.0" text=".txt file uploaded">
+                                    <font>
+                                        <Font size="16.0"/>
+                                    </font>
+                                    <HBox.margin>
+                                        <Insets left="5.0" top="5.0"/>
+                                    </HBox.margin>
+                                </Label>
+                                <Button fx:id="deleteTXTButton" mnemonicParsing="false"
+                                        onAction="#handleDeleteUploadedTXTButtonClick" text="Delete"
+                                        textAlignment="CENTER">
+                                    <HBox.margin>
+                                        <Insets top="5.0"/>
+                                    </HBox.margin>
+                                </Button>
+                            </HBox>
+                            <HBox fx:id="uploadedMP3Box" prefHeight="100.0" prefWidth="200.0">
+                                <Label prefHeight="26.0" prefWidth="164.0" text=".mp3 file uploaded">
+                                    <font>
+                                        <Font size="16.0"/>
+                                    </font>
+                                    <HBox.margin>
+                                        <Insets left="5.0" top="5.0"/>
+                                    </HBox.margin>
+                                </Label>
+                                <Button fx:id="deleteMP3Button" mnemonicParsing="false"
+                                        onAction="#handleDeleteUploadedMP3ButtonClick" text="Delete"
+                                        textAlignment="CENTER">
+                                    <HBox.margin>
+                                        <Insets top="5.0"/>
+                                    </HBox.margin>
+                                </Button>
+                            </HBox>
+                            <HBox fx:id="uploadedPNGBox" prefHeight="100.0" prefWidth="200.0">
+                                <Label prefHeight="26.0" prefWidth="164.0" text=".png file uploaded">
+                                    <font>
+                                        <Font size="16.0"/>
+                                    </font>
+                                    <HBox.margin>
+                                        <Insets left="5.0" top="5.0"/>
+                                    </HBox.margin>
+                                </Label>
+                                <Button fx:id="deletePNGButton" mnemonicParsing="false"
+                                        onAction="#handleDeleteUploadedPNGButtonClick" text="Delete"
+                                        textAlignment="CENTER">
+                                    <HBox.margin>
+                                        <Insets top="5.0"/>
+                                    </HBox.margin>
+                                </Button>
+                            </HBox>
+
+                            <Label fx:id="noUploadedFilesLabel" text="No files uploaded yet."
+                                   visible="false" managed="false"/>
+                        </VBox>
+                    </children>
+                </VBox>
+            </content>
+        </ScrollPane>
+    </center>
+
+    <!-- Bottom: fixed action bar -->
+    <bottom>
+        <HBox spacing="10.0" BorderPane.alignment="CENTER">
+            <children>
+                <Button fx:id="deleteProjectButton" onAction="#handleDeleteProjectButtonClick" text="Delete Project"/>
+                <Pane HBox.hgrow="ALWAYS"/>
+                <Button text="Submit to AI"/>
+                <Button fx:id="submitButton" text="Submit"/>
+            </children>
+
+            <padding>
+                <Insets top="10.0" right="14.0" bottom="10.0" left="14.0"/>
+            </padding>
+        </HBox>
+    </bottom>
+
+</BorderPane>
+
+
+
+<!--
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -149,3 +296,4 @@
         </AnchorPane>
     </children>
 </VBox>
+-->
