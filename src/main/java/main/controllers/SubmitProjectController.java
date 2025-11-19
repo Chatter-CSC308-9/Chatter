@@ -83,8 +83,8 @@ public class SubmitProjectController implements Controller, NeedsUser {
     public void submitProjectToAI(String projectFolder) {
         logger.info("entered submitProjToAI");
         File inputFile = new File(PROJECTS_DIRECTORY, projectFolder + "/work.txt");
-        String absoluteInputPath = inputFile.getAbsolutePath();
-        logger.info(absoluteInputPath);
+        String inputPath = inputFile.getPath();
+        logger.info(inputPath);
         File parentDir = inputFile.getParentFile();
         File feedbackFile = new File(parentDir, "AIFeedback.txt");
         String feedbackPath = feedbackFile.getAbsolutePath();
@@ -95,7 +95,7 @@ public class SubmitProjectController implements Controller, NeedsUser {
                     "python",
                     scriptPath,
                     "--model", "llama3.1",
-                    "--prompt_file", absoluteInputPath,
+                    "--prompt_file", inputPath,
                     "--output", feedbackPath
             );
             // Create the process builder
