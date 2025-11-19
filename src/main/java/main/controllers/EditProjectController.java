@@ -1,6 +1,6 @@
 package main.controllers;
 
-import main.FileProcessingException;
+import main.util.FileProcessingException;
 import main.adapters.ProjectHydratinator;
 import main.adapters.UserHydratinator;
 import main.controllers.apis.hooks.GetUserAPI;
@@ -299,6 +299,11 @@ public class EditProjectController implements Controller, NeedsUser {
     // submit project
     public void submitProject(SubmitProjectController spc) {
         spc.submitProject(projectFolder);
+    }
+
+    public void submitAIProject(SubmitProjectController spc) {
+        logger.debug("AI method called");
+        spc.submitProjectToAI(projectFolder);
     }
 
     @Override

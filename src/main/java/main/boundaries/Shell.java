@@ -6,7 +6,7 @@ import javafx.scene.Node;
 import javafx.scene.layout.StackPane;
 import main.boundaries.apis.hooks.ShellNavigateAPI;
 import main.boundaries.apis.interfaces.Navigator;
-import main.controllers.APIController;
+import main.controllers.apis.UserIdApiController;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -23,12 +23,12 @@ public class Shell extends Boundary implements ShellNavigateAPI {
     @FXML
     private StackPane contentHost; // The screen to be displayed under the taskbar
 
-    APIController apiController;
+    UserIdApiController userIdApiController;
 
-    public Shell(Map<Class<?>, Object> boundaryInstantiations, APIController apiController) {
+    public Shell(Map<Class<?>, Object> boundaryInstantiations, UserIdApiController userIdApiController) {
         this.boundaryInstantiations = boundaryInstantiations;
-        this.apiController = apiController;
-        super.addController(this.apiController);
+        this.userIdApiController = userIdApiController;
+        super.addController(this.userIdApiController);
     }
 
     // Starts here

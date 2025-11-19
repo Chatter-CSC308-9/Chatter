@@ -1,6 +1,6 @@
 package main.controllers;
 
-import main.FileProcessingException;
+import main.util.FileProcessingException;
 import main.adapters.ProjectHydratinator;
 import main.adapters.UserHydratinator;
 import main.controllers.apis.hooks.GetUserAPI;
@@ -8,11 +8,11 @@ import main.controllers.apis.interfaces.NeedsUser;
 import main.entities.Project;
 import main.entities.User;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.logging.Logger;
 
 public class SubmitProjectController implements Controller, NeedsUser {
 
@@ -20,7 +20,7 @@ public class SubmitProjectController implements Controller, NeedsUser {
 
     ProjectHydratinator projectHydratinator = new ProjectHydratinator();
     UserHydratinator userHydratinator = new UserHydratinator();
-
+    private static final Logger logger = Logger.getLogger(SubmitProjectController.class.getName());
     private static final String PROJECTS_DIRECTORY = "server/projects/";
     private static final String TITLE_FILE_NAME = "/title.txt";
 
@@ -70,7 +70,7 @@ public class SubmitProjectController implements Controller, NeedsUser {
     // return title of project
     public String getTitle(String projectName) {
         String title = "hello world";
-        try(BufferedReader br = new BufferedReader(new FileReader(PROJECTS_DIRECTORY + projectName + TITLE_FILE_NAME))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(PROJECTS_DIRECTORY + projectName + TITLE_FILE_NAME))) {
             title = br.readLine();
         } catch (IOException e) {
             throw new FileProcessingException("Failed to get title", e);
@@ -78,6 +78,48 @@ public class SubmitProjectController implements Controller, NeedsUser {
 
         return title;
     }
+
+    //Submit Project to AI
+    public void submitProjectToAI(String projectFolder) {
+        logger.info("entered submitProjToAI");
+        File inputFile = new File(PROJECTS_DIRECTORY, projectFolder + "/work.txt");
+        String absoluteInputPath = inputFile.getAbsolutePath();
+        logger.info(absoluteInputPath);
+        File parentDir = inputFile.getParentFile();
+        File feedbackFile = new File(parentDir, "AIFeedback.txt");
+        String feedbackPath = feedbackFile.getAbsolutePath();
+        logger.info(feedbackPath);
+        try{
+            String scriptPath = "server/AI/reader.py";
+            List<String> command = Arrays.asList(
+                    "python",
+                    scriptPath,
+                    "--model", "llama3.1",
+                    "--prompt_file", absoluteInputPath,
+                    "--output", feedbackPath
+            );
+            // Create the process builder
+            ProcessBuilder pb = new ProcessBuilder(command);
+            pb.redirectErrorStream(true); // merge stderr into stdout
+
+            // Start the process
+            Process p = pb.start();
+            try (BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()))) {
+                String line;
+                while ((line = r.readLine()) != null) {
+                    logger.info(line);
+                }
+                logger.info("complete");
+            }
+
+        }catch (Exception _){
+            logger.warning("Failed to submit project to AI");
+        }
+
+
+
+    }
+
 
     @Override
     public void setGetUserAPI(GetUserAPI getUserAPI) {

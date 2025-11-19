@@ -37,6 +37,9 @@ public class CurrentEdit extends Boundary implements Navigator {
     private Button submitButton;
 
     @FXML
+    private Button submitToAIButton;
+
+    @FXML
     private Button deleteMP3Button;
 
     @FXML
@@ -212,6 +215,13 @@ public class CurrentEdit extends Boundary implements Navigator {
     @FXML
     void handleSubmitButtonClick() {
         this.editProjectController.submitProject(submitProjectController);
+        shellNavigateAPI.setContent(CURRENT);
+    }
+
+    @FXML
+    void handleAISubmitButtonClick() {
+        logger.debug("AI submitting button clicked");
+        this.editProjectController.submitAIProject(submitProjectController);
         shellNavigateAPI.setContent(CURRENT);
     }
 

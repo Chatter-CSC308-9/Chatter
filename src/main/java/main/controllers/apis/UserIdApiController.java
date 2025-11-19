@@ -1,14 +1,16 @@
-package main.controllers;
+package main.controllers.apis;
 
+import main.controllers.Controller;
 import main.controllers.apis.hooks.GetUserAPI;
 import main.controllers.apis.hooks.SetUserAPI;
 import main.controllers.apis.interfaces.NeedsUser;
 import main.controllers.apis.interfaces.SetsUser;
 
-public class APIController implements Controller, GetUserAPI, SetUserAPI {
+public class UserIdApiController implements ApiController, GetUserAPI, SetUserAPI {
 
     private long currentUserID;
 
+    @Override
     public void injectControllerAPIs(Controller controller) {
         if (controller instanceof NeedsUser) injectGetUserAPI(controller);
         if (controller instanceof SetsUser) injectSetUserAPI(controller);

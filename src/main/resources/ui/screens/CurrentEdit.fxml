@@ -291,7 +291,7 @@
                 </VBox>
             <Button fx:id="deleteProjectButton" layoutX="43.0" layoutY="359.0" mnemonicParsing="false" onAction="#handleDeleteProjectButtonClick" text="Delete Project" />
                 <Button fx:id="submitButton" layoutX="447.0" layoutY="359.0" mnemonicParsing="false" onAction="#handleSubmitButtonClick" text="Submit" />
-                <Button layoutX="515.0" layoutY="359.0" mnemonicParsing="false" text="Submit to AI" />
+                <Button fx:id="submitToAIButton" layoutX="515.0" layoutY="359.0" mnemonicParsing="false" onAction="#handleAISubmitButtonClick" text="Submit to AI" />
             </children>
         </AnchorPane>
     </children>

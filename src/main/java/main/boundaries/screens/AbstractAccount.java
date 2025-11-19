@@ -21,6 +21,13 @@ public abstract class AbstractAccount extends Boundary implements Navigator {
 
     private ShellNavigateAPI shellNavigateAPI;
 
+    protected AbstractAccount(LogoutController logoutController, DisplayUsernameController displayUsernameController) {
+        this.logoutController = logoutController;
+        this.displayUsernameController = displayUsernameController;
+        super.addController(this.logoutController);
+        super.addController(this.displayUsernameController);
+    }
+
     public void handleLogoutButtonClick() {
         this.logoutController.logout();
         shellNavigateAPI.setContent("Login");

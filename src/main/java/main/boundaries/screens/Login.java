@@ -1,5 +1,6 @@
 package main.boundaries.screens;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
@@ -19,6 +20,8 @@ public class Login extends Boundary implements Navigator {
     public TextField usernameField;
     @FXML
     public PasswordField passwordField;
+    @FXML
+    public Button createAccountButton;
 
     private ShellNavigateAPI shellNavigateAPI;
 
@@ -30,7 +33,7 @@ public class Login extends Boundary implements Navigator {
     }
 
     @FXML
-    private void handleButtonClick() {
+    private void handleLoginButtonClick() {
         Optional<Boolean> verifyCredentials = loginController.verifyCredentials(usernameField.getText(), passwordField.getText());
         if (verifyCredentials.isPresent()) {
             this.usernameField.clear();
@@ -50,4 +53,8 @@ public class Login extends Boundary implements Navigator {
         this.shellNavigateAPI = shellNavigateAPI;
     }
 
+    @FXML
+    public void handleCreateAccountButtonClick(ActionEvent actionEvent) {
+        this.shellNavigateAPI.setContent("CreateAccount");
+    }
 }
