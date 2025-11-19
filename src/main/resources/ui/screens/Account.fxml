@@ -61,9 +61,11 @@
             <Label layoutX="46.0" layoutY="166.0" text="Email: perrytplatypus@owca.gov" />
             <Label layoutX="121.0" layoutY="199.0" text=" Don't share your email with potential graders" />
             <ToggleButton layoutX="34.0" layoutY="195.0" mnemonicParsing="false" text="Private Mode" />
-            <Button layoutX="37.0" layoutY="246.0" mnemonicParsing="false" text="Add Funds" />
+            <!--
+             <Button fx:id="addFundsButton" onAction="#handleAddFundsButtonClick" layoutX="37.0" layoutY="246.0" mnemonicParsing="false" text="Add Funds" />
             <Label layoutX="118.0" layoutY="250.0" text="Current Balance: $47.5" />
-            <Button fx:id="logoutButton" onAction="#handleLogoutButtonClick" layoutX="546.0" layoutY="337.0" mnemonicParsing="false" text="Log out" />
+            -->
+             <Button fx:id="logoutButton" onAction="#handleLogoutButtonClick" layoutX="546.0" layoutY="337.0" mnemonicParsing="false" text="Log out" />
          </children>
     </AnchorPane>
   </children>
