@@ -4,12 +4,18 @@ import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import main.boundaries.Boundary;
 import main.boundaries.apis.hooks.ShellNavigateAPI;
 import main.boundaries.apis.interfaces.Navigator;
 import main.controllers.CreateAccountController;
+
+import java.awt.*;
+import java.net.URI;
+import java.util.Optional;
 
 public class CreateAccount extends Boundary implements Navigator {
 
@@ -61,9 +67,8 @@ public class CreateAccount extends Boundary implements Navigator {
             registrationMessage("Passwords do not match", true);
             return;
         }
-        if (this.createAccountController.createAccount(username, email, password, isGrader)) {
-            stripeOnboard();
-        }
+        Optional<Long> userIdIfGrader = this.createAccountController.createAccount(username, email, password, isGrader);
+        userIdIfGrader.ifPresent(this::stripeOnboard);
         this.usernameField.clear();
         this.emailField.clear();
         this.passwordField.clear();
@@ -71,30 +76,62 @@ public class CreateAccount extends Boundary implements Navigator {
         this.shellNavigateAPI.setContent("Login");
     }
 
-    private void stripeOnboard() {
-        Alert loading = new Alert(Alert.AlertType.NONE);
-        loading.setTitle("Stripe onboarding");
-        loading.setHeaderText("Follow the instructions on your web browser");
-        ProgressIndicator spinner = new ProgressIndicator();
-        loading.getDialogPane().setContent(spinner);
-        loading.initModality(Modality.APPLICATION_MODAL);
-        loading.show();
-
+    private void stripeOnboard(long userId) {
         Task<Boolean> task = new Task<>() {
             @Override
             protected Boolean call() throws Exception {
-                return createAccountController.stripeOnboard();
+                String link = createAccountController.stripeOnboard(userId);
+                Desktop.getDesktop().browse(new URI(link));
+                return true;
             }
         };
 
         task.setOnSucceeded(_ -> {
-            closeDialog(loading);
-            Boolean ok = task.getValue();
-            new Alert(Boolean.TRUE.equals(ok) ? Alert.AlertType.INFORMATION : Alert.AlertType.ERROR,
-                    Boolean.TRUE.equals(ok) ? "Registration success!" : "Registration failure.").showAndWait();
+            Alert waiting = new Alert(Alert.AlertType.INFORMATION);
+            waiting.setTitle("Stripe onboarding");
+            waiting.setHeaderText("Complete onboarding in your browser, then click OK");
+            waiting.getButtonTypes().setAll(ButtonType.OK);
+            waiting.showAndWait();
+
+            verifyOnboarding(userId);
         });
 
         new Thread(task, "onboard-task").start();
+    }
+
+    private void verifyOnboarding(long userId) {
+        Alert verifying = new Alert(Alert.AlertType.NONE);
+        verifying.setTitle("Verifying");
+        verifying.setHeaderText("Checking onboarding status...");
+        ProgressIndicator spinner = new ProgressIndicator();
+        verifying.getDialogPane().setContent(spinner);
+        verifying.initModality(Modality.APPLICATION_MODAL);
+        verifying.show();
+
+        Task<Boolean> verifyTask = new Task<>() {
+            @Override
+            protected Boolean call() throws Exception {
+                return createAccountController.checkOnboardingComplete(userId);
+            }
+        };
+
+        verifyTask.setOnSucceeded(_ -> {
+            closeDialog(verifying);
+            Boolean complete = verifyTask.getValue();
+
+            if (Boolean.TRUE.equals(complete)) {
+                new Alert(Alert.AlertType.INFORMATION, "Registration successful!").showAndWait();
+            } else {
+                Alert retry = new Alert(Alert.AlertType.WARNING);
+                retry.setHeaderText("Onboarding not completed yet. Please complete it in your browser, then click OK");
+                retry.getButtonTypes().setAll(ButtonType.OK);
+                retry.showAndWait();
+
+                verifyOnboarding(userId); // Recursively check again
+            }
+        });
+
+        new Thread(verifyTask, "verify-task").start();
     }
 
     private void closeDialog(Alert alert) {

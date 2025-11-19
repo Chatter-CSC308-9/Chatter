@@ -21,4 +21,6 @@ public class User {
     public String[] completedProjects;
     @JsonProperty("numProjects")
     public int numProjects;
+    @JsonProperty("stripeId")
+    public String stripeId;
 }
