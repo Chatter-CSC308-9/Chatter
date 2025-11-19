@@ -27,6 +27,8 @@ public class Project {
     public Boolean hasUploadedMP3;
     @JsonProperty("hasUploadedPNG")
     public Boolean hasUploadedPNG;
+    @JsonProperty("isPaid")
+    public Boolean isPaid;
 
     public int getCostInCents() {
         if (Boolean.TRUE.equals(hasUploadedMP3)) {

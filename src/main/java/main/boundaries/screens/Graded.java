@@ -41,7 +41,8 @@ public class Graded extends Boundary implements Navigator {
 
     @FXML
     private void handleProjectButtonClick(String projDir) {
-        initiatePayment(projDir, ok -> {
+        if (acceptPaymentController.checkIfPaid(projDir)) downloadGradedProject(projDir);
+        else initiatePayment(projDir, ok -> {
             if (Boolean.TRUE.equals(ok)) {
                 downloadGradedProject(projDir);
             }
@@ -115,7 +116,7 @@ public class Graded extends Boundary implements Navigator {
         Task<Boolean> verifyTask = new Task<>() {
             @Override
             protected Boolean call() throws Exception {
-                return acceptPaymentController.verifyPayment(sessionId);
+                return acceptPaymentController.verifyPayment(sessionId, projDir);
             }
         };
 
@@ -148,9 +149,9 @@ public class Graded extends Boundary implements Navigator {
     private String costAsString(int cost) {
         String centsAsString = String.valueOf(cost);
         if (cost < 100) {
-            return "$0." + centsAsString;
+            return "€0." + centsAsString;
         }
-        return "$" + centsAsString.substring(0, centsAsString.length()-2) + "." + centsAsString.substring(centsAsString.length()-2);
+        return "€" + centsAsString.substring(0, centsAsString.length()-2) + "." + centsAsString.substring(centsAsString.length()-2);
     }
 
     private void downloadGradedProject(String projDir) {

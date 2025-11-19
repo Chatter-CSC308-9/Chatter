@@ -85,14 +85,25 @@ public class AcceptPaymentController implements Controller, NeedsUser {
         }
     }
 
-    public boolean verifyPayment(String sessionId) {
+    public boolean verifyPayment(String sessionId, String projectDirectory) {
         try {
             Session session = Session.retrieve(sessionId);
-            return "complete".equals(session.getStatus()) && "paid".equals(session.getPaymentStatus());
+            boolean result = "complete".equals(session.getStatus()) && "paid".equals(session.getPaymentStatus());
+            if (result) {
+                var projectHydratinator = new ProjectHydratinator();
+                var project = projectHydratinator.getProject(projectDirectory);
+                project.isPaid = true;
+                projectHydratinator.setProject(project);
+            }
+            return result;
         } catch (StripeException e) {
             logger.error("Error verifying payment", e);
             return false;
         }
+    }
+
+    public boolean checkIfPaid(String projectName) {
+        return (new ProjectHydratinator()).getProject(projectName).isPaid;
     }
 
     public int getCostInCents(String projDir) {
