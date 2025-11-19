@@ -49,7 +49,8 @@ public class Graded extends Boundary implements Navigator {
     }
 
     private void initiatePayment(String projDir, Consumer<Boolean> onDone) {
-        int cost = acceptPaymentController.getCostInCents(projDir);
+        int rawCost = acceptPaymentController.getCostInCents(projDir);
+        int cost = (int) (rawCost * (1+AcceptPaymentController.PLATFORM_FEE));
 
         Alert confirm = new Alert(Alert.AlertType.CONFIRMATION,
                 "Cost: " + costAsString(cost) + ". This will open Stripe Checkout in your browser.",

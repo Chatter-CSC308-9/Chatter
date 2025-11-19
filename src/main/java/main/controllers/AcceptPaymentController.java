@@ -19,6 +19,8 @@ public class AcceptPaymentController implements Controller, NeedsUser {
 
     GetUserAPI getUserAPI;
 
+    public static final double PLATFORM_FEE = 0.10;
+
     public String pay(String projectDirectory) {
         try {
             var projectHydratinator = new ProjectHydratinator();
@@ -31,7 +33,7 @@ public class AcceptPaymentController implements Controller, NeedsUser {
             }
 
             int costInCents = getCostInCents(projectDirectory);
-            int applicationFee = (int) (costInCents * 0.10); // 10% platform fee
+            int applicationFee = (int) (costInCents * PLATFORM_FEE);
 
             SessionCreateParams params = SessionCreateParams.builder()
                     .setMode(SessionCreateParams.Mode.PAYMENT)
