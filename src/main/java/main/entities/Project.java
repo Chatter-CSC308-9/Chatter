@@ -30,13 +30,13 @@ public class Project {
 
     public int getCostInCents() {
         if (Boolean.TRUE.equals(hasUploadedMP3)) {
-            return 10;
+            return 50;
         } else if (Boolean.TRUE.equals(hasUploadedPNG)) {
             return 243542;
         } else if (Boolean.TRUE.equals(hasUploadedTXT)) {
             return 142924;
         } else /*if work.txt exists*/ {
-            return 40;
+            return 60;
         }
     }
 }

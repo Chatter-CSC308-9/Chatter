@@ -54,7 +54,7 @@ public class CreateAccountController implements Controller {
             // create account
             var accountCreateParams = AccountCreateParams.builder()
                     .setType(AccountCreateParams.Type.EXPRESS)
-                    .setCountry("US")
+                    .setCountry("IT")
                     .build();
             Account account = Account.create(accountCreateParams);
 

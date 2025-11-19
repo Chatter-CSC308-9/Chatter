@@ -165,7 +165,7 @@
                 <Button fx:id="deleteProjectButton" onAction="#handleDeleteProjectButtonClick" text="Delete Project"/>
                 <Pane HBox.hgrow="ALWAYS"/>
                 <Button text="Submit to AI"/>
-                <Button fx:id="submitButton" text="Submit"/>
+                <Button fx:id="submitButton" onAction="#handleSubmitButtonClick" text="Submit"/>
             </children>
 
             <padding>
