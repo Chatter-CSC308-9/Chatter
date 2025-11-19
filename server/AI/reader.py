@@ -5,8 +5,7 @@ import sys
 import time
 import shutil
 import subprocess
-subprocess.run([sys.executable, "-m", "pip", "install", "ollama"])
-subprocess.run([sys.executable, "-m", "ollama", "pull", "llama3.1"])
+subprocess.run(["powershell", "-ExecutionPolicy", "Bypass", "-File", "./setup.ps1"], check=True)
 subprocess.check_call([sys.executable, "-m", "pip", "install", "requests"])
 subprocess.check_call([sys.executable, "-m", "pip", "install", "dotenv"])
 
