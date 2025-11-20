@@ -83,7 +83,7 @@ public class SubmitProjectController implements Controller, NeedsUser {
     public void submitProjectToAI(String projectFolder) {
         logger.info("entered submitProjToAI");
         File inputFile = new File(PROJECTS_DIRECTORY, projectFolder + "/work.txt");
-        String inputPath = inputFile.getPath();
+        String inputPath = inputFile.getAbsolutePath();
         logger.info(inputPath);
         File parentDir = inputFile.getParentFile();
         File feedbackFile = new File(parentDir, "AIFeedback.txt");
