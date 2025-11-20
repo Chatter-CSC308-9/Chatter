@@ -41,7 +41,8 @@ public class Graded extends Boundary implements Navigator {
 
     @FXML
     private void handleProjectButtonClick(String projDir) {
-        initiatePayment(projDir, ok -> {
+        if (acceptPaymentController.checkIfPaid(projDir)) downloadGradedProject(projDir);
+        else initiatePayment(projDir, ok -> {
             if (Boolean.TRUE.equals(ok)) {
                 downloadGradedProject(projDir);
             }
@@ -49,41 +50,94 @@ public class Graded extends Boundary implements Navigator {
     }
 
     private void initiatePayment(String projDir, Consumer<Boolean> onDone) {
-        int cost = acceptPaymentController.getCostInCents(projDir);
+        int rawCost = acceptPaymentController.getCostInCents(projDir);
+        int cost = (int) (rawCost * (1+AcceptPaymentController.PLATFORM_FEE));
 
         Alert confirm = new Alert(Alert.AlertType.CONFIRMATION,
-                "Cost: " + costAsString(cost) + ". Confirm?",
+                "Cost: " + costAsString(cost) + ". This will open Stripe Checkout in your browser.",
                 ButtonType.OK, ButtonType.CANCEL);
-        confirm.setTitle("Confirm");
+        confirm.setTitle("Confirm Payment");
         if (confirm.showAndWait().orElse(ButtonType.CANCEL) != ButtonType.OK) {
-            if (onDone != null) onDone.accept(false); // user cancelled
+            if (onDone != null) onDone.accept(false);
             return;
         }
 
         Alert loading = new Alert(Alert.AlertType.NONE);
-        loading.setTitle("Processing Payment");
-        loading.setHeaderText("Please wait...");
+        loading.setTitle("Opening Checkout");
+        loading.setHeaderText("Opening Stripe Checkout in your browser...");
         ProgressIndicator spinner = new ProgressIndicator();
         loading.getDialogPane().setContent(spinner);
         loading.initModality(Modality.APPLICATION_MODAL);
         loading.show();
 
-        Task<Boolean> task = new Task<>() {
+        Task<String> task = getStringTask(projDir, onDone, loading);
+
+        new Thread(task, "payment-task").start();
+    }
+
+    private Task<String> getStringTask(String projDir, Consumer<Boolean> onDone, Alert loading) {
+        Task<String> task = new Task<>() {
             @Override
-            protected Boolean call() throws Exception {
-                return acceptPaymentController.pay();
+            protected String call() {
+                return acceptPaymentController.pay(projDir);
             }
         };
 
         task.setOnSucceeded(_ -> {
             closeDialog(loading);
-            Boolean ok = task.getValue();
-            new Alert(Boolean.TRUE.equals(ok) ? Alert.AlertType.INFORMATION : Alert.AlertType.ERROR,
-                    Boolean.TRUE.equals(ok) ? "Payment successful!" : "Payment failed.").showAndWait();
-            if (onDone != null) onDone.accept(Boolean.TRUE.equals(ok));
+            String sessionId = task.getValue();
+
+            if (sessionId != null) {
+                Alert waiting = new Alert(Alert.AlertType.INFORMATION);
+                waiting.setTitle("Complete Payment");
+                waiting.setHeaderText("Complete payment in your browser, then click OK");
+                waiting.getButtonTypes().setAll(ButtonType.OK);
+                waiting.showAndWait();
+
+                verifyPaymentAndDownload(sessionId, projDir, onDone);
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Failed to open payment checkout.").showAndWait();
+                if (onDone != null) onDone.accept(false);
+            }
+        });
+        return task;
+    }
+
+
+    private void verifyPaymentAndDownload(String sessionId, String projDir, Consumer<Boolean> onDone) {
+        Alert verifying = new Alert(Alert.AlertType.NONE);
+        verifying.setTitle("Verifying Payment");
+        verifying.setHeaderText("Checking payment status...");
+        ProgressIndicator spinner = new ProgressIndicator();
+        verifying.getDialogPane().setContent(spinner);
+        verifying.initModality(Modality.APPLICATION_MODAL);
+        verifying.show();
+
+        Task<Boolean> verifyTask = new Task<>() {
+            @Override
+            protected Boolean call() throws Exception {
+                return acceptPaymentController.verifyPayment(sessionId, projDir);
+            }
+        };
+
+        verifyTask.setOnSucceeded(_ -> {
+            closeDialog(verifying);
+            Boolean verified = verifyTask.getValue();
+
+            if (Boolean.TRUE.equals(verified)) {
+                new Alert(Alert.AlertType.INFORMATION, "Payment successful!").showAndWait();
+                if (onDone != null) onDone.accept(true);
+            } else {
+                Alert retry = new Alert(Alert.AlertType.WARNING);
+                retry.setHeaderText("Payment not completed. Please complete it in your browser, then click OK");
+                retry.getButtonTypes().setAll(ButtonType.OK);
+                retry.showAndWait();
+
+                verifyPaymentAndDownload(sessionId, projDir, onDone);
+            }
         });
 
-        new Thread(task, "payment-task").start();
+        new Thread(verifyTask, "verify-payment-task").start();
     }
 
     private void closeDialog(Alert alert) {
@@ -95,9 +149,9 @@ public class Graded extends Boundary implements Navigator {
     private String costAsString(int cost) {
         String centsAsString = String.valueOf(cost);
         if (cost < 100) {
-            return "$0." + centsAsString;
+            return "€0." + centsAsString;
         }
-        return "$" + centsAsString.substring(0, centsAsString.length()-2) + "." + centsAsString.substring(centsAsString.length()-2);
+        return "€" + centsAsString.substring(0, centsAsString.length()-2) + "." + centsAsString.substring(centsAsString.length()-2);
     }
 
     private void downloadGradedProject(String projDir) {
