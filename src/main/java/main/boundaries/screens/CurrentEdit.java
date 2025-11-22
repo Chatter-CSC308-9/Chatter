@@ -214,6 +214,7 @@ public class CurrentEdit extends Boundary implements Navigator {
 
     @FXML
     void handleSubmitButtonClick() {
+        saveTitleAndWork();
         this.editProjectController.submitProject(submitProjectController);
         shellNavigateAPI.setContent(CURRENT);
     }
