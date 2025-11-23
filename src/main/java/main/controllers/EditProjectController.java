@@ -301,9 +301,10 @@ public class EditProjectController implements Controller, NeedsUser {
         spc.submitProject(projectFolder);
     }
 
-    public void submitAIProject(SubmitProjectController spc) {
+    public void submitAIProject(SubmitProjectController spc, Runnable onSucceeded,
+                                java.util.function.Consumer<Throwable> onFailed) {
         logger.debug("AI method called");
-        spc.submitProjectToAI(projectFolder);
+        spc.submitProjectToAI(projectFolder,onSucceeded,onFailed);
     }
 
     @Override

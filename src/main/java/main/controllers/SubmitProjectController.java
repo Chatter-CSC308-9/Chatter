@@ -20,7 +20,6 @@ public class SubmitProjectController implements Controller, NeedsUser {
 
     ProjectHydratinator projectHydratinator = new ProjectHydratinator();
     UserHydratinator userHydratinator = new UserHydratinator();
-    private static final Logger logger = Logger.getLogger(SubmitProjectController.class.getName());
     private static final String PROJECTS_DIRECTORY = "server/projects/";
     private static final String TITLE_FILE_NAME = "/title.txt";
 
@@ -64,7 +63,7 @@ public class SubmitProjectController implements Controller, NeedsUser {
             }
         }
 
-        return projNames.toArray(new String[projNames.size()]);
+        return projNames.toArray(new String[0]);
     }
 
     // return title of project
@@ -80,8 +79,38 @@ public class SubmitProjectController implements Controller, NeedsUser {
     }
 
     //Submit Project to AI
-    public void submitProjectToAI(String projectFolder) {
-        logger.info("entered submitProjToAI");
+    public void submitProjectToAI(String projectFolder,Runnable onSucceeded, java.util.function.Consumer<Throwable> onFailed) {
+       Thread a = new AIHelper(projectFolder,onSucceeded,onFailed);
+       a.setDaemon(true);
+       a.start();
+    }
+
+
+    @Override
+    public void setGetUserAPI(GetUserAPI getUserAPI) {
+        this.getUserAPI = getUserAPI;
+    }
+}
+
+class AIHelper extends Thread{
+    private static final Logger logger = Logger.getLogger(AIHelper.class.getName());
+    private static final String PROJECTS_DIRECTORY = "server/projects/";
+    private final String projectFolder;
+
+    private final Runnable onSucceeded;
+
+    private final java.util.function.Consumer<Throwable> onFailed;
+
+    public AIHelper(String projectFolder, Runnable onSucceeded,
+                    java.util.function.Consumer<Throwable> onFailed) {
+        this.onSucceeded = onSucceeded;
+        this.onFailed = onFailed;
+        setName("AIHelper");
+        this.projectFolder = projectFolder;
+    }
+    @Override
+    public void run(){
+
         File inputFile = new File(PROJECTS_DIRECTORY, projectFolder + "/work.txt");
         String inputPath = inputFile.getAbsolutePath();
         logger.info(inputPath);
@@ -90,39 +119,35 @@ public class SubmitProjectController implements Controller, NeedsUser {
         String feedbackPath = feedbackFile.getAbsolutePath();
         logger.info(feedbackPath);
         try{
-            String scriptPath = "server/AI/reader.py";
-            List<String> command = Arrays.asList(
-                    "python",
-                    scriptPath,
-                    "--model", "llama3.1",
-                    "--prompt_file", inputPath,
-                    "--output", feedbackPath
-            );
-            // Create the process builder
-            ProcessBuilder pb = new ProcessBuilder(command);
-            pb.redirectErrorStream(true); // merge stderr into stdout
-
-            // Start the process
-            Process p = pb.start();
+            Process p = getProcess(inputPath, feedbackPath);
             try (BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()))) {
                 String line;
                 while ((line = r.readLine()) != null) {
                     logger.info(line);
                 }
-                logger.info("complete");
             }
+                javafx.application.Platform.runLater(onSucceeded);
 
-        }catch (Exception _){
+        }catch (IOException e){
             logger.warning("Failed to submit project to AI");
+            javafx.application.Platform.runLater(() -> onFailed.accept(e));
         }
-
-
-
     }
 
+    private static Process getProcess(String inputPath, String feedbackPath) throws IOException {
+        String scriptPath = "server/AI/reader.py";
+        List<String> command = Arrays.asList(
+                "python",
+                scriptPath,
+                "--model", "llama3.1",
+                "--prompt_file", inputPath,
+                "--output", feedbackPath
+        );
+        // Create the process builder
+        ProcessBuilder pb = new ProcessBuilder(command);
+        pb.redirectErrorStream(true); // merge stderr into stdout
 
-    @Override
-    public void setGetUserAPI(GetUserAPI getUserAPI) {
-        this.getUserAPI = getUserAPI;
+        // Start the process
+        return pb.start();
     }
 }

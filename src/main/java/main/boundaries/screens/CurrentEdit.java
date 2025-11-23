@@ -221,9 +221,20 @@ public class CurrentEdit extends Boundary implements Navigator {
 
     @FXML
     void handleAISubmitButtonClick() {
-        logger.debug("AI submitting button clicked");
-        this.editProjectController.submitAIProject(submitProjectController);
         shellNavigateAPI.setContent(CURRENT);
+        // 1) Waiting alert: non-blocking, no buttons, modal, cannot be closed by user
+        new Alert(Alert.AlertType.INFORMATION,
+                "Submitted to AI; You will be notified of completion").showAndWait();
+
+        // 2) Kick off background work with callbacks
+        editProjectController.submitAIProject(
+                submitProjectController,
+                // onSucceeded:
+                () -> new Alert(Alert.AlertType.INFORMATION,
+                        "AI finished grading. Feedback is in your project folder.").showAndWait(),
+                // onFailed:
+                (Throwable err) -> new Alert(Alert.AlertType.ERROR,
+                            "AI grading failed: " + (err == null ? "Unknown error" : err.getMessage())).showAndWait());
     }
 
     @FXML
