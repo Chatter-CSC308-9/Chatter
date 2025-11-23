@@ -15,6 +15,10 @@ public abstract class AbstractAccount extends Boundary implements Navigator {
     public Label greetingLabel;
     @FXML
     public Button logoutButton;
+    @FXML
+    private Label usernameText;
+    @FXML
+    private Label emailText;
 
     LogoutController logoutController;
     DisplayUsernameController displayUsernameController;
@@ -42,7 +46,9 @@ public abstract class AbstractAccount extends Boundary implements Navigator {
     @FXML
     @Override
     public void onShow() {
-        greetingLabel.setText("Hi " + displayUsernameController.getUsername() + "!");
+        String userName = displayUsernameController.getUsername();
+        greetingLabel.setText("Hi " + userName + "!");
+        usernameText.setText(userName);
+        emailText.setText(displayUsernameController.getEmail());
     }
-
 }

@@ -32,6 +32,18 @@
   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<!--
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
@@ -70,3 +82,75 @@
     </AnchorPane>
   </children>
 </VBox>
+-->
+
+<BorderPane prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.boundaries.screens.CreateAccount">
+    <center>
+        <VBox alignment="CENTER" prefHeight="357.0" prefWidth="596.0" style="-fx-background-color: #dce6e2; -fx-background-insets: 80; -fx-background-radius: 20; -fx-max-width: 500; -fx-min-width: 500; -fx-min-height: 400; -fx-max-height: 400;">
+            <Label layoutX="295.0" layoutY="73.0" text="Register">
+                <font>
+                    <Font size="20.0" />
+                </font>
+            </Label>
+            <Label layoutX="271.0" layoutY="55.0" text="Welcome to Chatter!">
+                <VBox.margin>
+                    <Insets bottom="12.0" />
+                </VBox.margin>
+            </Label>
+            <HBox alignment="CENTER" prefHeight="30.0" prefWidth="640.0" spacing="10.0">
+                <children>
+                    <VBox>
+                        <Label text="Username:" />
+                        <TextField fx:id="usernameField" prefHeight="25.0" prefWidth="130.0">
+                            <HBox.margin>
+                                <Insets left="8.0" />
+                            </HBox.margin>
+                        </TextField>
+                    </VBox>
+                    <VBox>
+                        <Label text="Email:" />
+                        <TextField fx:id="emailField" prefHeight="25.0" prefWidth="130.0">
+                            <HBox.margin>
+                                <Insets left="8.0" />
+                            </HBox.margin>
+                        </TextField>
+                    </VBox>
+                </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="30.0" prefWidth="640.0" spacing="10.0">
+                <children>
+                    <VBox>
+                        <Label text="Password:" />
+                        <PasswordField fx:id="passwordField" prefHeight="25.0" prefWidth="130.0">
+                            <HBox.margin>
+                                <Insets left="8.0" />
+                            </HBox.margin>
+                        </PasswordField>
+                    </VBox>
+                    <VBox>
+                        <Label text="Repeat Password:" />
+                        <PasswordField fx:id="repeatPasswordField" prefHeight="25.0" prefWidth="130.0">
+                            <HBox.margin>
+                                <Insets left="8.0" />
+                            </HBox.margin>
+                        </PasswordField>
+                    </VBox>
+                </children>
+            </HBox>
+         <HBox alignment="CENTER" prefHeight="26.0" prefWidth="399.0" spacing="20.0">
+            <children>
+                  <CheckBox fx:id="isGraderCheckbox" mnemonicParsing="false" text="Grader account?" />
+               <VBox spacing="10.0">
+                  <children>
+                        <Button fx:id="createAccountButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleCreateAccountButtonClick" text="Register" />
+                        <Button fx:id="backToLoginButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleBackToLoginButtonClick" text="Back to log in" />
+                  </children>
+               </VBox>
+            </children>
+            <padding>
+               <Insets top="10.0" />
+            </padding>
+         </HBox>
+        </VBox>
+    </center>
+</BorderPane>

@@ -50,6 +50,8 @@ final class AppModule {
         boundarySuppliers.put(GraderClaimed.class, () -> new GraderClaimed(get(SubmitGradedProjectController.class)));
         boundarySuppliers.put(Graded.class, () -> new Graded(get(DownloadGradedProjectController.class), get(AcceptPaymentController.class)));
         boundarySuppliers.put(CreateAccount.class, () -> new CreateAccount(get(CreateAccountController.class)));
+        boundarySuppliers.put(Home.class, () -> new Home(get(DisplayUsernameController.class)));
+        boundarySuppliers.put(GraderHome.class, () -> new GraderHome(get(DisplayUsernameController.class)));
     }
 
     private <T> void register(T instance) {
