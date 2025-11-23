@@ -1,1 +1,1 @@
-{"username":"perry","passwordplaintext":"j","userID":3521570025,"isGrader":false,"email":"perry@owca.gov","emailIsHidden":true,"projects":[],"completedProjects":[],"numProjects":6,"stripeId":""}
+{"username":"perry","passwordplaintext":"j","userID":3521570025,"isGrader":false,"email":"perry@owca.gov","emailIsHidden":true,"projects":["D1E6E4E90"],"completedProjects":["D1E6E4E91","D1E6E4E92","D1E6E4E93","D1E6E4E94"],"numProjects":5,"stripeId":""}

@@ -1,1 +1,1 @@
-{"username":"ferb","passwordplaintext":"iamferb","userID":1565107617,"isGrader":true,"email":"ferb@gmail.com","emailIsHidden":false,"projects":[],"completedProjects":[],"numProjects":0,"stripeId":"acct_1SVItkKshH6OQxgM"}
+{"username":"ferb","passwordplaintext":"iamferb","userID":1565107617,"isGrader":true,"email":"ferb@gmail.com","emailIsHidden":false,"projects":["D1E6E4E91"],"completedProjects":["D1E6E4E93","D1E6E4E94"],"numProjects":0,"stripeId":"acct_1SVItkKshH6OQxgM"}
