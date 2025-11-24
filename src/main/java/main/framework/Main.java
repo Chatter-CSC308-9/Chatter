@@ -10,7 +10,7 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         Stripe.apiKey = System.getenv("STRIPE_SECRET_KEY");
-        launch();
+        launch(args);
     }
 
     @Override

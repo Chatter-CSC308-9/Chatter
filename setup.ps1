@@ -41,3 +41,7 @@ Write-Host "Installed models:"
 ollama list
 
 Write-Host "Done."
+
+mvn -Pwindows clean package
+
+java -jar target\chatter-1.0-SNAPSHOT.jar
