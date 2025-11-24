@@ -42,7 +42,7 @@ final class AppModule {
         // --- Boundaries (lazy suppliers) ---
         boundarySuppliers.put(Login.class, () -> new Login(get(LoginController.class)));
         boundarySuppliers.put(Current.class, () -> new Current(get(EditProjectController.class)));
-        boundarySuppliers.put(CurrentEdit.class, () -> new CurrentEdit(get(EditProjectController.class), get(SubmitProjectController.class)));
+        boundarySuppliers.put(CurrentEdit.class, () -> new CurrentEdit(get(EditProjectController.class), get(SubmitProjectController.class),get(DownloadGradedProjectController.class)));
         boundarySuppliers.put(Pending.class, () -> new Pending(get(SubmitProjectController.class)));
         boundarySuppliers.put(Account.class, () -> new Account(get(LogoutController.class), get(DisplayUsernameController.class)));
         boundarySuppliers.put(GraderAccount.class, () -> new GraderAccount(get(LogoutController.class), get(DisplayUsernameController.class)));

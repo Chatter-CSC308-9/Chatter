@@ -31,6 +31,9 @@ public class EditProjectController implements Controller, NeedsUser {
     public void setProject(String projectFolder) {
         this.projectFolder = projectFolder;
     }
+    public String getProject() {
+        return projectFolder;
+    }
 
     public void editProject(String projectFolder) {
         this.projectFolder = projectFolder;
@@ -209,7 +212,6 @@ public class EditProjectController implements Controller, NeedsUser {
         project.hasUploadedMP3 = false;
         projectHydratinator.setProject(project);
     }
-
     // delete uploaded png file
     public void deleteUploadedPNG() {
         try {
