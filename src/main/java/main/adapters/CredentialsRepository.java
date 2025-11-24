@@ -20,9 +20,23 @@ public class CredentialsRepository {
 
     private static final String CREDENTIALS_PATH = "server/credentials.jsonl";
 
+    private final boolean isTesting;
+
+    public CredentialsRepository() {
+        this(false);
+    }
+
+    private CredentialsRepository(boolean isTesting) {
+        this.isTesting = isTesting;
+    }
+
+    public String getCredentialsPath() {
+        return isTesting ? "test-" + CREDENTIALS_PATH : CREDENTIALS_PATH;
+    }
+
     public Optional<UserCredentials> getUserCredentials(String username) {
         ObjectMapper mapper = new ObjectMapper();
-        try (BufferedReader reader = new BufferedReader(new FileReader(CREDENTIALS_PATH))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(getCredentialsPath()))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 JsonNode node = mapper.readTree(line);
@@ -42,7 +56,7 @@ public class CredentialsRepository {
     public List<UserCredentials> getAllUserCredentials() {
         List<UserCredentials> list = new ArrayList<>();
         ObjectMapper mapper = new ObjectMapper();
-        try (BufferedReader reader = new BufferedReader(new FileReader(CREDENTIALS_PATH))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(getCredentialsPath()))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 JsonNode node = mapper.readTree(line);
@@ -61,7 +75,7 @@ public class CredentialsRepository {
     }
     public void addUserCredential(UserCredentials userCredential) {
         var objectMapper = new ObjectMapper();
-        try (FileWriter fw = new FileWriter(CREDENTIALS_PATH, true)) {
+        try (FileWriter fw = new FileWriter(getCredentialsPath(), true)) {
             String json = objectMapper.writeValueAsString(userCredential);
             fw.write(json + System.lineSeparator());
         } catch (IOException e) {
