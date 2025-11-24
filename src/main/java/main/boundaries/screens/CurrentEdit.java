@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 import main.boundaries.Boundary;
 import main.boundaries.apis.interfaces.Navigator;
 import main.boundaries.apis.hooks.ShellNavigateAPI;
+import main.controllers.DownloadGradedProjectController;
 import main.controllers.EditProjectController;
 import main.controllers.SubmitProjectController;
 import org.slf4j.Logger;
@@ -23,6 +24,8 @@ public class CurrentEdit extends Boundary implements Navigator {
 
     EditProjectController editProjectController;
     SubmitProjectController submitProjectController;
+    DownloadGradedProjectController downloadGradedProjectController;
+
 
     @FXML
     private TextArea projectField;
@@ -79,9 +82,10 @@ public class CurrentEdit extends Boundary implements Navigator {
 
     private static final String CURRENT = "Current";
 
-    public CurrentEdit(EditProjectController ewc, SubmitProjectController spc) {
+    public CurrentEdit(EditProjectController ewc, SubmitProjectController spc,DownloadGradedProjectController dgp) {
         this.editProjectController = ewc;
         this.submitProjectController = spc;
+        this.downloadGradedProjectController = dgp;
         super.addController(this.editProjectController);
     }
 
@@ -224,14 +228,27 @@ public class CurrentEdit extends Boundary implements Navigator {
         shellNavigateAPI.setContent(CURRENT);
         // 1) Waiting alert: non-blocking, no buttons, modal, cannot be closed by user
         new Alert(Alert.AlertType.INFORMATION,
-                "Submitted to AI; You will be notified of completion").showAndWait();
+                "Attempting AI submission; You will receive a status notification momentarily").showAndWait();
 
         // 2) Kick off background work with callbacks
         editProjectController.submitAIProject(
                 submitProjectController,
                 // onSucceeded:
-                () -> new Alert(Alert.AlertType.INFORMATION,
-                        "AI finished grading. Feedback is in your project folder.").showAndWait(),
+                () ->{
+                    new Alert(Alert.AlertType.INFORMATION,
+                            "AI finished grading.").showAndWait();
+                    final JFileChooser fileChooser = new JFileChooser();
+                    fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+                    if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+                        File file = fileChooser.getSelectedFile();
+                        if (this.downloadGradedProjectController.downloadAIFeedback(editProjectController.getProject(),file) == 1) {
+                            JOptionPane.showMessageDialog(null, "Error in downloading feedback. There may be a naming conflict in your destination folder.");
+                        }
+                        else {
+                            JOptionPane.showMessageDialog(null, "Successfully downloaded");
+                        }
+                    }
+                },
                 // onFailed:
                 (Throwable err) -> new Alert(Alert.AlertType.ERROR,
                             "AI grading failed: " + (err == null ? "Unknown error" : err.getMessage())).showAndWait());

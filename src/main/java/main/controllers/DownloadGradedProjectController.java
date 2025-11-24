@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 
 public class DownloadGradedProjectController implements Controller, NeedsUser {
@@ -46,6 +47,19 @@ public class DownloadGradedProjectController implements Controller, NeedsUser {
             return 0;
         } catch (IOException e) {
             logger.error("error downloading project", e);
+            return 1;
+        }
+    }
+    public int downloadAIFeedback(String projDir, File dest) {
+        try {
+            Path source = Path.of("server", "projects", projDir, "AIFeedback.txt");
+            Path target = dest.toPath().resolve("AIFeedback.txt");
+
+            // Delete and replace if file already exists
+            Files.copy(source, target, StandardCopyOption.REPLACE_EXISTING);
+            return 0;
+        } catch (IOException e) {
+            logger.error("Error downloading project", e);
             return 1;
         }
     }

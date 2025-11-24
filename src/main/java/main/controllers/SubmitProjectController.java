@@ -115,11 +115,9 @@ class AIHelper extends Thread{
 
         File inputFile = new File(PROJECTS_DIRECTORY, projectFolder + "/work.txt");
         String inputPath = inputFile.getAbsolutePath();
-        logger.info(inputPath);
         File parentDir = inputFile.getParentFile();
         File feedbackFile = new File(parentDir, "AIFeedback.txt");
         String feedbackPath = feedbackFile.getAbsolutePath();
-        logger.info(feedbackPath);
         try{
             Process p = getProcess(inputPath, feedbackPath);
             try (BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()))) {
@@ -130,12 +128,12 @@ class AIHelper extends Thread{
             }
                 javafx.application.Platform.runLater(onSucceeded);
 
+
         }catch (IOException e){
             logger.warning("Failed to submit project to AI");
             javafx.application.Platform.runLater(() -> onFailed.accept(e));
         }
     }
-
     private static Process getProcess(String inputPath, String feedbackPath) throws IOException {
         String scriptPath = "server/AI/reader.py";
         List<String> command = Arrays.asList(
