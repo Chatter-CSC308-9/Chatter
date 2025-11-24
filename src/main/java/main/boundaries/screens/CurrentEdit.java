@@ -225,6 +225,7 @@ public class CurrentEdit extends Boundary implements Navigator {
 
     @FXML
     void handleAISubmitButtonClick() {
+        saveTitleAndWork();
         shellNavigateAPI.setContent(CURRENT);
         // 1) Waiting alert: non-blocking, no buttons, modal, cannot be closed by user
         new Alert(Alert.AlertType.INFORMATION,
