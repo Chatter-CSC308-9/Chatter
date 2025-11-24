@@ -68,7 +68,7 @@ public class SubmitProjectController implements Controller, NeedsUser {
 
     // return title of project
     public String getTitle(String projectName) {
-        String title = "hello world";
+        String title;
         try (BufferedReader br = new BufferedReader(new FileReader(PROJECTS_DIRECTORY + projectName + TITLE_FILE_NAME))) {
             title = br.readLine();
         } catch (IOException e) {
@@ -108,6 +108,8 @@ class AIHelper extends Thread{
         setName("AIHelper");
         this.projectFolder = projectFolder;
     }
+
+    @SuppressWarnings("java:S7467") // prevent erroneous error naming sonar issue
     @Override
     public void run(){
 

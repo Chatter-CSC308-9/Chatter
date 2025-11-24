@@ -187,7 +187,8 @@ public class Graded extends Boundary implements Navigator {
             projectButtons.add(b);
             b.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> handleProjectButtonClick(project));
             String title = downloadGradedProjectController.getTitle(project);
-            b.setText("Download Feedback for: " + title);
+            String whetherPaid = acceptPaymentController.checkIfPaid(project) ? " (Paid)" : " (Unpaid";
+            b.setText("Download Feedback for: " + title + whetherPaid);
             b.setPrefHeight(26.0);
             b.setPrefWidth(290.0);
         }
