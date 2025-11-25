@@ -42,6 +42,4 @@ ollama list
 
 Write-Host "Done."
 
-mvn -Pwindows clean package
-
-java -jar target\chatter-1.0-SNAPSHOT.jar
+java -jar target/chatter-1.0-SNAPSHOT.jar

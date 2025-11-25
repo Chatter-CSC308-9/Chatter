@@ -12,7 +12,7 @@ import java.util.Comparator;
 import java.util.stream.Stream;
 
 public class TestingServerUtil {
-    private static final Logger logger = LoggerFactory.getLogger(TestingServerUtil.class);
+    static final Logger logger = LoggerFactory.getLogger(TestingServerUtil.class);
 
     private static final String SERVER_DIRECTORY = "test-server";
 

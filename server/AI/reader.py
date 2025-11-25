@@ -6,18 +6,6 @@ import time
 import shutil
 import subprocess
 import shutil
-# Try to locate PowerShell automatically
-ps_exe = shutil.which("powershell.exe") or shutil.which("pwsh.exe") or r"C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe"
-subprocess.run(
-    [
-        ps_exe,
-        "-NoProfile",
-        "-ExecutionPolicy", "Bypass",
-        "-File", "./setup.ps1"
-    ],
-    check=True,
-    cwd=os.path.dirname(__file__),
-)
 subprocess.check_call([sys.executable, "-m", "pip", "install", "requests"])
 subprocess.check_call([sys.executable, "-m", "pip", "install", "dotenv"])
 
