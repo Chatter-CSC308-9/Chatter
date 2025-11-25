@@ -16,12 +16,28 @@ public class UserHydratinator {
 
     private static final Logger logger = LoggerFactory.getLogger(UserHydratinator.class);
 
+    private static final String USERS_REPOSITORY = "server/users/";
+
+    private final boolean isTesting;
+
+    public UserHydratinator() {
+        this(false);
+    }
+
+    private UserHydratinator(boolean isTesting) {
+        this.isTesting = isTesting;
+    }
+
+    private String getUsersRepository() {
+        return this.isTesting ? "test-" + USERS_REPOSITORY : USERS_REPOSITORY;
+    }
+
     public User getUser(long userID) {
 
         String jsonText = null;
         Stream<String> lines = null;
         try {
-            lines = Files.lines(Paths.get("server/users/" + Long.toHexString(userID) + ".json"));
+            lines = Files.lines(Paths.get(getUsersRepository() + Long.toHexString(userID) + ".json"));
             jsonText = lines.reduce("", String::concat);
         }
         catch (IOException e) {
@@ -48,7 +64,7 @@ public class UserHydratinator {
         ObjectMapper mapper = new ObjectMapper();
 
         try {
-            mapper.writeValue(new File("server/users/" + Long.toHexString(user.userID) + ".json"), user);
+            mapper.writeValue(new File(getUsersRepository() + Long.toHexString(user.userID) + ".json"), user);
         } catch (IOException e) {
             logger.error("error", e);
         }
