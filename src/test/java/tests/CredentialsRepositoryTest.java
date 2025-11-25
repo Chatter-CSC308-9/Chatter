@@ -2,6 +2,8 @@ package tests;
 
 import main.adapters.CredentialsRepository;
 import main.entities.UserCredentials;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -11,81 +13,126 @@ import static org.junit.Assert.*;
 
 public class CredentialsRepositoryTest {
 
-    @Test
-    public void getAllUserCredentialsTest() throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
-        // create testing CredentialsRepository
-        var credentialsRepository = getTestingRepository();
+    private CredentialsRepository credentialsRepository;
 
-        // 0 loops, no users
+    @Before
+    public void setUp() throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+        credentialsRepository = getTestingRepository();
         TestingServerUtil.clearTestServer();
+    }
+
+    @After
+    public void tearDown() {
+        TestingServerUtil.clearTestServer();
+    }
+
+    // getAllUserCredentials tests
+
+    @Test
+    public void getAllUserCredentials_withNoUsers_returnsEmptyList() {
         List<UserCredentials> expected = new ArrayList<>();
         List<UserCredentials> result = credentialsRepository.getAllUserCredentials();
         assertEquals(expected, result);
-
-        // 1 loop, 1 user
-        expected.add(generateRandomUserCredential());
-        for (UserCredentials userCredentials : expected) {
-            credentialsRepository.addUserCredential(userCredentials);
-        }
-        result = credentialsRepository.getAllUserCredentials();
-        assertEquals(new HashSet<>(expected), new HashSet<>(result));
-
-        // 2 loops, 2 users
-        TestingServerUtil.clearTestServer();
-        expected.add(generateRandomUserCredential());
-        for (UserCredentials userCredentials : expected) {
-            credentialsRepository.addUserCredential(userCredentials);
-        }
-        result = credentialsRepository.getAllUserCredentials();
-        assertEquals(new HashSet<>(expected), new HashSet<>(result));
-
-        // 50 loops, 50 users
-        TestingServerUtil.clearTestServer();
-        for (int i = 0; i < 48; i++) {
-            expected.add(generateRandomUserCredential());
-        }
-        for (UserCredentials userCredentials : expected) {
-            credentialsRepository.addUserCredential(userCredentials);
-        }
-        result = credentialsRepository.getAllUserCredentials();
-        assertEquals(new HashSet<>(expected), new HashSet<>(result));
-
-        TestingServerUtil.clearTestServer();
     }
 
     @Test
-    public void getUserCredentialsTest() throws InvocationTargetException, NoSuchMethodException,
-            InstantiationException, IllegalAccessException {
-        var credentialsRepository = getTestingRepository();
+    public void getAllUserCredentials_withOneUser_returnsOneUser() {
+        List<UserCredentials> expected = new ArrayList<>();
+        expected.add(generateRandomUserCredential());
+
+        for (UserCredentials userCredentials : expected) {
+            credentialsRepository.addUserCredential(userCredentials);
+        }
+
+        List<UserCredentials> result = credentialsRepository.getAllUserCredentials();
+        assertEquals(new HashSet<>(expected), new HashSet<>(result));
+    }
+
+    @Test
+    public void getAllUserCredentials_withTwoUsers_returnsTwoUsers() {
+        List<UserCredentials> expected = new ArrayList<>();
+        expected.add(generateRandomUserCredential());
+        expected.add(generateRandomUserCredential());
+
+        for (UserCredentials userCredentials : expected) {
+            credentialsRepository.addUserCredential(userCredentials);
+        }
+
+        List<UserCredentials> result = credentialsRepository.getAllUserCredentials();
+        assertEquals(new HashSet<>(expected), new HashSet<>(result));
+    }
+
+    @Test
+    public void getAllUserCredentials_withFiftyUsers_returnsFiftyUsers() {
+        List<UserCredentials> expected = new ArrayList<>();
+        for (int i = 0; i < 50; i++) {
+            expected.add(generateRandomUserCredential());
+        }
+
+        for (UserCredentials userCredentials : expected) {
+            credentialsRepository.addUserCredential(userCredentials);
+        }
+
+        List<UserCredentials> result = credentialsRepository.getAllUserCredentials();
+        assertEquals(new HashSet<>(expected), new HashSet<>(result));
+    }
+
+    // getUserCredentials tests
+
+    @Test
+    public void getUserCredentials_whenNoCredentialsExist_returnsEmpty() {
         UserCredentials credentialToFind = new UserCredentials("perry", "", 1L, false);
         String usernameToGet = credentialToFind.username;
 
-        // No credentials exist
-        setupTest();
         assertEquals(Optional.empty(), credentialsRepository.getUserCredentials(usernameToGet));
-
-        // User is first credential
-        setupTest(credentialsRepository, credentialToFind);
-        assertEquals(Optional.of(credentialToFind),credentialsRepository.getUserCredentials(usernameToGet));
-
-        // User is second credential
-        setupTest(credentialsRepository, 1, credentialToFind);
-        assertEquals(Optional.of(credentialToFind),credentialsRepository.getUserCredentials(usernameToGet));
-
-        // User is in the middle of many credentials
-        setupTest(credentialsRepository, 50, credentialToFind, 50);
-        assertEquals(Optional.of(credentialToFind),credentialsRepository.getUserCredentials(usernameToGet));
-
-        // User is second-to-last credential
-        setupTest(credentialsRepository, 50, credentialToFind, 1);
-        assertEquals(Optional.of(credentialToFind),credentialsRepository.getUserCredentials(usernameToGet));
-
-        // User is last credential
-        setupTest(credentialsRepository, 50, credentialToFind);
-        assertEquals(Optional.of(credentialToFind),credentialsRepository.getUserCredentials(usernameToGet));
-
-        TestingServerUtil.clearTestServer();
     }
+
+    @Test
+    public void getUserCredentials_whenUserIsFirstCredential_returnsUser() {
+        UserCredentials credentialToFind = new UserCredentials("perry", "", 1L, false);
+        String usernameToGet = credentialToFind.username;
+
+        setupTest(credentialsRepository, credentialToFind);
+        assertEquals(Optional.of(credentialToFind), credentialsRepository.getUserCredentials(usernameToGet));
+    }
+
+    @Test
+    public void getUserCredentials_whenUserIsSecondCredential_returnsUser() {
+        UserCredentials credentialToFind = new UserCredentials("perry", "", 1L, false);
+        String usernameToGet = credentialToFind.username;
+
+        setupTest(credentialsRepository, 1, credentialToFind);
+        assertEquals(Optional.of(credentialToFind), credentialsRepository.getUserCredentials(usernameToGet));
+    }
+
+    @Test
+    public void getUserCredentials_whenUserIsInMiddleOfManyCredentials_returnsUser() {
+        UserCredentials credentialToFind = new UserCredentials("perry", "", 1L, false);
+        String usernameToGet = credentialToFind.username;
+
+        setupTest(credentialsRepository, 50, credentialToFind, 50);
+        assertEquals(Optional.of(credentialToFind), credentialsRepository.getUserCredentials(usernameToGet));
+    }
+
+    @Test
+    public void getUserCredentials_whenUserIsSecondToLastCredential_returnsUser() {
+        UserCredentials credentialToFind = new UserCredentials("perry", "", 1L, false);
+        String usernameToGet = credentialToFind.username;
+
+        setupTest(credentialsRepository, 50, credentialToFind, 1);
+        assertEquals(Optional.of(credentialToFind), credentialsRepository.getUserCredentials(usernameToGet));
+    }
+
+    @Test
+    public void getUserCredentials_whenUserIsLastCredential_returnsUser() {
+        UserCredentials credentialToFind = new UserCredentials("perry", "", 1L, false);
+        String usernameToGet = credentialToFind.username;
+
+        setupTest(credentialsRepository, 50, credentialToFind);
+        assertEquals(Optional.of(credentialToFind), credentialsRepository.getUserCredentials(usernameToGet));
+    }
+
+    // Helper methods
 
     private void setupTest(CredentialsRepository credentialsRepository, int before, UserCredentials target, int after) {
         TestingServerUtil.clearTestServer();
@@ -102,10 +149,6 @@ public class CredentialsRepositoryTest {
 
     private void setupTest(CredentialsRepository credentialsRepository, int before, UserCredentials target) {
         setupTest(credentialsRepository, before, target, 0);
-    }
-
-    private void setupTest() {
-        TestingServerUtil.clearTestServer();
     }
 
     private void addRandomCredentials(CredentialsRepository credentialsRepository, int count) {
@@ -128,5 +171,4 @@ public class CredentialsRepositoryTest {
         boolean isGrader = Math.random() < 0.5;
         return new UserCredentials(username, password, userId, isGrader);
     }
-
 }

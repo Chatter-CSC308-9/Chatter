@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class LoginControllerTest {
     @Test
@@ -17,7 +17,7 @@ public class LoginControllerTest {
         credentials.put("perry", "j");
         credentials.put("doof", "passwordinator");
         Optional<Boolean> expected = Optional.of(false);
-        testLoginResult(credentials, expected);
+        assertTrue(testLoginResult(credentials, expected));
     }
 
     @Test
@@ -25,7 +25,7 @@ public class LoginControllerTest {
         Map<String, String> credentials = new HashMap<>();
         credentials.put("ferb", "iamferb");
         Optional<Boolean> expected = Optional.of(true);
-        testLoginResult(credentials, expected);
+        assertTrue(testLoginResult(credentials, expected));
     }
 
     @Test
@@ -34,15 +34,16 @@ public class LoginControllerTest {
         credentials.put("ferb", "iamnotferb");
         credentials.put("idontexist", "nopass");
         Optional<Boolean> expected = Optional.empty();
-        testLoginResult(credentials, expected);
+        assertTrue(testLoginResult(credentials, expected));
     }
 
-    private void testLoginResult(Map<String, String> credentials, Optional<Boolean> expected) {
+    private boolean testLoginResult(Map<String, String> credentials, Optional<Boolean> expected) {
         var loginController = initializeLoginController();
         for (String username : credentials.keySet()) {
             Optional<Boolean> result = loginController.verifyCredentials(username, credentials.get(username));
-            assertEquals(expected, result);
+            if (!expected.equals(result)) return false;
         }
+        return true;
     }
 
     private LoginController initializeLoginController() {
