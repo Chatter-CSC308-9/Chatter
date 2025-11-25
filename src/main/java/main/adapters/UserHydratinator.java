@@ -42,6 +42,7 @@ public class UserHydratinator {
         }
         catch (IOException e) {
             logger.error("error retrieving user info", e);
+            return null;
         }
         finally {
             if (lines != null) {

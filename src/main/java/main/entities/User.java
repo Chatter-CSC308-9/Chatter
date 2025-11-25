@@ -2,6 +2,8 @@ package main.entities;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.Objects;
+
 public class User {
     @JsonProperty("username")
     public String username;
@@ -23,4 +25,24 @@ public class User {
     public int numProjects;
     @JsonProperty("stripeId")
     public String stripeId;
+
+    @Override
+    public boolean equals(Object other){
+        if (other == null){
+            return false;
+        }
+        else{
+            if (other instanceof User user){
+                return user.userID == userID;
+            }
+            else{
+                return false;
+            }
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userID);
+    }
 }

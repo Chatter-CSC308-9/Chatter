@@ -25,6 +25,7 @@ public class TestingServerUtil {
         }
         clearDirectory(SERVER_DIRECTORY + "/projects");
         clearDirectory(SERVER_DIRECTORY + "/projects_list");
+        clearDirectory(SERVER_DIRECTORY + "/users");
     }
 
     @SuppressWarnings("java:S7467") // prevent erroneous error naming sonar issue
